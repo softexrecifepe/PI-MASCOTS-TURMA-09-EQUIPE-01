@@ -2,15 +2,55 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
+const robotoThin = localFont({
+  src: "./fonts/Roboto-Thin.ttf",
+  variable: "--font-roboto-thin",
+  weight: "100",
 });
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+const robotoLigth = localFont({
+  src: "./fonts/Roboto-Light.ttf",
+  variable: "--font-roboto-light",
+  weight: "300",
+});
+const robotoRegular = localFont({
+  src: "./fonts/Roboto-Regular.ttf",
+  variable: "--font-roboto-regular",
+  weight: "400",
+});
+const robotoMedium = localFont({
+  src: "./fonts/Roboto-Medium.ttf",
+  variable: "--font-roboto-medium",
+  weight: "500",
+});
+const robotoBold = localFont({
+  src: "./fonts/Roboto-Bold.ttf",
+  variable: "--font-roboto-bold",
+  weight: "700",
+});
+const quickSandLight = localFont({
+  src: "./fonts/Quicksand-Light.ttf",
+  variable: "--font-quicksand-light",
+  weight: "300",
+});
+const quickSandRegular = localFont({
+  src: "./fonts/Quicksand-Regular.ttf",
+  variable: "--font-quicksand-regular",
+  weight: "400",
+});
+const quickSandMedium = localFont({
+  src: "./fonts/Quicksand-Medium.ttf",
+  variable: "--font-quicksand-medium",
+  weight: "500",
+});
+const quickSandSemiBold = localFont({
+  src: "./fonts/Quicksand-SemiBold.ttf",
+  variable: "--font-quicksand-semibold",
+  weight: "600",
+});
+const quickSandBold = localFont({
+  src: "./fonts/Quicksand-Bold.ttf",
+  variable: "--font-quicksand-bold",
+  weight: "700",
 });
 
 export const metadata: Metadata = {
@@ -26,7 +66,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${robotoThin.variable} ${robotoLigth.variable} ${robotoRegular.variable} 
+        ${robotoMedium.variable} ${robotoBold.variable} ${quickSandLight.variable}
+        ${quickSandRegular.variable} ${quickSandMedium.variable} ${quickSandSemiBold.variable} ${quickSandBold.variable} antialiased`}
       >
         {children}
       </body>
