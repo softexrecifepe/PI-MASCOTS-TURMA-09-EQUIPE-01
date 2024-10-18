@@ -9,17 +9,14 @@ import { ServicesInfo } from "./components/homePage/servicesInfo";
 export default function Home() {
   return (
     <>
-      <HeaderHomePage />
+      <HeaderHomePage bgColor="bg-black" />
       <BgHomePage />
       <Info
-        title="Sistema veterinário para clínicas, hospitais e petshops"
+        title=" é o melhor sistema veterinário para clínicas, hospitais e petshops"
         subtitle="Um sistema para a gestão cotidiana do seu negócio"
       />
       <ServicesInfo />
-      <AboutPetSys
-        imgUrl="https://i.ytimg.com/vi/HqaWK3M1Ta8/maxresdefault.jpg"
-        imgAlt="Logo FAP e Softex Pernambuco"
-      />
+      <AboutPetSys />
       <Devs />
       <FooterHomePage />
     </>

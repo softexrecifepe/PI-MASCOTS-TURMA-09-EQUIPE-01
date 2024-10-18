@@ -49,7 +49,7 @@ export function Devs() {
       <div>
         <h6
           id="devs"
-          className="text-myrtleGreen-light roboto-light scroll-mt-28"
+          className="text-myrtleGreen-light roboto-light scroll-mt-32 border-b-2 border-darkCyan pb-2"
         >
           Desenvolvedores
         </h6>

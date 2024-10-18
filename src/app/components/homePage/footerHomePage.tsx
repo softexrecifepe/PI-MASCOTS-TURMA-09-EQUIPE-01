@@ -16,9 +16,6 @@ export function FooterHomePage() {
                 <Link href={"/"}>Home</Link>
               </li>
               <li className="p-1 hover:text-darkCyan transition-colors duration-300">
-                Deploy
-              </li>
-              <li className="p-1 hover:text-darkCyan transition-colors duration-300">
                 <a href="https://github.com/softexrecifepe/PI-MASCOTS-TURMA-09-EQUIPE-01">
                   GitHub do projeto
                 </a>

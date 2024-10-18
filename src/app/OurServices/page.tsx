@@ -1,10 +1,14 @@
+import { AboutPetSys } from "../components/homePage/aboutPetSys";
+import { FooterHomePage } from "../components/homePage/footerHomePage";
+import { GeneralHeader } from "../components/ui/headers/generalHeader";
+
 export default function OurServices() {
   return (
     <>
-      <h1>
-        Nesta página vamos colocar imagens e descrição da funções do sistema.
-      </h1>
-      <h2>Fazer depois que estiver tudo pronto.</h2>
+      {/* depois precisa ajustar o conteúdo da página */}
+      <GeneralHeader></GeneralHeader>
+      <AboutPetSys></AboutPetSys>
+      <FooterHomePage></FooterHomePage>
     </>
   );
 }
