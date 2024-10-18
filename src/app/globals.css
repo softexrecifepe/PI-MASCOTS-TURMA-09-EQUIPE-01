@@ -41,3 +41,7 @@
 .quicksand-bold {
   font-family: var(--font-quicksand-bold);
 }
+
+html {
+  scroll-behavior: smooth;
+}
