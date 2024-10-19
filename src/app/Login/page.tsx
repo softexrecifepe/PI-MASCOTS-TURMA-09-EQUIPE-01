@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { BtnColorBg } from "../components/ui/btn/btnColorBg";
-import { Header } from "../components/telasNavegacao/header/header";
-import { SideBar } from "../components/telasNavegacao/sidebar/sidebar";
+import { Header } from "../components/navigationScreen/header/header";
+import { SideBar } from "../components/navigationScreen/sidebar/sidebar";
 
 export default function Login() {
   return (
