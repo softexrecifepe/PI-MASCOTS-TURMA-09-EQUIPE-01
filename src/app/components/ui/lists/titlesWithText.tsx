@@ -7,7 +7,7 @@ export function TitlesWithText() {
   // criando a lista de items
   const items = [
     {
-      title: "Como o PetSys Surgiu?",
+      title: "Como o Mascot's Surgiu?",
       description:
         "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ut quo debitis corporis sequi fuga repellat optio id provident excepturi quos, vitae aspernatur, odit omnis! Laudantium fugit totam temporibus esse ut.",
     },

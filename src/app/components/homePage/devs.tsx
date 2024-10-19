@@ -55,7 +55,7 @@ export function Devs() {
         </h6>
       </div>
       <div>
-        <h2 className="text-4xl roboto-medium">Quem desenvolveu o PetSys?</h2>
+        <h2 className="text-4xl roboto-medium">Quem desenvolveu o Mascot&#39;s?</h2>
       </div>
       <div className="grid grid-cols-5 gap-10 p-10 mb-10">
         {developers.map((dev, index) => (

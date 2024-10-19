@@ -3,7 +3,7 @@ import Image from "next/image";
 import img3 from "../../assets/images/img3.jpg";
 import { TitlesWithText } from "../ui/lists/titlesWithText";
 
-export function AboutPetSys() {
+export function AboutMascots() {
   return (
     <section className="flex flex-row gap-10 pl-20 pr-20 mt-28 mb-36">
       <div className="flex flex-col gap-5">

@@ -71,7 +71,7 @@ export function ServicesInfo() {
         </h6>
       </div>
       <div>
-        <h2 className="text-4xl roboto-medium">Funcionalidades do PetSys</h2>
+        <h2 className="text-4xl roboto-medium">Funcionalidades do Mascot&#39;s</h2>
       </div>
       <div>
         <h4 className="roboto-light">
