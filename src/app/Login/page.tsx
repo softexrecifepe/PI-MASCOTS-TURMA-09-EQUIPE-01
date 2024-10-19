@@ -6,7 +6,7 @@ import { SideBar } from "../components/telasNavegacao/sidebar/sidebar";
 export default function Login() {
   return (
     <>
-      <SideBar />
+      <SideBar /> 
       <Header />
       <div className="pt-20 pl-20 pr-10">
         <h1>Login</h1>

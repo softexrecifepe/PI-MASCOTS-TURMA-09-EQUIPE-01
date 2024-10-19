@@ -13,10 +13,10 @@ export function Header() {
           </Link>
 
           <div
-            className={`text-darkCyan items-center flex justify-between space-x-10`}
+            className={`text-darkCyan items-center flex justify-between space-x-10 `}
           >
-            <Link href={"#"}>Suporte</Link>
-            <Link href={"#"} className="flex items-center">
+            <Link href={"#"} className={"transition duration-300 transform hover:scale-110"}>Suporte</Link>
+            <Link href={"#"} className="flex items-center transition duration-300 transform hover:scale-110">
               <i className="fa fa-user mr-1 text-lg" aria-hidden="true"></i>
               UserTeste
             </Link>
