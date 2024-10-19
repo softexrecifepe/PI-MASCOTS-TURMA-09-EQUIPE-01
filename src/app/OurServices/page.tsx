@@ -1,4 +1,4 @@
-import { AboutPetSys } from "../components/homePage/aboutPetSys";
+import { AboutMascots } from "../components/homePage/AboutMascots";
 import { FooterHomePage } from "../components/homePage/footerHomePage";
 import { GeneralHeader } from "../components/ui/headers/generalHeader";
 
@@ -7,7 +7,7 @@ export default function OurServices() {
     <>
       {/* depois precisa ajustar o conteúdo da página */}
       <GeneralHeader></GeneralHeader>
-      <AboutPetSys></AboutPetSys>
+      <AboutMascots></AboutMascots>
       <FooterHomePage></FooterHomePage>
     </>
   );

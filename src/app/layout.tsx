@@ -55,7 +55,7 @@ const quickSandBold = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "PetSys",
+  title: "Mascot's",
   description: "Sistema para Gerenciamento de Clínicas veterinárias",
 };
 

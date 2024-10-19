@@ -21,7 +21,7 @@ export function HeaderHomePage() {
         <span
           className={`text-white font-bold text-2xl p-2 border border-white roboto-regular`}
         >
-          <Link href={"/"}>PetSys</Link>
+          <Link href={"/"}>Mascot&#39;s</Link>
         </span>
       </div>
       <div className="flex flex-row gap-4 content-center items-center">
@@ -50,7 +50,7 @@ export function HeaderHomePage() {
         </nav>
         <div>
           <Link href={"/Login"}>
-            <BtnWhiteBg content="Acessar o PetSys" />
+            <BtnWhiteBg content="Acessar o Mascot's" />
           </Link>
         </div>
       </div>

@@ -7,7 +7,7 @@ export function FooterHomePage() {
         <div className="flex flex-row gap-10 justify-center items-center h-52 ">
           <div>
             <span className="text-white roboto-regular border border-white p-3 text-lg font-bold ml-10">
-              <Link href={"/"}>PetSys</Link>
+              <Link href={"/"}>Mascot&#39;s</Link>
             </span>
           </div>
           <div>

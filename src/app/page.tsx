@@ -1,4 +1,4 @@
-import { AboutPetSys } from "./components/homePage/aboutPetSys";
+import { AboutMascots } from "./components/homePage/AboutMascots";
 import { BgHomePage } from "./components/homePage/bgHomePage";
 import { Devs } from "./components/homePage/devs";
 import { FooterHomePage } from "./components/homePage/footerHomePage";
@@ -16,7 +16,7 @@ export default function Home() {
         subtitle="Um sistema para a gestão cotidiana do seu negócio"
       />
       <ServicesInfo />
-      <AboutPetSys />
+      <AboutMascots />
       <Devs />
       <FooterHomePage />
     </>
