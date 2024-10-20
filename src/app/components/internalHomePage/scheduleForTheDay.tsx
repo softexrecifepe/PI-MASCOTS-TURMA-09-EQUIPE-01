@@ -1,20 +1,23 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import { CardTypeSchedule } from "@/app/components/ui/card/cardTypeSchedule";
 
-export function Schedule(){
-  const consultasDia = [
-    {
-      icon: "fa-solid fa-calendar text-base",
-      nome: "Doguinho",
-      schedule: "12h",
-      hoverColor: "tex-blue"
-    },
-    {
-      icon: "fa-solid fa-calendar text-base",
-      nome: "Gatinho",
-      schedule: "13h",
-      hoverColor: "tex-blue"
-    },
-  ]
+interface consultasDias {
+  icon: string;
+  name: string;
+  schedule: string;
+}
+
+export function Schedule() {
+  const [consultasDia, setconsultasDia] = useState<consultasDias[]>([]);
+
+  useEffect(() => {
+    fetch("/components/data.json")
+      .then((response) => response.json())
+      .then((data) => setconsultasDia(data))
+      .catch((error) => console.error("Erro ao carregar dados:", error));
+  }, []);
 
   return (
     <>
@@ -24,22 +27,23 @@ export function Schedule(){
             className="pl-4 pr-4 fa-solid fa-calendar text-lapisLazuli text-5xl"
             aria-hidden="true"
           ></i>
-          <a href="#" className="flex-1 roboto-light text-2xl flex items-center">
+          <a
+            href="#"
+            className="flex-1 roboto-light text-2xl flex items-center"
+          >
             Agenda do Dia
           </a>
         </div>
 
         <div className="flex flex-row gap-4 mb-20">
-          {/* criar um for para renderizar o grid */}
-        {consultasDia.map((feat, index) => (
-          <CardTypeSchedule
-            key={index}
-            icon={feat.icon} 
-            name={feat.nome}
-            schedule ={feat.schedule }
-            hoverColor={feat.hoverColor}
-          />
-        ))}
+          {consultasDia.map((feat, index) => (
+            <CardTypeSchedule
+              key={index}
+              icon={feat.icon}
+              name={feat.name}
+              schedule={feat.schedule}
+            />
+          ))}
         </div>
       </div>
     </>
