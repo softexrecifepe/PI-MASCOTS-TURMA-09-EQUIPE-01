@@ -2,22 +2,20 @@ import { Appointments } from "@/app/components/internalHomePage/appointments";
 import { Schedule } from "@/app/components/internalHomePage/scheduleForTheDay";
 import { Header } from "@/app/components/navigationScreen/header/header";
 import { SideBar } from "@/app/components/navigationScreen/sidebar/sidebar";
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
 import Patient from "../components/internalHomePage/patient";
 import LogOutbutton from "../components/LogOutButton";
 
 async function Page() {
-  const session = await getServerSession();
+  // const session = await getServerSession();
 
-  if (!session) {
-    redirect("/");
-  }
+  // if (!session) {
+  //   redirect("/Dashboard");
+  // }
   return (
     <div>
       <Header />
       <SideBar />
-      <div>Olá{session?.user?.name}</div>
+      {/* <div>Olá{session?.user?.name}</div> */}
       <main>
         <div className="pt-24 pl-32">
           <h1 className="pb-12 text-3xl roboto-light">Painel Inicial</h1>

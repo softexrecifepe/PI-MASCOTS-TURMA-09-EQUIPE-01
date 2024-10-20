@@ -9,7 +9,7 @@ import { ServicesInfo } from "./components/homePage/servicesInfo";
 export default function Home() {
   return (
     <>
-      <HeaderHomePage bgColor="bg-black" />
+      <HeaderHomePage />
       <BgHomePage />
       <Info
         title=" é o melhor sistema veterinário para clínicas, hospitais e petshops"
