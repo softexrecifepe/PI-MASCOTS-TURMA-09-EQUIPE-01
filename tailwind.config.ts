@@ -72,6 +72,19 @@ const config: Config = {
       },
     },
   },
+  daisyui: {
+    themes: [
+      {
+        mytheme: {
+          primary: "#2894E2",
+          "base-100": "#FFFFFF", // Cor de fundo clara
+          "base-200": "#F9FAFB", // Cor clara para componentes
+          // Defina outras cores conforme necessário
+        },
+      },
+      "light", // Tema claro padrão
+    ],
+  },
   plugins: [require("daisyui")],
 };
 export default config;
