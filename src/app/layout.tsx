@@ -65,7 +65,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="pt-br">
       <body
         className={`${robotoThin.variable} ${robotoLigth.variable} ${robotoRegular.variable} 
         ${robotoMedium.variable} ${robotoBold.variable} ${quickSandLight.variable}

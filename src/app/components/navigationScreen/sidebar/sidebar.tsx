@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export function SideBar() {
   const iconsSideBar = [
     {
@@ -6,7 +8,8 @@ export function SideBar() {
     },
     {
       icon: "fa-solid fa-calendar",
-      hoverColor: "hover:text-lapisLazuli"
+      hoverColor: "hover:text-lapisLazuli",
+      link: "/Schedule"
     },
     {
       icon: "fa-regular fa-folder-open",
@@ -38,8 +41,8 @@ export function SideBar() {
     }
   ]
 
-  return (
-    <section className="flex flex-col fixed w-20 h-screen border-r border-r-darkCyan">
+	return (
+    <aside className="fixed left-0 top-0 w-20 h-screen bg-white border-r border-r-darkCyan z-40">
       <ul className="text-2xl flex flex-col gap-2 mt-20 items-center justify-center flex-grow text-darkCyan space-y-4">
         {iconsSideBar.map((feat, index) => (
           <li key={index} className="transition duration-300 transform hover:scale-110">
@@ -47,6 +50,6 @@ export function SideBar() {
           </li>
         ))}
       </ul>
-    </section>
+    </aside>
   );
 }

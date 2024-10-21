@@ -1,0 +1,56 @@
+[
+  {
+    "icon": "fa-solid fa-calendar text-base",
+    "name": "Doguinho",
+    "schedule": "12h",
+    "description": "Doguinho está dodói, precisa de uma avaliação completa.",
+    "recordNumber": "PRT-00123",
+    "admissionDate": "2024-10-10",
+    "exitDate": "2024-10-12"
+  },
+  {
+    "icon": "fa-solid fa-calendar text-base",
+    "name": "Gatinho",
+    "schedule": "13h",
+    "description": "Consulta de rotina e vacinação.",
+    "recordNumber": "PRT-00124",
+    "admissionDate": "2024-10-11",
+    "exitDate": "2024-10-11"
+  },
+  {
+    "icon": "fa-solid fa-calendar text-base",
+    "name": "Bolinha",
+    "schedule": "15h",
+    "description": "Consulta para verificar o peso e dieta.",
+    "recordNumber": "PRT-00125",
+    "admissionDate": "2024-10-12",
+    "exitDate": "2024-10-12"
+  },
+  {
+    "icon": "fa-solid fa-calendar text-base",
+    "name": "Lulu",
+    "schedule": "16h",
+    "description": "Exames de sangue para check-up geral.",
+    "recordNumber": "PRT-00126",
+    "admissionDate": "2024-10-12",
+    "exitDate": "2024-10-13"
+  },
+  {
+    "icon": "fa-solid fa-calendar text-base",
+    "name": "Totó",
+    "schedule": "17h",
+    "description": "Consulta de retorno para acompanhamento da cirurgia.",
+    "recordNumber": "PRT-00127",
+    "admissionDate": "2024-10-13",
+    "exitDate": "2024-10-14"
+  },
+  {
+    "icon": "fa-solid fa-calendar text-base",
+    "name": "Pipoca",
+    "schedule": "14h",
+    "description": "Avaliação de comportamento devido a mudanças recentes.",
+    "recordNumber": "PRT-00128",
+    "admissionDate": "2024-10-13",
+    "exitDate": "2024-10-14"
+  }
+]
