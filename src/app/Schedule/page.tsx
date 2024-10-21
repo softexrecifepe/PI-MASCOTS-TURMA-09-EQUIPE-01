@@ -1,11 +1,12 @@
 import Link from 'next/link';
-import { FaArrowLeft, FaArrowRight, FaCalendarAlt } from 'react-icons/fa';
 import { Header } from '../components/navigationScreen/header/header';
 import { SideBar } from '../components/navigationScreen/sidebar/sidebar';
 
-const Agenda = () => {
+export default function Schedule(){
   const currentDate = new Date().toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' });
 
+  return(
+    <>
     <div className="flex h-screen">
       <SideBar />
       <div className="flex-1 flex flex-col">
@@ -14,12 +15,12 @@ const Agenda = () => {
         <main className="flex-1 overflow-x-hidden overflow-y-auto  p-4 ml-20 mt-16">
           <div className="container mx-auto">
             <Link href="/dashboard" className="flex items-center text-blue-600 hover:underline mb-4">
-              <FaArrowLeft className="mr-2 text-gray-900" />
+            <i className="fa-solid fa-arrow-left"></i>
               <span className='text-green-600'>Voltar para a dashboard</span>
             </Link>
 
             <div className="flex items-center mb-6">
-              <FaCalendarAlt className="text-3xl text-blue-600 mr-2" />
+              <i className='fa-solid fa-calendar text-3xl text-blue-600 mr-2'></i>
               <h1 className="text-2xl font-bold">Agenda Diária</h1>
             </div>
 
@@ -30,9 +31,9 @@ const Agenda = () => {
                 <button className="bg-gray-300 text-gray-700 px-4 py-2 rounded">Ano</button>
               </div>
               <div className="flex items-center space-x-4">
-                <button><FaArrowLeft /></button>
+                <button><i className="fa-solid fa-arrow-left"></i></button>
                 <span>{currentDate}</span>
-                <button><FaArrowRight /></button>
+                <button><i className="fa-solid fa-arrow-right"></i></button>
               </div>
             </div>
 
@@ -41,7 +42,7 @@ const Agenda = () => {
                 <thead>
                   <tr className="bg-gray-50">
                     <th className="border-b p-2 text-left">Usuário 1</th>
-                    <th className="border-b p-2 text-left text-sm text-gray-600 text-green-600">Veterinário</th>
+                    <th className="border-b p-2 text-left text-sm text-darkCyan">Veterinário</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -77,6 +78,6 @@ const Agenda = () => {
         </main>
       </div>
     </div>
-}
-
-export default Agenda;
+    </>
+  )
+};
