@@ -9,7 +9,7 @@ async function Page() {
   // const session = await getServerSession();
 
   // if (!session) {
-  //   redirect("/Dashboard");
+  //   redirect("/dashboard");
   // }
   return (
     <div>

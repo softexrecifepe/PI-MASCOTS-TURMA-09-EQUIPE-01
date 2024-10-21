@@ -20,7 +20,7 @@ const LoginForm = () => {
     };
     signIn("credentials", {
       ...data,
-      callbackUrl: "/Dashboard",
+      callbackUrl: "/dashboard",
     });
   }
 
