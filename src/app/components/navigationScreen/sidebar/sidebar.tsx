@@ -8,7 +8,8 @@ export function SideBar() {
     },
     {
       icon: "fa-solid fa-calendar",
-      hoverColor: "hover:text-lapisLazuli"
+      hoverColor: "hover:text-lapisLazuli",
+      link: "/Schedule"
     },
     {
       icon: "fa-regular fa-folder-open",
