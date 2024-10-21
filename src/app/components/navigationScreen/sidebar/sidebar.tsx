@@ -10,7 +10,7 @@ export function SideBar() {
     {
       icon: "fa-solid fa-calendar",
       hoverColor: "hover:text-lapisLazuli",
-      link: "/agenda"
+      link: "/Schedule"
     },
     {
       icon: "fa-regular fa-folder-open",
