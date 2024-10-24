@@ -1,19 +1,11 @@
-import Link from "next/link";
-import { BtnColorBg } from "../components/ui/btn/btnColorBg";
-import { Header } from "../components/navigationScreen/header/header";
-import { SideBar } from "../components/navigationScreen/sidebar/sidebar";
+import LoginForm from "../components/LoginForm";
 
-export default function Login() {
+export default function Home() {
   return (
-    <>
-      <SideBar /> 
-      <Header />
-      <div className="pt-20 pl-20 pr-10">
-        <h1>Login</h1>
-        <Link href={"/Login/ForgetPassword"}>
-          <BtnColorBg content="Recuperar Senha" />
-        </Link>
+    <main>
+      <div className="h-screen flex justify-center items-center bg-slate-600 px-5">
+        <LoginForm />
       </div>
-    </>
+    </main>
   );
 }
