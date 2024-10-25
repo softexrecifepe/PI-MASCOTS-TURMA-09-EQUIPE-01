@@ -1,13 +1,13 @@
 import { Header } from "../components/navigationScreen/header/header";
 import { SideBar } from "../components/navigationScreen/sidebar/sidebar";
 
-export default function Registration() {
+export default function MedicalAppointment() {
   return (
     <>
-      <Header />
       <SideBar />
+      <Header />
       <div>
-        <h1>Você está em Cadastros</h1>;
+        <h1>Você está em Atendimento - consultas</h1>;
       </div>
     </>
   );
