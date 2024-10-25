@@ -1,5 +1,4 @@
 "use client";
-
 import { BtnWhiteBg } from "../ui/btn/btnWhiteBg";
 import { UseScrollPosition } from "@/app/hooks/useScrollPosition";
 import Link from "next/link";
@@ -49,7 +48,7 @@ export function HeaderHomePage() {
           </ul>
         </nav>
         <div>
-          <Link href={"/Login"}>
+          <Link href="/login">
             <BtnWhiteBg content="Acessar o Mascot's" />
           </Link>
         </div>

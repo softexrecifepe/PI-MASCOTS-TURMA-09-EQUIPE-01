@@ -24,7 +24,7 @@ export function CardTypeSchedule({ icon, name, schedule }: CardProp) {
           <p>{schedule}</p>
         </div>
         <div>
-          <Link href={""}>
+          <Link href={"/schedule"}>
             <span className="text-blue-600 text-sm">Ver mais informações</span>
           </Link>
         </div>
