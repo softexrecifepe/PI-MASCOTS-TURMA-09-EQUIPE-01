@@ -25,6 +25,7 @@ const config: Config = {
           dark: "#588989",
         },
         lihtBlue: {
+          extralight: "#D9E8E8",
           light: "#A6C9C9",
           DEFAULT: "#97BFBF",
           dark: "#8DB9B9",
