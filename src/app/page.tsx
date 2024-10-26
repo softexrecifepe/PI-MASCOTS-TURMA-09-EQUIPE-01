@@ -1,3 +1,5 @@
+"use client"
+import { useState } from "react";
 import { AboutMascots } from "./components/homePage/AboutMascots";
 import { BgHomePage } from "./components/homePage/bgHomePage";
 import { Devs } from "./components/homePage/devs";
