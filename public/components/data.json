@@ -6,7 +6,13 @@
     "description": "Doguinho está dodói, precisa de uma avaliação completa.",
     "recordNumber": "PRT-00123",
     "admissionDate": "2024-10-10",
-    "exitDate": "2024-10-12"
+    "exitDate": "2024-10-12",
+    "weight": "6kg",
+    "fisicalDescription": "preto e branco",
+    "specie": "cachorro",
+    "vet": "Dra. Camilla Barros",
+    "vetSpeciality": "Veterinária Geral",
+    "appointmentStatus": "Aguardando"
   },
   {
     "icon": "fa-solid fa-calendar text-base",
@@ -15,7 +21,13 @@
     "description": "Consulta de rotina e vacinação.",
     "recordNumber": "PRT-00124",
     "admissionDate": "2024-10-11",
-    "exitDate": "2024-10-11"
+    "exitDate": "2024-10-11",
+    "weight": "5kg",
+    "fisicalDescription": "laranja com listras brancas",
+    "specie": "gato",
+    "vet": "Dra. Izabelle Alves",
+    "vetSpeciality": "Veterinária Geral",
+    "appointmentStatus": "Em atendimento"
   },
   {
     "icon": "fa-solid fa-calendar text-base",
@@ -24,7 +36,13 @@
     "description": "Consulta para verificar o peso e dieta.",
     "recordNumber": "PRT-00125",
     "admissionDate": "2024-10-12",
-    "exitDate": "2024-10-12"
+    "exitDate": "2024-10-12",
+    "weight": "10kg",
+    "fisicalDescription": "caramelo",
+    "specie": "cachorro",
+    "vet": "Dr. Lucas Galvão",
+    "vetSpeciality": "Nutrição Veterinária",
+    "appointmentStatus": "Aguardando"
   },
   {
     "icon": "fa-solid fa-calendar text-base",
@@ -33,7 +51,13 @@
     "description": "Exames de sangue para check-up geral.",
     "recordNumber": "PRT-00126",
     "admissionDate": "2024-10-12",
-    "exitDate": "2024-10-13"
+    "exitDate": "2024-10-13",
+    "weight": "6kg",
+    "fisicalDescription": "branca",
+    "specie": "cachorro",
+    "vet": "Dr. Augusto Dantas",
+    "vetSpeciality": "Enfermaria Veterinária",
+    "appointmentStatus": "Aguardando"
   },
   {
     "icon": "fa-solid fa-calendar text-base",
@@ -42,7 +66,13 @@
     "description": "Consulta de retorno para acompanhamento da cirurgia.",
     "recordNumber": "PRT-00127",
     "admissionDate": "2024-10-13",
-    "exitDate": "2024-10-14"
+    "exitDate": "2024-10-14",
+    "weight": "6kg",
+    "fisicalDescription": "preto e branco",
+    "specie": "gato",
+    "vet": "Dr. Lauro",
+    "vetSpeciality": "Cirurgia Veterinária",
+    "appointmentStatus": "Em atendimento"
   },
   {
     "icon": "fa-solid fa-calendar text-base",
@@ -51,6 +81,12 @@
     "description": "Avaliação de comportamento devido a mudanças recentes.",
     "recordNumber": "PRT-00128",
     "admissionDate": "2024-10-13",
-    "exitDate": "2024-10-14"
+    "exitDate": "2024-10-14",
+    "weight": "500g",
+    "fisicalDescription": "amarelo e cinza",
+    "specie": "calopsita",
+    "vet": "Dra. Camilla Barros",
+    "vetSpeciality": "Veterinária Geral",
+    "appointmentStatus": "Aguardando"
   }
 ]

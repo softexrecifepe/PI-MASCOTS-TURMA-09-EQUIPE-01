@@ -20,16 +20,12 @@ export default function MedicalAppointment() {
               sectionTitle="Atendimentos"
             ></SectionTitle>
             <FormAppointment />
-            <div className="mt-10">
-              <h2 className="text-2xl roboto-medium">
-                Pacientes para atendimento &#x00028;0&#x00029;
-              </h2>
-            </div>
             <div className="mt-8">
               <TableOne
                 tHeadOne="Nome do Paciente"
-                tHeadTwo="Veterinário Responsável"
-                tHeadThree="Status do Atendimento"
+                tHeadTwo="Motivo do Atendimento"
+                tHeadThree="Veterinário Responsável"
+                tHeadFour="Status do atendimento"
               />
             </div>
           </main>
