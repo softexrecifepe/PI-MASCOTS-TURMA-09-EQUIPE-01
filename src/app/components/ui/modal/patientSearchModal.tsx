@@ -1,5 +1,22 @@
 import { fetchPatients } from "@/app/api/getPatients";
+import localData from "../../../../../public/components/data.json";
 import { useState, useEffect } from "react";
+
+// interface PatientsJson {
+//   icon: string;
+//   name: string;
+//   schedule: string;
+//   description: string;
+//   recordNumber: string;
+//   admissionDate: string;
+//   exitDate: string;
+//   weight: string;
+//   fisicalDescription: string;
+//   specie: string;
+//   vet: string;
+//   vetSpeciality: string;
+//   appointmentStatus: string;
+// }
 
 interface Patient {
   pet_id: number;
@@ -31,8 +48,23 @@ export function PatientSearcModal({
     const loadPatients = async () => {
       try {
         const data = await fetchPatients();
+
+        const localDataMapped = localData.map((item) => ({
+          pet_id: parseInt(item.recordNumber),
+          pet_name: item.name,
+          species: item.specie,
+          gender: item.gender,
+          age: "",
+          breed: item.breed,
+          weight: item.weight,
+          physical_characteristics: item.fisicalDescription,
+          owners_cpf: item.owners_cpf,
+        }));
+
+        const combinedData = [...data, ...localDataMapped];
+
         console.log("Dados da API:", data);
-        setPatients(data);
+        setPatients(combinedData);
       } catch (error) {
         console.error("Erro ao carregar os dados dos pacientes: ", error);
       }
@@ -97,7 +129,7 @@ export function PatientSearcModal({
                       {patient.owners_cpf} - {patient.species}
                     </span>
                     <span className="text-xs text-gray-600">
-                      {patient.breed}
+                      {`${patient.breed}, ${patient.weight}, ${patient.physical_characteristics}`}
                     </span>
                   </div>
                 </li>
