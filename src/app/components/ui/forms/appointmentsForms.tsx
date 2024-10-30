@@ -1,68 +1,93 @@
 import { BtnColorBg } from "../btn/btnColorBg";
+import { useState } from "react";
+import { PatientSearcModal } from "../modal/patientSearchModal";
 
 export function FormAppointment() {
+  const [patientNameOrPront, setPatientNameOrPront] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
+  const handlePatientSearch = (name: string) => {
+    setPatientNameOrPront(name);
+    closeModal();
+  };
+
   const vets = [
-    { vet: "Camilla" },
-    { vet: "Izabelle" },
-    { vet: "Lucas" },
-    { vet: "Lauro" },
-    { vet: "Augusto" },
+    { vet: "Dra. Camilla Barros", vetSpeciality: "Veterinária Geral" },
+    { vet: "Dra. Izabelle Alves", vetSpeciality: "Veterinária Geral" },
+    { vet: "Dr. Lucas Galvão", vetSpeciality: "Nutrição Veterinária" },
+    { vet: "Dr. Lauro", vetSpeciality: "Cirurgia Veterinária" },
+    { vet: "Dr. Augusto Dantas", vetSpeciality: "Enfermaria Veterinária" },
   ];
   return (
     <>
-      <form action="POST" className="flex flex-col gap-8">
-        <div className="grid grid-flow-row-dense grid-cols-3">
-          <div className="w-72">
-            <div className="flex flex-col gap-3">
-              <label htmlFor="" className="roboto-medium">
-                Nº de prontuário
-              </label>
-              <div className="flex flex-row gap-3">
-                <input
-                  type="text"
-                  className="border rounded-lg p-1"
-                  placeholder="000000"
-                />
-                <div className=" justify-center items-center content-center">
-                  <i className="fa-solid fa-magnifying-glass text-sm text-white bg-myrtleGreen p-2 rounded-lg"></i>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col-span-2">
-            <div className="flex flex-col gap-3">
-              <label htmlFor="" className="roboto-medium">
-                Nome do Paciente
-              </label>
+      <form className="flex flex-col gap-8 border shadow-md py-5 px-5 rounded-lg">
+        <div className="flex flex-row gap-10">
+          <div className="flex flex-col gap-3">
+            <label htmlFor="" className="roboto-medium">
+              Nº de prontuário ou nome do paciente
+            </label>
+            <div className="flex flex-row gap-3">
               <input
                 type="text"
-                className="border rounded-lg p-1"
-                placeholder="ex: Lorde"
+                value={patientNameOrPront}
+                onChange={(e) => setPatientNameOrPront(e.target.value)}
+                className="border rounded-lg text-sm p-1 w-96 roboto-light"
+                placeholder="PRT-00000 ou nome do paciente"
               />
+
+              <button
+                type="button"
+                onClick={openModal}
+                className="justify-center items-center content-center"
+              >
+                <i className="fa-solid fa-magnifying-glass text-sm text-white bg-myrtleGreen p-2 rounded-lg"></i>
+              </button>
             </div>
           </div>
+          <div className="flex flex-col gap-3">
+            <label htmlFor="" className="roboto-medium">
+              Motivo do Atendimento
+            </label>
+            <input
+              type="text"
+              placeholder="Descreva o motivo do atendimento"
+              className="border rounded-lg text-sm p-1 w-96 roboto-light"
+            />
+          </div>
         </div>
-        <div className="grid grid-cols-3">
-          <div className="col-span-3">
-            <div className="flex flex-col gap-3">
-              <label htmlFor="" className="roboto-medium">
-                Veterinário
-              </label>
-              <div className="flex flex-row gap-3">
-                <select className="p-2 rounded-lg bg-white border">
-                  <option disabled selected>
-                    Selecione um veterinário
+        <div className="flex flex-row">
+          <div className="flex flex-col gap-3">
+            <label htmlFor="" className="roboto-medium">
+              Veterinário
+            </label>
+            <div className="flex flex-row gap-3">
+              <select
+                className="p-2 rounded-lg bg-white border text-sm"
+                defaultValue=""
+              >
+                <option disabled value={""}>
+                  Selecione um veterinário
+                </option>
+                {vets.map((item, index) => (
+                  <option key={index} value={item.vet}>
+                    {item.vet} - {item.vetSpeciality}
                   </option>
-                  {vets.map((item, index) => (
-                    <option key={index}>{item.vet}</option>
-                  ))}
-                </select>
-                <BtnColorBg content="Atribuir Atendimento" />
-              </div>
+                ))}
+              </select>
+              <BtnColorBg content="Atribuir Atendimento" />
             </div>
           </div>
         </div>
       </form>
+      {isModalOpen && (
+        <PatientSearcModal
+          onSearch={handlePatientSearch}
+          onClose={closeModal}
+        />
+      )}
     </>
   );
 }
