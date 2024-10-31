@@ -1,7 +1,47 @@
 // import { BtnColorBg } from "../btn/btnColorBg";
-import { useState } from "react";
-import { PatientSearcModal } from "../modal/patientSearchModal";
+import { useState, useEffect } from "react";
+// import { PatientSearcModal } from "../modal/patientSearchModal";
 import { useAppointmentQueue } from "@/app/contexts/appointmentQueueContext";
+
+type PatientInfo = {
+  owners_cpf: string;
+  species: string;
+  breed: string;
+  weight: string;
+  physical_characteristics: string;
+};
+
+interface PetData {
+  recordNumber: string; // ou number, dependendo do formato no JSON
+  name: string;
+  specie: string;
+  gender: string;
+  breed: string;
+  weight: string;
+  fisicalDescription: string;
+  owners_cpf: string;
+}
+
+interface Patient {
+  pet_id: number;
+  pet_name: string;
+  species: string;
+  gender: string;
+  age: string;
+  breed: string;
+  weight: string;
+  physical_characteristics: string;
+  owners_cpf: string;
+}
+
+type Atendimento = {
+  patientNameOrPront: string;
+  patientInfo: PatientInfo;
+  appointmentReason: string;
+  vet: string;
+  vetSpeciality: string;
+  status: "Próximo" | "Aguardando"; // Status do atendimento
+};
 
 export function FormAppointment() {
   // criando estados
@@ -13,30 +53,68 @@ export function FormAppointment() {
     weight: "",
     physical_characteristics: "",
   });
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  // const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedVet, setSelectedVet] = useState("");
   const [appointmentReason, setAppointmentReason] = useState("");
   const { addAppointment } = useAppointmentQueue();
+  const [patients, setPatients] = useState<Patient[]>([]);
+  const [filteredPatients, setFilteredPatients] = useState<Patient[]>([]);
 
-  // para o modal
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  // // para o modal
+  // const openModal = () => setIsModalOpen(true);
+  // const closeModal = () => setIsModalOpen(false);
 
   // para a busca de pacientes no modal
-  const handlePatientSearch = (
-    name: string,
-    additionalInfo: {
-      owners_cpf: string;
-      species: string;
-      breed: string;
-      weight: string;
-      physical_characteristics: string;
+  // const handlePatientSearch = (
+  //   name: string,
+  //   additionalInfo: {
+  //     owners_cpf: string;
+  //     species: string;
+  //     breed: string;
+  //     weight: string;
+  //     physical_characteristics: string;
+  //   }
+  // ) => {
+  //   setPatientNameOrPront(name);
+  //   setPatientInfo(additionalInfo);
+  //   // closeModal();
+  // };
+
+  // Fetch patients data
+  useEffect(() => {
+    fetch("/components/data.json")
+      .then((response) => response.json())
+      .then((data) => {
+        const localDataMapped = data.map((item: PetData) => ({
+          pet_id: parseInt(item.recordNumber),
+          pet_name: item.name,
+          species: item.specie,
+          gender: item.gender,
+          age: "",
+          breed: item.breed,
+          weight: item.weight,
+          physical_characteristics: item.fisicalDescription,
+          owners_cpf: item.owners_cpf,
+        }));
+        setPatients(localDataMapped);
+      })
+      .catch((error) => console.error("Erro ao carregar dados:", error));
+  }, []);
+
+  // Filtra pacientes com base no termo de busca
+  useEffect(() => {
+    if (patientNameOrPront.trim() === "") {
+      setFilteredPatients([]);
+    } else {
+      const lowercasedTerm = patientNameOrPront.toLowerCase();
+      const filtered = patients.filter(
+        (patient) =>
+          patient.pet_name.toLowerCase().includes(lowercasedTerm) ||
+          patient.owners_cpf.toLowerCase().includes(lowercasedTerm)
+      );
+      setFilteredPatients(filtered);
     }
-  ) => {
-    setPatientNameOrPront(name);
-    setPatientInfo(additionalInfo);
-    closeModal();
-  };
+  }, [patientNameOrPront, patients]);
 
   // lista de vets
   const vets = [
@@ -49,14 +127,27 @@ export function FormAppointment() {
 
   const selectedVetInfo = vets.find((vet) => vet.vet === selectedVet);
 
+  const selectPatient = (patient: Patient) => {
+    setPatientNameOrPront(patient.pet_name); // Define o nome do paciente no campo de entrada
+    setPatientInfo({
+      owners_cpf: patient.owners_cpf,
+      species: patient.species,
+      breed: patient.breed,
+      weight: patient.weight,
+      physical_characteristics: patient.physical_characteristics,
+    });
+    setFilteredPatients([]); // Limpa a lista filtrada
+  };
+
   // adicionar a fila
   const handleAddToqueue = () => {
-    const atendimentos = {
+    const atendimentos: Atendimento = {
       patientNameOrPront,
       patientInfo,
       appointmentReason,
       vet: selectedVet,
       vetSpeciality: selectedVetInfo?.vetSpeciality || "",
+      status: "Aguardando",
     };
 
     // para formar a fila
@@ -90,14 +181,37 @@ export function FormAppointment() {
                 className="border rounded-lg text-sm p-1 w-96 roboto-light"
                 placeholder="Digite o cpf ou nome do paciente aqui"
               />
+              {filteredPatients.length > 0 && (
+                <ul className="absolute bg-white border border-gray-300 w-96 mt-1 rounded z-10">
+                  {filteredPatients.map((patient) => (
+                    <li
+                      key={patient.owners_cpf}
+                      className="p-2 cursor-pointer hover:bg-gray-100 border-b"
+                      onClick={() => selectPatient(patient)}
+                    >
+                      <div className="flex flex-col">
+                        <span className="font-semibold">
+                          {patient.pet_name}
+                        </span>
+                        <span className="text-xs text-gray-600">
+                          {patient.owners_cpf} - {patient.species}
+                        </span>
+                        <span className="text-xs text-gray-600">
+                          {`${patient.breed}, ${patient.weight}, ${patient.physical_characteristics}`}
+                        </span>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              )}
 
-              <button
+              {/* <button
                 type="button"
                 onClick={openModal}
                 className="justify-center items-center content-center"
               >
                 <i className="fa-solid fa-magnifying-glass text-sm text-white bg-myrtleGreen p-2 rounded-lg"></i>
-              </button>
+              </button> */}
             </div>
           </div>
           <div className="flex flex-col gap-3">
@@ -144,12 +258,12 @@ export function FormAppointment() {
           </div>
         </div>
       </form>
-      {isModalOpen && (
+      {/* {isModalOpen && (
         <PatientSearcModal
           onSearch={handlePatientSearch}
           onClose={closeModal}
         />
-      )}
+      )} */}
     </>
   );
 }

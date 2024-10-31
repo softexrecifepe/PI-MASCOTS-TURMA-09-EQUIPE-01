@@ -5,8 +5,11 @@ export const fetchPatients = async () => {
       throw new Error("Erro ao buscar dados");
     }
     const data = await response.json();
+    // console.log(data);
     return data;
   } catch (error) {
     throw error;
   }
 };
+
+// fetchPatients();

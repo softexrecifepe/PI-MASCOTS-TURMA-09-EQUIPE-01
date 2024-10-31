@@ -11,16 +11,19 @@ type PatientInfo = {
 };
 
 type Atendimento = {
+  id: string;
   patientNameOrPront: string;
   patientInfo: PatientInfo;
   appointmentReason: string;
   vet: string;
-  vetSpeciality: string; // Adiciona a especialidade do veterinário
+  vetSpeciality: string;
+  status: "Próximo" | "Aguardando"; // Status do atendimento
 };
 
 type AppointmentQueueContextType = {
   queueAppointments: Atendimento[]; // Fila de atendimentos
-  addAppointment: (atendimento: Atendimento) => void; // Função para adicionar atendimentos
+  addAppointment: (atendimento: Omit<Atendimento, "id">) => void; // Função para adicionar atendimentos
+  removeAppointment: (id: string) => void;
 };
 
 const AppointmentQueueContext = createContext<
@@ -36,14 +39,32 @@ export function AppointmentQueueProvider({
   const [queueAppointments, setQueueAppointments] = useState<Atendimento[]>([]);
 
   // criando uma função para adicionar a fila
-  const addAppointment = (atendimento: Atendimento) => {
-    setQueueAppointments((prev) => [...prev, atendimento]);
+  const addAppointment = (atendimento: Omit<Atendimento, "id">) => {
+    const newAppointment: Atendimento = {
+      ...atendimento,
+      id: Date.now().toString(), // Gera um ID único
+      status: queueAppointments.length === 0 ? "Próximo" : "Aguardando",
+    };
+    setQueueAppointments((prev) => [...prev, newAppointment]);
+  };
+
+  const removeAppointment = (id: string) => {
+    setQueueAppointments((prev) => {
+      const updatedQueue = prev.filter((appointment) => appointment.id !== id);
+
+      // Atualiza o status do primeiro item restante na fila para "Próximo"
+      if (updatedQueue.length > 0) {
+        updatedQueue[0].status = "Próximo";
+      }
+
+      return updatedQueue;
+    });
   };
 
   return (
     // provedor do contexto
     <AppointmentQueueContext.Provider
-      value={{ queueAppointments, addAppointment }}
+      value={{ queueAppointments, addAppointment, removeAppointment }}
     >
       {children}
     </AppointmentQueueContext.Provider>
