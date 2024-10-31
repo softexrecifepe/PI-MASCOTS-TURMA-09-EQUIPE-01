@@ -31,7 +31,16 @@ interface Patient {
 }
 
 type PatientSearchModalProps = {
-  onSearch: (searchTerm: string) => void;
+  onSearch: (
+    name: string,
+    additionalInfo: {
+      owners_cpf: string;
+      species: string;
+      breed: string;
+      weight: string;
+      physical_characteristics: string;
+    }
+  ) => void;
   onClose: () => void;
 };
 
@@ -95,8 +104,17 @@ export function PatientSearcModal({
     }
   }, [searchTerm, patients]);
 
-  const selectPatient = (name: string) => {
-    onSearch(name);
+  const selectPatient = (
+    name: string,
+    additionalInfo: {
+      owners_cpf: string;
+      species: string;
+      breed: string;
+      weight: string;
+      physical_characteristics: string;
+    }
+  ) => {
+    onSearch(name, additionalInfo);
     onClose();
   };
 
@@ -121,7 +139,16 @@ export function PatientSearcModal({
                 <li
                   key={patient.owners_cpf}
                   className="p-2 cursor-pointer hover:bg-gray-100 border-b"
-                  onClick={() => selectPatient(patient.pet_name)}
+                  onClick={() =>
+                    selectPatient(patient.pet_name, {
+                      owners_cpf: patient.owners_cpf,
+                      species: patient.species,
+                      breed: patient.breed,
+                      weight: patient.weight,
+                      physical_characteristics:
+                        patient.physical_characteristics,
+                    })
+                  }
                 >
                   <div className="flex flex-col">
                     <span className="font-semibold">{patient.pet_name}</span>
