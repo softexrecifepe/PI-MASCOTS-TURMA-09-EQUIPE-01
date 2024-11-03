@@ -1,23 +1,26 @@
 "use client";
 
-import { useState, useEffect } from "react";
+// import { useState, useEffect } from "react";
 import { CardTypeAppointments } from "../ui/card/cardTypeAppointments";
+// import { useAppointmentQueue } from "@/app/contexts/appointmentQueueContext";
 
-interface Appointment {
-  name: string;
-  description: string;
-  recordNumber: string;
-}
+// interface Appointment {
+//   name: string;
+//   description: string;
+//   recordNumber: string;
+// }
 
 export function Appointments() {
-  const [appointments, setAppointments] = useState<Appointment[]>([]);
+  // const [appointments, setAppointments] = useState<Appointment[]>([]);
 
-  useEffect(() => {
-    fetch("/components/data.json")
-      .then((response) => response.json())
-      .then((data) => setAppointments(data))
-      .catch((error) => console.error("Erro ao carregar dados:", error));
-  }, []);
+  // useEffect(() => {
+  //   fetch("/components/data.json")
+  //     .then((response) => response.json())
+  //     .then((data) => setAppointments(data))
+  //     .catch((error) => console.error("Erro ao carregar dados:", error));
+  // }, []);
+
+  // const { queueAppointments } = useAppointmentQueue();
 
   return (
     <>
@@ -36,14 +39,7 @@ export function Appointments() {
         </div>
 
         <div className="flex flex-row gap-4 mb-20">
-          {appointments.map((feat, index) => (
-            <CardTypeAppointments
-              key={index}
-              name={feat.name}
-              description={feat.description}
-              recordNumber={feat.recordNumber}
-            />
-          ))}
+          <CardTypeAppointments />
         </div>
       </div>
     </>

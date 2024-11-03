@@ -32,7 +32,8 @@ export function TableOne({
   tHeadFour,
 }: TableProp) {
   const { queueAppointments, removeAppointment } = useAppointmentQueue();
-  const [colorChange, setColorChange] = useState("text-black");
+  // const [colorChange, setColorChange] = useState("text-black");
+  const [activeIconId, setActiveIconId] = useState<string | null>(null);
   // const [appointments, setAppointments] = useState<Appointment[]>([]);
 
   // useEffect(() => {
@@ -134,19 +135,16 @@ export function TableOne({
                   {tHeadFour}
                 </th>
                 <th className="px-4 py-2 text-center roboto-regular"></th>
+                <th className="px-4 py-2 text-center roboto-regular"></th>
               </tr>
             </thead>
             <tbody>
               {queueAppointments.map((appointment, index) => (
-                <tr key={index} className="roboto-light p-3 hover:bg-gray-100">
-                  <td>
-                    <i
-                      className={`fa-solid fa-trash pl-3 ${colorChange}`}
-                      onClick={() => removeAppointment(appointment.id)}
-                      onMouseEnter={() => setColorChange("text-red-600")}
-                      onMouseLeave={() => setColorChange("text-black")}
-                    ></i>
-                  </td>
+                <tr
+                  key={appointment.id}
+                  className="roboto-light p-3 hover:bg-gray-100"
+                >
+                  <td className="text-center">{index + 1}</td>
                   <td className="flex flex-col self-start py-5 px-4">
                     <span className="text-2xl pb-1">
                       {appointment.patientNameOrPront}
@@ -179,7 +177,19 @@ export function TableOne({
                     </span>
                   </td>
                   <td>
-                    <BtnWhiteBg content="Ver Atendimento" />
+                    <i
+                      className={`fa-solid fa-trash text-center ${
+                        activeIconId === appointment.id
+                          ? "text-red-600"
+                          : "text-black"
+                      }`}
+                      onClick={() => removeAppointment(appointment.id)}
+                      onMouseEnter={() => setActiveIconId(appointment.id)}
+                      onMouseLeave={() => setActiveIconId(null)}
+                    ></i>
+                  </td>
+                  <td>
+                    <BtnWhiteBg content="Atender" />
                   </td>
                 </tr>
               ))}

@@ -1,5 +1,5 @@
 "use client";
-import { ReactNode, useContext } from "react";
+import { ReactNode, useContext, useEffect } from "react";
 import { useState, createContext } from "react";
 
 type PatientInfo = {
@@ -36,7 +36,25 @@ export function AppointmentQueueProvider({
   children: ReactNode;
 }) {
   // criando o estado
-  const [queueAppointments, setQueueAppointments] = useState<Atendimento[]>([]);
+  const [queueAppointments, setQueueAppointments] = useState<Atendimento[]>(
+    () => {
+      // Lê os atendimentos do localStorage na inicialização
+      if (typeof window !== "undefined") {
+        // Garante que está rodando no cliente
+        const storedAppointments = localStorage.getItem("appointments");
+        return storedAppointments ? JSON.parse(storedAppointments) : [];
+      }
+      return []; // Retorna um array vazio se não estiver no cliente
+    }
+  );
+
+  // Armazena os atendimentos no localStorage sempre que eles mudam
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      // Garante que está rodando no cliente
+      localStorage.setItem("appointments", JSON.stringify(queueAppointments));
+    }
+  }, [queueAppointments]);
 
   // criando uma função para adicionar a fila
   const addAppointment = (atendimento: Omit<Atendimento, "id">) => {

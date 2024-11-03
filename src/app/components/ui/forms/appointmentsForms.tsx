@@ -1,6 +1,4 @@
-// import { BtnColorBg } from "../btn/btnColorBg";
 import { useState, useEffect } from "react";
-// import { PatientSearcModal } from "../modal/patientSearchModal";
 import { useAppointmentQueue } from "@/app/contexts/appointmentQueueContext";
 
 type PatientInfo = {
@@ -40,7 +38,7 @@ type Atendimento = {
   appointmentReason: string;
   vet: string;
   vetSpeciality: string;
-  status: "Próximo" | "Aguardando"; // Status do atendimento
+  status: "Próximo" | "Aguardando";
 };
 
 export function FormAppointment() {
@@ -53,34 +51,13 @@ export function FormAppointment() {
     weight: "",
     physical_characteristics: "",
   });
-  // const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedVet, setSelectedVet] = useState("");
   const [appointmentReason, setAppointmentReason] = useState("");
   const { addAppointment } = useAppointmentQueue();
   const [patients, setPatients] = useState<Patient[]>([]);
   const [filteredPatients, setFilteredPatients] = useState<Patient[]>([]);
 
-  // // para o modal
-  // const openModal = () => setIsModalOpen(true);
-  // const closeModal = () => setIsModalOpen(false);
-
-  // para a busca de pacientes no modal
-  // const handlePatientSearch = (
-  //   name: string,
-  //   additionalInfo: {
-  //     owners_cpf: string;
-  //     species: string;
-  //     breed: string;
-  //     weight: string;
-  //     physical_characteristics: string;
-  //   }
-  // ) => {
-  //   setPatientNameOrPront(name);
-  //   setPatientInfo(additionalInfo);
-  //   // closeModal();
-  // };
-
-  // Fetch patients data
+  // pegar os dados do json
   useEffect(() => {
     fetch("/components/data.json")
       .then((response) => response.json())
@@ -125,6 +102,7 @@ export function FormAppointment() {
     { vet: "Dr. Augusto Dantas", vetSpeciality: "Enfermaria Veterinária" },
   ];
 
+  // se o nome do vet for encontrado, selectedVet terá o nome e a especialidade
   const selectedVetInfo = vets.find((vet) => vet.vet === selectedVet);
 
   const selectPatient = (patient: Patient) => {
@@ -136,7 +114,8 @@ export function FormAppointment() {
       weight: patient.weight,
       physical_characteristics: patient.physical_characteristics,
     });
-    setFilteredPatients([]); // Limpa a lista filtrada
+    //setFilteredPatients([])
+    setTimeout(() => setFilteredPatients([]), 50); // Limpa a lista filtrada
   };
 
   // adicionar a fila
@@ -173,7 +152,7 @@ export function FormAppointment() {
             <label htmlFor="" className="roboto-medium">
               CPF do tutor ou nome do paciente
             </label>
-            <div className="flex flex-row gap-3">
+            <div className="flex flex-col gap-3 relative">
               <input
                 type="text"
                 value={patientNameOrPront}
@@ -182,7 +161,10 @@ export function FormAppointment() {
                 placeholder="Digite o cpf ou nome do paciente aqui"
               />
               {filteredPatients.length > 0 && (
-                <ul className="absolute bg-white border border-gray-300 w-96 mt-1 rounded z-10">
+                <ul
+                  style={{ top: "100%" }}
+                  className="absolute bg-white border border-gray-300 w-96 mt-1 rounded z-10 shadow-lg max-h-48 overflow-y-auto"
+                >
                   {filteredPatients.map((patient) => (
                     <li
                       key={patient.owners_cpf}
@@ -232,7 +214,7 @@ export function FormAppointment() {
             <label htmlFor="" className="roboto-medium">
               Veterinário
             </label>
-            <div className="flex flex-row gap-3">
+            <div className="flex flex-row gap-5">
               <select
                 className="p-2 rounded-lg bg-white border text-sm"
                 defaultValue=""
@@ -250,10 +232,13 @@ export function FormAppointment() {
                   </option>
                 ))}
               </select>
-              <button type="button" onClick={handleAddToqueue}>
+              <button
+                className="border border-darkCyan text-darkCyan hover:bg-myrtleGreen hover:text-white transition-all duration-200 ease-in-out roboto-medium text-sm rounded-md px-2 py-1"
+                type="button"
+                onClick={handleAddToqueue}
+              >
                 Atribuir atendimento
               </button>
-              {/* <BtnColorBg content="Atribuir Atendimento" /> */}
             </div>
           </div>
         </div>
