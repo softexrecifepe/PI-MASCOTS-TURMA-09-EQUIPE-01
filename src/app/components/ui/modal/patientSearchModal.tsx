@@ -1,5 +1,5 @@
-import { fetchPatients } from "@/app/api/getPatients";
-import localData from "../../../../../public/components/data.json";
+// import { fetchPatients } from "@/app/api/getPatients";
+// import localData from "../../../../../public/components/data.json";
 import { useState, useEffect } from "react";
 
 // interface PatientsJson {
@@ -18,6 +18,17 @@ import { useState, useEffect } from "react";
 //   appointmentStatus: string;
 // }
 
+interface PetData {
+  recordNumber: string; // ou number, dependendo do formato no JSON
+  name: string;
+  specie: string;
+  gender: string;
+  breed: string;
+  weight: string;
+  fisicalDescription: string;
+  owners_cpf: string;
+}
+
 interface Patient {
   pet_id: number;
   pet_name: string;
@@ -31,7 +42,16 @@ interface Patient {
 }
 
 type PatientSearchModalProps = {
-  onSearch: (searchTerm: string) => void;
+  onSearch: (
+    name: string,
+    additionalInfo: {
+      owners_cpf: string;
+      species: string;
+      breed: string;
+      weight: string;
+      physical_characteristics: string;
+    }
+  ) => void;
   onClose: () => void;
 };
 
@@ -43,13 +63,49 @@ export function PatientSearcModal({
   const [patients, setPatients] = useState<Patient[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
 
-  // pegar da api
-  useEffect(() => {
-    const loadPatients = async () => {
-      try {
-        const data = await fetchPatients();
+  // useEffect(() => {
+  //   fetch("/components/data.json")
+  //     .then((response) => response.json())
+  //     .then((data) => setAppointments(data))
+  //     .catch((error) => console.error("Erro ao carregar dados:", error));
+  // }, []);
 
-        const localDataMapped = localData.map((item) => ({
+  // // pegar da api
+  // useEffect(() => {
+  //   const loadPatients = async () => {
+  //     try {
+  //       const data = await fetchPatients();
+
+  //       const localDataMapped = localData.map((item) => ({
+  //         pet_id: parseInt(item.recordNumber),
+  //         pet_name: item.name,
+  //         species: item.specie,
+  //         gender: item.gender,
+  //         age: "",
+  //         breed: item.breed,
+  //         weight: item.weight,
+  //         physical_characteristics: item.fisicalDescription,
+  //         owners_cpf: item.owners_cpf,
+  //       }));
+
+  //       // const combinedData = [...data, ...localDataMapped];
+
+  //       console.log("Dados da API:", data);
+  //       setPatients(localDataMapped);
+  //     } catch (error) {
+  //       console.error("Erro ao carregar os dados dos pacientes: ", error);
+  //     }
+  //   };
+
+  //   loadPatients();
+  // }, []);
+
+  useEffect(() => {
+    fetch("/components/data.json")
+      .then((response) => response.json())
+      .then((data) => {
+        // Mapeando os dados recebidos
+        const localDataMapped = data.map((item: PetData) => ({
           pet_id: parseInt(item.recordNumber),
           pet_name: item.name,
           species: item.specie,
@@ -60,17 +116,10 @@ export function PatientSearcModal({
           physical_characteristics: item.fisicalDescription,
           owners_cpf: item.owners_cpf,
         }));
-
-        const combinedData = [...data, ...localDataMapped];
-
-        console.log("Dados da API:", data);
-        setPatients(combinedData);
-      } catch (error) {
-        console.error("Erro ao carregar os dados dos pacientes: ", error);
-      }
-    };
-
-    loadPatients();
+        // Definindo o estado com os dados mapeados
+        setPatients(localDataMapped);
+      })
+      .catch((error) => console.error("Erro ao carregar dados:", error));
   }, []);
 
   // para ver o que está sendo carregado
@@ -95,8 +144,17 @@ export function PatientSearcModal({
     }
   }, [searchTerm, patients]);
 
-  const selectPatient = (name: string) => {
-    onSearch(name);
+  const selectPatient = (
+    name: string,
+    additionalInfo: {
+      owners_cpf: string;
+      species: string;
+      breed: string;
+      weight: string;
+      physical_characteristics: string;
+    }
+  ) => {
+    onSearch(name, additionalInfo);
     onClose();
   };
 
@@ -121,7 +179,16 @@ export function PatientSearcModal({
                 <li
                   key={patient.owners_cpf}
                   className="p-2 cursor-pointer hover:bg-gray-100 border-b"
-                  onClick={() => selectPatient(patient.pet_name)}
+                  onClick={() =>
+                    selectPatient(patient.pet_name, {
+                      owners_cpf: patient.owners_cpf,
+                      species: patient.species,
+                      breed: patient.breed,
+                      weight: patient.weight,
+                      physical_characteristics:
+                        patient.physical_characteristics,
+                    })
+                  }
                 >
                   <div className="flex flex-col">
                     <span className="font-semibold">{patient.pet_name}</span>
