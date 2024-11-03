@@ -25,7 +25,7 @@ async function registerTutor(tutor: Tutor): Promise<void> {
 }
 
 const novoTutor = new Tutor("Chico Science", "00600700891", "81987474159", "chico@science.com", "Endereço do Chico");
-registerTutor(novoTutor); // Chamada da função adicionada
+registerTutor(novoTutor); 
 console.log(novoTutor);
 
 export default registerTutor;
