@@ -46,11 +46,11 @@ export default function LoginForm() {
           onSubmit={login}
           className="p-10 w-full max-w-full h-full flex flex-col gap-2"
         >
-          <h1 className="text-black roboto-regular self-start text-2xl mb-3">
+          <h1 className="text-black roboto-regular self-start text-3xl mb-3">
             Entrar no Mascot&#39;s
           </h1>
           <div className="flex flex-col gap-4 mb-5">
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 ">
               <label
                 htmlFor="email"
                 className="text-black roboto-regular text-sm"
@@ -61,7 +61,7 @@ export default function LoginForm() {
                 name="email"
                 type="email"
                 placeholder="Email"
-                className="input input-success w-full h-3/4 pt-2 pb-2 text-sm"
+                className="input input-success w-full h-3/4 pt-2 pb-2 text-lg"
               />
             </div>
 
@@ -76,13 +76,13 @@ export default function LoginForm() {
                 name="password"
                 type="password"
                 placeholder="Senha"
-                className="input input-success w-full h-3/4 pt-2 pb-2 text-sm "
+                className="input input-success w-full h-3/4 pt-2 pb-2 text-lg "
               />
             </div>
           </div>
 
           <button
-            className="btn hover:bg-myrtleGreen-light w-full bg-myrtleGreen text-white"
+            className="btn hover:bg-myrtleGreen-light hover:scale-105  w-full bg-myrtleGreen text-white text-base "
             type="submit"
           >
             Entrar no Mascot&#39;s
@@ -94,7 +94,9 @@ export default function LoginForm() {
             <BtnRecover content="Recuperar Senha" />
           </Link>
         </form>
+      
       </div>
+      
     </section>
   );
 }
