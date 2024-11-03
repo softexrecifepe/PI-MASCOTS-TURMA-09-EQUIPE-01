@@ -6,6 +6,7 @@ import { BtnColorBg } from '@/app/components/ui/btn/btnColorBg';
 import { BtnRecover } from '@/app/components/ui/btn/BtnRecover';
 import React, { useState } from 'react';
 import { Tutor } from './tutor'; // Certifique-se de importar a classe Tutor corretamente
+import { BreadCrumb } from '@/app/components/ui/breadcrumbs/breadcrumb';
 
 const RegisterForm = () => {
   const [tutorName, setTutorName] = useState('');
@@ -39,9 +40,10 @@ const RegisterForm = () => {
 
     if (noErrors) {
       const newTutor = new Tutor(tutorName, tutorCpf, tutorTelephone, tutorEmail, tutorAddress);
-      console.log('Dados do Tutor:', newTutor); // Imprime as informações enviadas no console
+      alert("Usuário cadastrado com sucesso!")
+      console.log('Dados do Tutor:', newTutor); 
 
-      // Resetar os inputs do formulário
+      // Reset inputs
       setTutorName('');
       setTutorCpf('');
       setTutorTelephone('');
@@ -51,12 +53,10 @@ const RegisterForm = () => {
   };
 
   return (
-    <div className='flex justify-center text-left'>
+    <div className='flex justify-center text-left '>
       <Header />
       <SideBar />
-
-      <h1 className='flex justify-start text-start fixed items-center m-48 text-4xl left-36'>Cadastro</h1>
-
+      
       <main className='flex justify-center flex-col fixed items-center top-24 left-0 text-start w-full h-full'>
         <form className='flex justify-center flex-col gap-5 input-lg' onSubmit={handleSubmit}>
           <div className='mb-10'>
