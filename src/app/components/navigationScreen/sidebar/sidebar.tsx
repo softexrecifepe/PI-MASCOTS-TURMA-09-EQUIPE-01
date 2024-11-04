@@ -20,7 +20,7 @@ export function SideBar() {
       icon: "fa-regular fa-folder-open",
       tooltip: "tooltip tooltip-right tooltip-success roboto-regular",
       hoverColor: "hover:text-gamboge",
-      link: "/register",
+      link: "/registers",
       datatip: "Gerenciar Cadastros",
     },
     {

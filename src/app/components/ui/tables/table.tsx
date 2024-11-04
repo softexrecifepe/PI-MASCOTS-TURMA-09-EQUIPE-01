@@ -188,7 +188,7 @@ export function TableOne({
                       onMouseLeave={() => setActiveIconId(null)}
                     ></i>
                   </td>
-                  <td>
+                  <td className="px-3">
                     <BtnWhiteBg content="Atender" />
                   </td>
                 </tr>
