@@ -3,6 +3,7 @@
 import { Header } from "@/app/components/navigationScreen/header/header";
 import { SideBar } from "@/app/components/navigationScreen/sidebar/sidebar";
 import { BreadCrumb } from "@/app/components/ui/breadcrumbs/breadcrumb";
+import ProfileTab from "@/app/components/ui/tabs/profileTab";
 import { PetInformation } from "@/app/components/ui/titles/petInformation";
 import { TutorInformation } from "@/app/components/ui/titles/tutorInformation";
 
@@ -18,9 +19,14 @@ export default function PatientProfile() {
               link="/registers"
               description="Voltar para a busca de cadastros"
             ></BreadCrumb>
-            <div className="flex flex-row gap-10">
-              <TutorInformation></TutorInformation>
-              <PetInformation></PetInformation>
+            <div className="flex flex-col gap-10">
+              <div className="flex flex-row gap-10">
+                <TutorInformation></TutorInformation>
+                <PetInformation></PetInformation>
+              </div>
+              <div className="">
+                <ProfileTab></ProfileTab>
+              </div>
             </div>
           </main>
         </div>
