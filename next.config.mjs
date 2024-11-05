@@ -20,6 +20,12 @@ const nextConfig = {
         port: "", // Deixe em branco se não houver porta específica
         pathname: "/**", // Isso permite todos os avatares dos usuários (pode ajustar conforme necessário)
       },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+        port: "", // Deixe em branco se não houver porta específica
+        pathname: "/**", // Isso permite todos os avatares dos usuários (pode ajustar conforme necessário)
+      },
     ],
   },
 };
