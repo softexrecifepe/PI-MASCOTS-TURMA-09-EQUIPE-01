@@ -117,11 +117,30 @@ export default function ProfileTab() {
                 </div>
               ))}
             </div>
-            <div className="py-10 px-10">
-              <div className="flex flex-col gap-3 bg-tuftsBlue px-16 py-5 rounded-tl-xl rounded-br-xl justify-center items-center">
-                <i className="fa-solid fa-suitcase-medical text-white text-3xl"></i>
-                <span className="text-white text-lg">Atendimento</span>
+            {/* <!-- Primeira linha --> */}
+            <div className="py-10 px-5">
+              <div className="flex flex-row flex-wrap gap-5">
+                <div className="flex flex-col flex-wrap gap-3 bg-tuftsBlue px-10 py-5 rounded-tl-xl rounded-br-xl justify-center items-center">
+                  <i className="fa-solid fa-suitcase-medical text-white text-3xl"></i>
+                  <span className="text-white text-lg">Atendimento</span>
+                </div>
+                <div className="flex flex-col gap-3 bg-auburn px-10 py-5 rounded-tl-xl rounded-br-xl justify-center items-center">
+                  <i className="fa-solid fa-file-medical text-white text-3xl"></i>
+                  <span className="text-white text-lg">Internamento</span>
+                </div>
+                <div className="flex flex-col flex-wrap gap-3 bg-tuftsBlue px-10 py-5 rounded-tl-xl rounded-br-xl justify-center items-center">
+                  <i className="fa-solid fa-suitcase-medical text-white text-3xl"></i>
+                  <span className="text-white text-lg">Atendimento</span>
+                </div>
+                <div className="flex flex-col gap-3 bg-auburn px-10 py-5 rounded-tl-xl rounded-br-xl justify-center items-center">
+                  <i className="fa-solid fa-file-medical text-white text-3xl"></i>
+                  <span className="text-white text-lg">Internamento</span>
+                </div>
               </div>
+            </div>
+            {/* <!-- Segunda linha --> */}
+            <div className="py-5 px-5">
+              <div className="flex flex-row  flex-wrap gap-5"></div>
             </div>
           </div>
         )}
