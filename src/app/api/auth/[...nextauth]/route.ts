@@ -18,14 +18,14 @@ const handler = NextAuth({
                 return null
             }
             if(
-                credentials.email === "" && 
-                credentials.password === ""
+                credentials.email === "funcionario@gmail.com" && 
+                credentials.password === "123"
             ){
 
                 return{
-                    id:"",
-                    name: "",
-                    email: "",
+                    id:"1",
+                    name: "funcionario",
+                    email: "funcionario@gmail.com",
                 }
 
             }

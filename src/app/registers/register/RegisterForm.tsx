@@ -5,7 +5,7 @@ import { SideBar } from '@/app/components/navigationScreen/sidebar/sidebar';
 import { BtnColorBg } from '@/app/components/ui/btn/btnColorBg';
 import { BtnRecover } from '@/app/components/ui/btn/BtnRecover';
 import React, { useState } from 'react';
-import { Tutor } from './tutor'; // Certifique-se de importar a classe Tutor corretamente
+import { Tutor } from './tutor'; 
 import { BreadCrumb } from '@/app/components/ui/breadcrumbs/breadcrumb';
 
 const RegisterForm = () => {
@@ -23,7 +23,7 @@ const RegisterForm = () => {
     tutorEmail: false,
   });
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     
     const newErrors = {
@@ -39,16 +39,29 @@ const RegisterForm = () => {
     const noErrors = !Object.values(newErrors).some(error => error);
 
     if (noErrors) {
-      const newTutor = new Tutor(tutorName, tutorCpf, tutorTelephone, tutorEmail, tutorAddress);
-      alert("Usuário cadastrado com sucesso!")
-      console.log('Dados do Tutor:', newTutor); 
+      const newTutor = { nome: tutorName, cpf: tutorCpf, telefone: tutorTelephone, email: tutorEmail, endereco: tutorAddress };
 
-      // Reset inputs
-      setTutorName('');
-      setTutorCpf('');
-      setTutorTelephone('');
-      setTutorAddress('');
-      setTutorEmail('');
+      const response = await fetch('http://localhost:4000/tutores', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newTutor)
+      });
+
+      if (response.ok) {
+        alert("Usuário cadastrado com sucesso!");
+        console.log('Dados do Tutor:', newTutor);
+
+        // Reset inputs
+        setTutorName('');
+        setTutorCpf('');
+        setTutorTelephone('');
+        setTutorAddress('');
+        setTutorEmail('');
+      } else {
+        alert("Erro ao cadastrar usuário.");
+      }
     }
   };
 
