@@ -9,7 +9,10 @@ type YearsType = {
 };
 
 export default function ProfileTab() {
+  // estado para a aba ativa
   const [activeTab, setActiveTab] = useState("Histórico");
+  // estado para o ano selecionado
+  const [selectedYear, setSelectedYear] = useState("");
 
   const years: YearsType[] = [
     {
@@ -49,6 +52,39 @@ export default function ProfileTab() {
     },
   ];
 
+  // para agrupar items por ano
+  const groupedYears = years.reduce(
+    (acc: Record<string, YearsType[]>, item: YearsType) => {
+      if (!acc[item.year]) {
+        acc[item.year] = []; // Inicializa o array para o ano específico
+      }
+      acc[item.year].push(item); // Adiciona o item ao array do ano
+      return acc;
+    },
+    {} as Record<string, YearsType[]>
+  );
+
+  // para setar o ano atual
+  const currentYear = new Date().getFullYear().toString();
+
+  // // Dados a serem exibidos conforme o ano selecionado
+  // const displayedData = selectedYear ? groupedYears[selectedYear] || [] : years;
+
+  // função para determinar uma cor de borda de acordo com o tipo de serviço
+  const getBorderColor = (type: string) => {
+    const normalizedType = type.toLowerCase();
+
+    const typeMap: Record<string, string> = {
+      atendimento: "border-tuftsBlue",
+      internamento: "border-auburn",
+      exames: "border-redCrayola",
+      prescrições: "border-grape",
+      peso: "border-gamboge",
+    };
+
+    return typeMap[normalizedType] || "border-gray-400";
+  };
+
   return (
     <div className="border w-full p-4 bg-white border-b-2 shadow-md rounded">
       <div className="flex space-x-4 border-b w-full">
@@ -78,10 +114,20 @@ export default function ProfileTab() {
           {activeTab === "Histórico" && (
             <div>
               <form>
-                <select value="" className="px-10 py-2">
-                  {years.map((option, index) => (
-                    <option key={index}>{option.year}</option>
-                  ))}
+                <select
+                  value={selectedYear}
+                  onChange={(e) => setSelectedYear(e.target.value)}
+                  className="px-10 py-2"
+                >
+                  {[currentYear, ...Object.keys(groupedYears)]
+                    .filter(
+                      (value, index, self) => self.indexOf(value) === index
+                    )
+                    .map((year, index) => (
+                      <option key={index} value={year}>
+                        {year}
+                      </option>
+                    ))}
                 </select>
               </form>
             </div>
@@ -104,20 +150,38 @@ export default function ProfileTab() {
         {activeTab === "Histórico" && (
           <div className="flex flex-row">
             <div className="border-r w-fit pr-10 flex flex-col">
-              {years.map((item, index) => (
+              {Object.keys(groupedYears).map((year, index) => (
                 <div key={index}>
-                  <div className="py-3 text-tuftsBlue">{item.year}</div>
-                  <div className="flex flex-col border-l-4 border-tuftsBlue">
-                    <span className="pl-3">
-                      {item.date} - {item.hour}
-                    </span>
-                    <span className="pl-3">{item.type}</span>
-                    <span className="pl-3">{item.reason}</span>
-                  </div>
+                  {/* Exibir o ano apenas uma vez */}
+                  {(selectedYear === "" || selectedYear === year) && (
+                    <div>
+                      <div className="py-3 text-tuftsBlue">{year}</div>
+                      <div className="flex flex-col gap-4">
+                        {groupedYears[year].map((item, index) => (
+                          <div
+                            key={index}
+                            className={`flex flex-col border-l-4 ${getBorderColor(
+                              item.type
+                            )}`}
+                          >
+                            <span className="pl-3 text-gray-400 text-sm">
+                              {item.date} - {item.hour}
+                            </span>
+                            <span className="pl-3 roboto-regular">
+                              {item.type}
+                            </span>
+                            <span className="pl-3 roboto-light text-sm">
+                              {item.reason}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
-            {/* <!-- Primeira linha --> */}
+            {/* Primeira linha */}
             <div className="py-10 px-5">
               <div className="flex flex-row flex-wrap gap-5">
                 <div className="flex flex-col flex-wrap gap-3 bg-tuftsBlue px-10 py-5 rounded-tl-xl rounded-br-xl justify-center items-center">
@@ -138,9 +202,9 @@ export default function ProfileTab() {
                 </div>
               </div>
             </div>
-            {/* <!-- Segunda linha --> */}
+            {/* Segunda linha */}
             <div className="py-5 px-5">
-              <div className="flex flex-row  flex-wrap gap-5"></div>
+              <div className="flex flex-row flex-wrap gap-5"></div>
             </div>
           </div>
         )}
