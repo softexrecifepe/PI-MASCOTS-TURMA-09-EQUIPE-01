@@ -3,16 +3,17 @@ import { FaArrowLeft } from "react-icons/fa";
 import { useState } from "react";
 
 type BreadProps = {
+  link: string;
   description: string;
 };
 
-export function BreadCrumb({ description }: BreadProps) {
+export function BreadCrumb({ link, description }: BreadProps) {
   const [mouseOn, setMouseOn] = useState(false);
 
   return (
     <>
       <Link
-        href="/dashboard"
+        href={link}
         className={`flex items-center mb-10`}
         onMouseEnter={() => setMouseOn(true)}
         onMouseLeave={() => setMouseOn(false)}

@@ -14,10 +14,14 @@ export default function MedicalAppointment() {
         <div className="flex-1 flex flex-col">
           <Header />
           <main className="flex-1 overflow-x-hidden overflow-y-auto ml-20 mt-[72px] px-10 py-8">
-            <BreadCrumb description="Voltar para a dashboard" />
+            <BreadCrumb
+              link="/dashboard"
+              description="Voltar para a dashboard"
+            />
             <SectionTitle
               iconClass="fa-solid fa-suitcase-medical"
               sectionTitle="Atendimentos"
+              color="text-tuftsBlue"
             ></SectionTitle>
             <FormAppointment />
             <div className="mt-8">

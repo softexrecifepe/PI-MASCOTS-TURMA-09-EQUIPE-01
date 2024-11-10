@@ -2,6 +2,8 @@
 import { ReactNode, useContext, useEffect } from "react";
 import { useState, createContext } from "react";
 
+// inicio da definição dos tipos
+
 type PatientInfo = {
   owners_cpf: string;
   species: string;
@@ -17,15 +19,16 @@ type Atendimento = {
   appointmentReason: string;
   vet: string;
   vetSpeciality: string;
-  status: "Próximo" | "Aguardando"; // Status do atendimento
+  status: "Próximo" | "Aguardando";
 };
 
 type AppointmentQueueContextType = {
   queueAppointments: Atendimento[]; // Fila de atendimentos
   addAppointment: (atendimento: Omit<Atendimento, "id">) => void; // Função para adicionar atendimentos
   removeAppointment: (id: string) => void;
-};
+}; // final da definição dos tipos
 
+// criando o contexto
 const AppointmentQueueContext = createContext<
   AppointmentQueueContextType | undefined
 >(undefined);
@@ -35,24 +38,27 @@ export function AppointmentQueueProvider({
 }: {
   children: ReactNode;
 }) {
-  // criando o estado
-  const [queueAppointments, setQueueAppointments] = useState<Atendimento[]>(
-    () => {
-      // Lê os atendimentos do localStorage na inicialização
-      if (typeof window !== "undefined") {
-        // Garante que está rodando no cliente
-        const storedAppointments = localStorage.getItem("appointments");
-        return storedAppointments ? JSON.parse(storedAppointments) : [];
+  // criando o estado e inicializa com um array vazio
+  const [queueAppointments, setQueueAppointments] = useState<Atendimento[]>([]);
+
+  // Carrega os dados do localStorage apenas no cliente
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedAppointments = localStorage.getItem("appointments");
+      if (storedAppointments) {
+        setQueueAppointments(JSON.parse(storedAppointments));
       }
-      return []; // Retorna um array vazio se não estiver no cliente
     }
-  );
+  }, []);
 
   // Armazena os atendimentos no localStorage sempre que eles mudam
   useEffect(() => {
     if (typeof window !== "undefined") {
-      // Garante que está rodando no cliente
-      localStorage.setItem("appointments", JSON.stringify(queueAppointments));
+      try {
+        localStorage.setItem("appointments", JSON.stringify(queueAppointments));
+      } catch (error) {
+        console.error("Failed to save appointments to localStorage:", error);
+      }
     }
   }, [queueAppointments]);
 
