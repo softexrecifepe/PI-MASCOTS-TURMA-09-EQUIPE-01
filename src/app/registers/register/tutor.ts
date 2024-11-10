@@ -1,7 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
 
+
 class Pet {
-  // Supondo que você tem uma classe Pet, inclua aqui
+  
 }
 
 export class Tutor {
