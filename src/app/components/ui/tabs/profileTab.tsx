@@ -66,7 +66,9 @@ export default function ProfileTab() {
 
   // para setar o ano atual
   const currentYear = new Date().getFullYear().toString();
-
+  const uniqueYears = [
+    ...Array.from(new Set([currentYear, ...Object.keys(groupedYears)])),
+  ].sort((a, b) => parseInt(b) - parseInt(a));
   // // Dados a serem exibidos conforme o ano selecionado
   // const displayedData = selectedYear ? groupedYears[selectedYear] || [] : years;
 
@@ -119,15 +121,11 @@ export default function ProfileTab() {
                   onChange={(e) => setSelectedYear(e.target.value)}
                   className="px-10 py-2"
                 >
-                  {[currentYear, ...Object.keys(groupedYears)]
-                    .filter(
-                      (value, index, self) => self.indexOf(value) === index
-                    )
-                    .map((year, index) => (
-                      <option key={index} value={year}>
-                        {year}
-                      </option>
-                    ))}
+                  {uniqueYears.map((year, index) => (
+                    <option key={index} value={year}>
+                      {year}
+                    </option>
+                  ))}
                 </select>
               </form>
             </div>
@@ -149,56 +147,62 @@ export default function ProfileTab() {
         </div>
         {activeTab === "Histórico" && (
           <div className="flex flex-row">
-            <div className="border-r w-fit pr-10 flex flex-col">
-              {Object.keys(groupedYears).map((year, index) => (
-                <div key={index}>
-                  {/* Exibir o ano apenas uma vez */}
-                  {(selectedYear === "" || selectedYear === year) && (
-                    <div>
-                      <div className="py-3 text-tuftsBlue">{year}</div>
-                      <div className="flex flex-col gap-4">
-                        {groupedYears[year].map((item, index) => (
-                          <div
-                            key={index}
-                            className={`flex flex-col border-l-4 ${getBorderColor(
-                              item.type
-                            )}`}
-                          >
-                            <span className="pl-3 text-gray-400 text-sm">
-                              {item.date} - {item.hour}
-                            </span>
-                            <span className="pl-3 roboto-regular">
-                              {item.type}
-                            </span>
-                            <span className="pl-3 roboto-light text-sm">
-                              {item.reason}
-                            </span>
-                          </div>
-                        ))}
+            <div className="border-r w-3/6 pr-10 flex flex-col">
+              {Object.keys(groupedYears)
+                .sort((a, b) => parseInt(b) - parseInt(a))
+                .map((year, index) => (
+                  <div key={index}>
+                    {/* Exibir o ano apenas uma vez */}
+                    {(selectedYear === "" || selectedYear === year) && (
+                      <div>
+                        <div className="py-3 text-tuftsBlue">{year}</div>
+                        <div className="flex flex-col gap-4">
+                          {groupedYears[year].map((item, index) => (
+                            <div
+                              key={index}
+                              className={`flex flex-col border-l-4 ${getBorderColor(
+                                item.type
+                              )}`}
+                            >
+                              <span className="pl-3 text-gray-400 text-sm">
+                                {item.date} - {item.hour}
+                              </span>
+                              <span className="pl-3 roboto-regular">
+                                {item.type}
+                              </span>
+                              <span className="pl-3 roboto-light text-sm">
+                                {item.reason}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  )}
-                </div>
-              ))}
+                    )}
+                  </div>
+                ))}
             </div>
             {/* Primeira linha */}
             <div className="py-10 px-5">
-              <div className="flex flex-row flex-wrap gap-5">
-                <div className="flex flex-col flex-wrap gap-3 bg-tuftsBlue px-10 py-5 rounded-tl-xl rounded-br-xl justify-center items-center">
+              <div className="flex flex-row flex-wrap gap-5 justify-center">
+                <div className="flex flex-col flex-wrap gap-3 bg-tuftsBlue w-52 px-10 py-5 rounded-tl-xl rounded-br-xl justify-center items-center">
                   <i className="fa-solid fa-suitcase-medical text-white text-3xl"></i>
                   <span className="text-white text-lg">Atendimento</span>
                 </div>
-                <div className="flex flex-col gap-3 bg-auburn px-10 py-5 rounded-tl-xl rounded-br-xl justify-center items-center">
+                <div className="flex flex-col gap-3 bg-auburn px-10 py-5 w-52 rounded-tl-xl rounded-br-xl justify-center items-center">
                   <i className="fa-solid fa-file-medical text-white text-3xl"></i>
                   <span className="text-white text-lg">Internamento</span>
                 </div>
-                <div className="flex flex-col flex-wrap gap-3 bg-tuftsBlue px-10 py-5 rounded-tl-xl rounded-br-xl justify-center items-center">
-                  <i className="fa-solid fa-suitcase-medical text-white text-3xl"></i>
-                  <span className="text-white text-lg">Atendimento</span>
+                <div className="flex flex-col flex-wrap gap-3 bg-redCrayola w-52 px-10 py-5 rounded-tl-xl rounded-br-xl justify-center items-center">
+                  <i className="fa-solid fa-flask text-white text-3xl"></i>
+                  <span className="text-white text-lg">Exames</span>
                 </div>
-                <div className="flex flex-col gap-3 bg-auburn px-10 py-5 rounded-tl-xl rounded-br-xl justify-center items-center">
-                  <i className="fa-solid fa-file-medical text-white text-3xl"></i>
-                  <span className="text-white text-lg">Internamento</span>
+                <div className="flex flex-col gap-3 bg-grape px-10 py-5 w-52 rounded-tl-xl rounded-br-xl justify-center items-center">
+                  <i className="fa-solid fa-prescription-bottle-medical text-white text-3xl"></i>
+                  <span className="text-white text-lg">Prescrições</span>
+                </div>
+                <div className="flex flex-col gap-3 bg-gamboge px-10 py-5 w-52 rounded-tl-xl rounded-br-xl justify-center items-center">
+                  <i className="fa-solid fa-weight-scale text-white text-3xl"></i>
+                  <span className="text-white text-lg">Peso</span>
                 </div>
               </div>
             </div>
