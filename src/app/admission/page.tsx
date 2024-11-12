@@ -1,13 +1,82 @@
+"use client";
+
 import { Header } from "../components/navigationScreen/header/header";
 import { SideBar } from "../components/navigationScreen/sidebar/sidebar";
+import { BreadCrumb } from "../components/ui/breadcrumbs/breadcrumb";
+import CardTypeAdmission from "../components/ui/card/cardTypeAdmission";
+import { SectionTitle } from "../components/ui/titles/sectionTitle";
 
 export default function Admission() {
   return (
     <>
-      <SideBar />
-      <Header />
-      <div>
-        <h1>Você está em internamento</h1>;
+      <div className="flex h-screen">
+        <SideBar />
+        <div className="flex-1 flex flex-col">
+          <Header />
+          <main className="flex-1 overflow-x-hidden overflow-y-auto ml-20 mt-[72px] px-10 py-8">
+            <BreadCrumb
+              link="/dashboard"
+              description="Voltar para a Dashboard"
+            />
+            <SectionTitle
+              iconClass="fa-solid fa-file-medical"
+              sectionTitle="Internamentos"
+              color="text-auburn"
+            />
+            <div className="flex flex-col gap-5">
+              <div className="py-5 px-5 flex flex-col gap-10 border shadow-md text-2xl roboto-regular">
+                <h2 className="">Pacientes internados</h2>
+                <div className="flex flex-row flex-wrap gap-5">
+                  <CardTypeAdmission
+                    pet_name="Bolinha"
+                    breed="SRD"
+                    weight="15kg"
+                    owners_cpf="000000"
+                    boxLocation="G-01"
+                    color_classification="bg-green-500"
+                    category="Menos grave"
+                    profilePic="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=1443&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                  />
+                  <CardTypeAdmission
+                    pet_name="Bolinha"
+                    breed="SRD"
+                    weight="15kg"
+                    owners_cpf="000000"
+                    boxLocation="G-01"
+                    color_classification="bg-blue-500"
+                    category="Caso leve"
+                    profilePic="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=1443&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                  />
+                </div>
+              </div>
+              <div className="py-5 px-5 flex flex-col gap-10 border shadow-md text-2xl roboto-regular">
+                <h2 className="">Pacientes em triagem</h2>
+                <div className="flex flex-row flex-wrap gap-5">
+                  <CardTypeAdmission
+                    pet_name="Bolinha"
+                    breed="SRD"
+                    weight="15kg"
+                    owners_cpf="000000"
+                    boxLocation="G-01"
+                    color_classification="bg-gray-500"
+                    category="Aguardando classificação"
+                    profilePic="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=1443&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                  />
+                  <CardTypeAdmission
+                    pet_name="Bellinha Barros"
+                    breed="SRD"
+                    weight="15kg"
+                    owners_cpf="000000"
+                    boxLocation="G-01"
+                    color_classification="bg-gray-500"
+                    category="Aguardando classificação"
+                    profilePic="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=1443&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                  />
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
       </div>
     </>
   );
