@@ -69,6 +69,7 @@ export default function ProfileTab() {
   const uniqueYears = [
     ...Array.from(new Set([currentYear, ...Object.keys(groupedYears)])),
   ].sort((a, b) => parseInt(b) - parseInt(a));
+
   // // Dados a serem exibidos conforme o ano selecionado
   // const displayedData = selectedYear ? groupedYears[selectedYear] || [] : years;
 
@@ -212,7 +213,9 @@ export default function ProfileTab() {
             </div>
           </div>
         )}
-        {activeTab === "Procedimentos" && <div>Conteúdo da Tab 2</div>}
+        {activeTab === "Exames" && <div>Conteúdo da Tab 2</div>}
+        {activeTab === "Linha do tempo" && <div>Conteúdo da Tab 3</div>}
+        {activeTab === "Agenda" && <div>Conteúdo da Tab 4</div>}
       </div>
     </div>
   );
