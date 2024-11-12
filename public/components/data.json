@@ -16,7 +16,10 @@
     "vet": "Dra. Camilla Barros",
     "vetSpeciality": "Veterinária Geral",
     "appointmentStatus": "Aguardando",
-    "age": "2 anos"
+    "age": "2 anos",
+    "boxLocation": "G-06",
+    "category": "Atenção Leve",
+    "color_classification": "bg-blue-500"
   },
   {
     "icon": "fa-solid fa-calendar text-base",
@@ -35,7 +38,10 @@
     "vet": "Dra. Izabelle Alves",
     "vetSpeciality": "Veterinária Geral",
     "appointmentStatus": "Em atendimento",
-    "age": "5 anos"
+    "age": "5 anos",
+    "boxLocation": "G-08",
+    "category": "Observação",
+    "color_classification": "bg-green-500"
   },
   {
     "icon": "fa-solid fa-calendar text-base",
@@ -54,7 +60,10 @@
     "vet": "Dr. Lucas Galvão",
     "vetSpeciality": "Nutrição Veterinária",
     "appointmentStatus": "Aguardando",
-    "age": "4 anos"
+    "age": "4 anos",
+    "boxLocation": "G-01",
+    "category": "Cuidado Moderado",
+    "color_classification": "bg-gamboge-dark"
   },
   {
     "icon": "fa-solid fa-calendar text-base",
@@ -73,7 +82,10 @@
     "vet": "Dr. Augusto Dantas",
     "vetSpeciality": "Enfermaria Veterinária",
     "appointmentStatus": "Aguardando",
-    "age": "10 anos"
+    "age": "10 anos",
+    "boxLocation": "G-02",
+    "category": "Observação",
+    "color_classification": "bg-green-500"
   },
   {
     "icon": "fa-solid fa-calendar text-base",
@@ -92,7 +104,10 @@
     "vet": "Dr. Lauro",
     "vetSpeciality": "Cirurgia Veterinária",
     "appointmentStatus": "Em atendimento",
-    "age": "1 ano"
+    "age": "1 ano",
+    "boxLocation": "G-05",
+    "category": "Urgente",
+    "color_classification": "bg-redCrayola"
   },
   {
     "icon": "fa-solid fa-calendar text-base",
@@ -111,6 +126,9 @@
     "vet": "Dra. Camilla Barros",
     "vetSpeciality": "Veterinária Geral",
     "appointmentStatus": "Aguardando",
-    "age": "5 anos"
+    "age": "5 anos",
+    "boxLocation": "G-10",
+    "category": "Emergência",
+    "color_classification": "bg-auburn"
   }
 ]
