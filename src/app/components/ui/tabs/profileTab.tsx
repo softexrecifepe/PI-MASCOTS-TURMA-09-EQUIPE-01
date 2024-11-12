@@ -111,6 +111,16 @@ export default function ProfileTab() {
         >
           Procedimentos
         </button>
+        <button
+          className={`tab-btn py-2 px-4 ${
+            activeTab === "Procedimentos"
+              ? "text-blue-600 border-b-2 border-blue-600"
+              : "text-gray-600"
+          }`}
+          onClick={() => setActiveTab("Procedimentos")}
+        >
+          Exames
+        </button>
       </div>
       <div className="mt-4">
         <div className="py-3 flex flex-row justify-between content-center border-b">
