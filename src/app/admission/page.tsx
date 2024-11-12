@@ -26,7 +26,7 @@ export default function Admission() {
             <div className="flex flex-col gap-5">
               <div className="py-5 px-5 flex flex-col gap-10 border shadow-md text-2xl roboto-regular">
                 <h2 className="">Pacientes internados</h2>
-                {/* <div className="flex flex-row flex-wrap gap-5">
+                {/* <div className="grid gap-5 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                   {data.map((item) => (
                     <CardTypeAdmission
                       key={item.owners_cpf}
@@ -38,30 +38,35 @@ export default function Admission() {
                       boxLocation={item.boxLocation}
                       color_classification={item.color_classification}
                       category={item.category}
-                      profilePic="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=1443&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                      profilePic={item.link_profilePic}
                     />
                   ))}
                 </div> */}
                 <div className="grid gap-5 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                  {data.map((item) => (
-                    <CardTypeAdmission
-                      key={item.owners_cpf}
-                      pet_name={item.name}
-                      breed={item.breed}
-                      weight={item.weight}
-                      discharge={item.exitDate}
-                      owners_cpf={item.owners_cpf}
-                      boxLocation={item.boxLocation}
-                      color_classification={item.color_classification}
-                      category={item.category}
-                      profilePic="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=1443&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                    />
-                  ))}
+                  {data.map((item) => {
+                    if (item.category === "Aguardando Classificação")
+                      return null;
+
+                    return (
+                      <CardTypeAdmission
+                        key={item.owners_cpf}
+                        pet_name={item.name}
+                        breed={item.breed}
+                        weight={item.weight}
+                        discharge={item.exitDate}
+                        owners_cpf={item.owners_cpf}
+                        boxLocation={item.boxLocation}
+                        color_classification={item.color_classification}
+                        category={item.category}
+                        profilePic={item.link_profilePic}
+                      />
+                    );
+                  })}
                 </div>
               </div>
               <div className="py-5 px-5 flex flex-col gap-10 border shadow-md text-2xl roboto-regular">
                 <h2 className="">Pacientes em triagem</h2>
-                <div className="flex flex-row flex-wrap gap-5">
+                {/* <div className="flex flex-row flex-wrap gap-5">
                   <CardTypeAdmission
                     pet_name="Bolinha"
                     breed="SRD"
@@ -82,6 +87,27 @@ export default function Admission() {
                     category="Aguardando classificação"
                     profilePic="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=1443&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                   />
+                </div> */}
+                <div className="grid gap-5 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                  {data.map((item) => {
+                    if (item.category !== "Aguardando Classificação")
+                      return null;
+
+                    return (
+                      <CardTypeAdmission
+                        key={item.owners_cpf}
+                        pet_name={item.name}
+                        breed={item.breed}
+                        weight={item.weight}
+                        discharge={item.exitDate}
+                        owners_cpf={item.owners_cpf}
+                        boxLocation={item.boxLocation}
+                        color_classification={item.color_classification}
+                        category={item.category}
+                        profilePic={item.link_profilePic}
+                      />
+                    );
+                  })}
                 </div>
               </div>
             </div>

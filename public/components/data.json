@@ -19,7 +19,8 @@
     "age": "2 anos",
     "boxLocation": "G-06",
     "category": "Atenção Leve",
-    "color_classification": "bg-blue-500"
+    "color_classification": "bg-blue-500",
+    "link_profilePic": "https://images.unsplash.com/photo-1589210043112-d4835d91b37a?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
   },
   {
     "icon": "fa-solid fa-calendar text-base",
@@ -41,7 +42,8 @@
     "age": "5 anos",
     "boxLocation": "G-08",
     "category": "Observação",
-    "color_classification": "bg-green-500"
+    "color_classification": "bg-green-500",
+    "link_profilePic": "https://images.unsplash.com/photo-1608878808200-c8263a3a6ff5?q=80&w=1442&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
   },
   {
     "icon": "fa-solid fa-calendar text-base",
@@ -63,7 +65,8 @@
     "age": "4 anos",
     "boxLocation": "G-01",
     "category": "Cuidado Moderado",
-    "color_classification": "bg-gamboge-dark"
+    "color_classification": "bg-gamboge-dark",
+    "link_profilePic": "https://images.unsplash.com/photo-1534521152192-2e2cb02c6ea1?q=80&w=1430&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
   },
   {
     "icon": "fa-solid fa-calendar text-base",
@@ -85,7 +88,8 @@
     "age": "10 anos",
     "boxLocation": "G-02",
     "category": "Observação",
-    "color_classification": "bg-green-500"
+    "color_classification": "bg-green-500",
+    "link_profilePic": "https://images.unsplash.com/photo-1677558563764-b5326c7db5d1?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fHdoaXRlJTIwZG9nfGVufDB8fDB8fHww"
   },
   {
     "icon": "fa-solid fa-calendar text-base",
@@ -95,7 +99,7 @@
     "description": "Consulta de retorno para acompanhamento da cirurgia.",
     "recordNumber": "PRT-00127",
     "admissionDate": "2024-10-13",
-    "exitDate": "2024-10-14",
+    "exitDate": "",
     "weight": "6kg",
     "breed": "Pelo curto brasileiro",
     "gender": "Macho",
@@ -107,7 +111,8 @@
     "age": "1 ano",
     "boxLocation": "G-05",
     "category": "Urgente",
-    "color_classification": "bg-redCrayola"
+    "color_classification": "bg-redCrayola",
+    "link_profilePic": "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGNhdHxlbnwwfHwwfHx8MA%3D%3D"
   },
   {
     "icon": "fa-solid fa-calendar text-base",
@@ -117,7 +122,7 @@
     "description": "Avaliação de comportamento devido a mudanças recentes.",
     "recordNumber": "PRT-00128",
     "admissionDate": "2024-10-13",
-    "exitDate": "2024-10-14",
+    "exitDate": "",
     "weight": "500g",
     "breed": "Psittaciformes",
     "gender": "Macho",
@@ -129,6 +134,53 @@
     "age": "5 anos",
     "boxLocation": "G-10",
     "category": "Emergência",
-    "color_classification": "bg-auburn"
+    "color_classification": "bg-auburn",
+    "link_profilePic": "https://images.unsplash.com/photo-1707096656916-284aa48b50e8?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8Y2Fsb3BzaXR0ZXxlbnwwfHwwfHx8MA%3D%3D"
+  },
+  {
+    "icon": "fa-solid fa-calendar text-base",
+    "name": "Belo",
+    "owners_cpf": "36935885297",
+    "schedule": "17h",
+    "description": "Consulta de retorno para acompanhamento da cirurgia.",
+    "recordNumber": "PRT-00127",
+    "admissionDate": "2024-10-13",
+    "exitDate": "",
+    "weight": "5kg",
+    "breed": "Pelo curto brasileiro",
+    "gender": "Macho",
+    "fisicalDescription": "preto e branco",
+    "specie": "gato",
+    "vet": "Dr. Lauro",
+    "vetSpeciality": "Cirurgia Veterinária",
+    "appointmentStatus": "Em atendimento",
+    "age": "1 ano",
+    "boxLocation": "G-13",
+    "category": "Aguardando Classificação",
+    "color_classification": "bg-gray-500",
+    "link_profilePic": "https://images.unsplash.com/photo-1573865526739-10659fec78a5?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGNhdHxlbnwwfHwwfHx8MA%3D%3D"
+  },
+  {
+    "icon": "fa-solid fa-calendar text-base",
+    "name": "Garibaldo",
+    "owners_cpf": "28635898697",
+    "schedule": "17h",
+    "description": "Consulta de retorno para acompanhamento da cirurgia.",
+    "recordNumber": "PRT-00127",
+    "admissionDate": "2024-10-13",
+    "exitDate": "",
+    "weight": "6kg",
+    "breed": "Pelo curto brasileiro",
+    "gender": "Macho",
+    "fisicalDescription": "preto e branco",
+    "specie": "gato",
+    "vet": "Dr. Lauro",
+    "vetSpeciality": "Cirurgia Veterinária",
+    "appointmentStatus": "Em atendimento",
+    "age": "1 ano",
+    "boxLocation": "G-11",
+    "category": "Aguardando Classificação",
+    "color_classification": "bg-gray-500",
+    "link_profilePic": "https://images.unsplash.com/photo-1472491235688-bdc81a63246e?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
   }
 ]

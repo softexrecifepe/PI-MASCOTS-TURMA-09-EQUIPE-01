@@ -27,13 +27,13 @@ export default function CardTypeAdmission({
 }: InformationProps) {
   return (
     <>
-      <div className="border w-fit max-w-80 min-w-52 rounded-lg shadow-lg">
+      <div className="border w-64 rounded-lg shadow-lg">
         <div
           className={`flex flex-row px-2 py-2 rounded-t-lg ${color_classification}`}
         >
           <span className="text-sm text-white roboto-bold">{category}</span>
         </div>
-        <div className="flex flex-row py-5 px-5 gap-10">
+        <div className="flex flex-row py-5 px-5 justify-between">
           <div className="flex flex-col gap-1">
             <span className="text-lg roboto-regular">{pet_name} </span>
             <span className="text-gray-400 text-sm">{owners_cpf}</span>
@@ -41,7 +41,7 @@ export default function CardTypeAdmission({
               {breed}, {weight}
             </span>
             <span className="text-xs text-gray-400">
-              {discharge
+              {discharge !== ""
                 ? `Previsão de alta ${discharge}`
                 : "Sem previsão de alta"}
             </span>
