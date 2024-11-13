@@ -7,6 +7,14 @@ import CardTypeAdmission from "../components/ui/card/cardTypeAdmission";
 import { SectionTitle } from "../components/ui/titles/sectionTitle";
 
 export default function Admission() {
+  // const tagColors = [
+  //   { category: "Observação", color: "bg-green-500" },
+  //   { category: "Atenção Leve", color: "bg-bluee-500" },
+  //   { category: "Cuidado Moderado", color: "bg-gamboge-dark" },
+  //   { category: "Urgente", color: "bg-redCrayola" },
+  //   { category: "Emergência", color: "bg-auburn" },
+  // ];
+
   return (
     <>
       <div className="flex h-screen">
@@ -50,6 +58,7 @@ export default function Admission() {
                     return (
                       <CardTypeAdmission
                         key={item.owners_cpf}
+                        usageType="geral"
                         pet_name={item.name}
                         breed={item.breed}
                         weight={item.weight}
@@ -59,6 +68,7 @@ export default function Admission() {
                         color_classification={item.color_classification}
                         category={item.category}
                         profilePic={item.link_profilePic}
+                        vet={item.vet}
                       />
                     );
                   })}
@@ -96,6 +106,7 @@ export default function Admission() {
                     return (
                       <CardTypeAdmission
                         key={item.owners_cpf}
+                        usageType="Geral"
                         pet_name={item.name}
                         breed={item.breed}
                         weight={item.weight}
@@ -105,6 +116,7 @@ export default function Admission() {
                         color_classification={item.color_classification}
                         category={item.category}
                         profilePic={item.link_profilePic}
+                        vet={item.vet}
                       />
                     );
                   })}
