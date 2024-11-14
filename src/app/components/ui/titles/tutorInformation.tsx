@@ -1,9 +1,9 @@
 type TutorInfoProps = {
-  tutor_name: string;
-  userType: string;
-  owners_cpf: string;
-  foneNumber: string;
-  email: string;
+  tutor_name: string | undefined;
+  userType: string | undefined;
+  owners_cpf: string | undefined;
+  foneNumber: string | undefined;
+  email: string | undefined;
 };
 
 export function TutorInformation({
