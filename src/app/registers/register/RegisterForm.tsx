@@ -2,8 +2,6 @@
 
 import { Header } from '@/app/components/navigationScreen/header/header';
 import { SideBar } from '@/app/components/navigationScreen/sidebar/sidebar';
-import { BtnColorBg } from '@/app/components/ui/btn/btnColorBg';
-import { BtnRecover } from '@/app/components/ui/btn/BtnRecover';
 import React from 'react';
 import { Tutor } from './tutor'; 
 import { BreadCrumb } from '@/app/components/ui/breadcrumbs/breadcrumb';
