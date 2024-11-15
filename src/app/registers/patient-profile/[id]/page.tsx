@@ -135,28 +135,35 @@ export default function PatientProfileId() {
               description="Voltar para a busca de cadastros"
             ></BreadCrumb>
             <div className="flex flex-col gap-10">
-              <div className="flex flex-row gap-10">
-                <TutorInformation
-                  userType="Tutor"
-                  tutor_name={patient?.owners_name}
-                  owners_cpf={patient?.owners_cpf}
-                  foneNumber={patient?.owners_fone}
-                  email={patient?.owners_email}
-                ></TutorInformation>
-                <PetInformation
-                  hospitalStatus=""
-                  userType="Paciente"
-                  usageType="Profile"
-                  pet_name={patient?.name}
-                  species={patient?.specie}
-                  breed={patient?.breed}
-                  gender={patient?.gender}
-                  fisicalDescription={patient?.fisicalDescription}
-                  weight={patient?.weight}
-                  link_profilePic={patient?.link_profilePic}
-                  alergies={patient?.alergies}
-                  age={patient?.age}
-                ></PetInformation>
+              <div className=" flex flex-col shadow-md border">
+                <div className="w-full bg-darkCyan py-2">
+                  <span className="text-white text-xl px-2">
+                    Informações do Paciente
+                  </span>
+                </div>
+                <div className="flex flex-row  py-7 px-7">
+                  <TutorInformation
+                    userType="Tutor"
+                    tutor_name={patient?.owners_name}
+                    owners_cpf={patient?.owners_cpf}
+                    foneNumber={patient?.owners_fone}
+                    email={patient?.owners_email}
+                  ></TutorInformation>
+                  <PetInformation
+                    hospitalStatus=""
+                    userType="Paciente"
+                    usageType="Profile"
+                    pet_name={patient?.name}
+                    species={patient?.specie}
+                    breed={patient?.breed}
+                    gender={patient?.gender}
+                    fisicalDescription={patient?.fisicalDescription}
+                    weight={patient?.weight}
+                    link_profilePic={patient?.link_profilePic}
+                    alergies={patient?.alergies}
+                    age={patient?.age}
+                  ></PetInformation>
+                </div>
               </div>
               <div className="">
                 <ProfileTab></ProfileTab>
