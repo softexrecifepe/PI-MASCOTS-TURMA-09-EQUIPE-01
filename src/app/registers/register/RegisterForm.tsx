@@ -2,165 +2,100 @@
 
 import { Header } from '@/app/components/navigationScreen/header/header';
 import { SideBar } from '@/app/components/navigationScreen/sidebar/sidebar';
-import { BtnColorBg } from '@/app/components/ui/btn/btnColorBg';
-import { BtnRecover } from '@/app/components/ui/btn/BtnRecover';
-import React, { useState } from 'react';
-import { Tutor } from './tutor'; // Certifique-se de importar a classe Tutor corretamente
+import React from 'react';
+import { Tutor } from './tutor'; 
 import { BreadCrumb } from '@/app/components/ui/breadcrumbs/breadcrumb';
+import { tutorSchema, TutorData } from '@/app/schemas/tutorSchema'; 
+import { zodResolver } from '@hookform/resolvers/zod'; 
+import { useForm, Controller } from 'react-hook-form';
 
 const RegisterForm = () => {
-  const [tutorName, setTutorName] = useState("");
-  const [tutorCpf, setTutorCpf] = useState("");
-  const [tutorTelephone, setTutorTelephone] = useState("");
-  const [tutorAddress, setTutorAddress] = useState("");
-  const [tutorEmail, setTutorEmail] = useState("");
-
-  const [errors, setErrors] = useState({
-    tutorName: false,
-    tutorCpf: false,
-    tutorTelephone: false,
-    tutorAddress: false,
-    tutorEmail: false,
+  const { control, handleSubmit, reset, formState: { errors } } = useForm<TutorData>({
+    resolver: zodResolver(tutorSchema),
   });
 
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
+  const onSubmit = async (data: TutorData) => {
+    const response = await fetch('http://localhost:4000/tutores', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
 
-    const newErrors = {
-      tutorName: tutorName.trim() === "",
-      tutorCpf: tutorCpf.trim() === "",
-      tutorTelephone: tutorTelephone.trim() === "",
-      tutorAddress: tutorAddress.trim() === "",
-      tutorEmail: tutorEmail.trim() === "",
-    };
-
-    setErrors(newErrors);
-
-    const noErrors = !Object.values(newErrors).some((error) => error);
-
-    if (noErrors) {
-      const newTutor = new Tutor(tutorName, tutorCpf, tutorTelephone, tutorEmail, tutorAddress);
-      alert("Usuário cadastrado com sucesso!")
-      console.log('Dados do Tutor:', newTutor); 
-
-      // Reset inputs
-      setTutorName('');
-      setTutorCpf('');
-      setTutorTelephone('');
-      setTutorAddress('');
-      setTutorEmail('');
+    if (response.ok) {
+      alert("Usuário cadastrado com sucesso!");
+      reset();
+    } else {
+      alert("Erro ao cadastrar usuário.");
     }
   };
 
   return (
-    <div className="flex justify-center text-left ">
+    <div className='flex justify-center text-left'>
       <Header />
       <SideBar />
 
-      <main className="flex justify-center flex-col fixed items-center top-24 left-0 text-start w-full h-full">
-        <form
-          className="flex justify-center flex-col gap-5 input-lg"
-          onSubmit={handleSubmit}
-        >
-          <div className="mb-10">
-            <div className="flex gap-4">
-              <div className="flex flex-col">
-                <label htmlFor="tutorName" className="text-lg font-semibold">
-                  Nome do tutor:
-                </label>
-                <input
-                  type="text"
-                  name="tutorName"
-                  className="input input-bordered h-3/4 pt-2 pb-2 text-lg"
-                  placeholder="Digite o nome completo"
-                  value={tutorName}
-                  onChange={(e) => setTutorName(e.target.value)}
+      <main className='flex justify-center flex-col fixed items-center top-24 left-0 text-start w-full h-full'>
+        <form className='flex justify-center flex-col gap-5 input-lg' onSubmit={handleSubmit(onSubmit)}>
+          <div className='mb-10'>
+            <div className='flex gap-4'>
+              <div className='flex flex-col'>
+                <label htmlFor="nome" className='text-lg font-semibold'>Nome do tutor:</label>
+                <Controller
+                  name="nome"
+                  control={control}
+                  render={({ field }) => <input {...field} type="text" className="input input-bordered h-3/4 pt-2 pb-2 text-lg" placeholder='Digite o nome completo' />}
                 />
-                {errors.tutorName && (
-                  <span className="text-red-500">Campo obrigatório</span>
-                )}
+                {errors.nome && <span className='text-red-500'>{errors.nome.message}</span>}
               </div>
 
-              <div className="flex flex-col">
-                <label htmlFor="tutorCpf" className="text-lg font-semibold">
-                  CPF do tutor:
-                </label>
-                <input
-                  type="text"
-                  name="tutorCpf"
-                  className="input input-bordered h-3/4 pt-2 pb-2 text-lg"
-                  placeholder="000.000.000-00"
-                  value={tutorCpf}
-                  onChange={(e) => setTutorCpf(e.target.value)}
+              <div className='flex flex-col'>
+                <label htmlFor="cpf" className='text-lg font-semibold'>CPF do tutor:</label>
+                <Controller
+                  name="cpf"
+                  control={control}
+                  render={({ field }) => <input {...field} type="text" className="input input-bordered h-3/4 pt-2 pb-2 text-lg" placeholder='000.000.000-00' />}
                 />
-                {errors.tutorCpf && (
-                  <span className="text-red-500">Campo obrigatório</span>
-                )}
+                {errors.cpf && <span className='text-red-500'>{errors.cpf.message}</span>}
               </div>
             </div>
 
-            <div className="flex gap-4">
-              <div className="flex flex-col">
-                <label
-                  htmlFor="tutorTelephone"
-                  className="text-lg font-semibold"
-                >
-                  Telefone do tutor:
-                </label>
-                <input
-                  type="text"
-                  name="tutorTelephone"
-                  className="input input-bordered h-3/4 pt-2 pb-2 text-lg"
-                  placeholder="(00) 0 0000-0000"
-                  value={tutorTelephone}
-                  onChange={(e) => setTutorTelephone(e.target.value)}
+            <div className='flex gap-4'>
+              <div className='flex flex-col'>
+                <label htmlFor="telefone" className='text-lg font-semibold'>Telefone do tutor:</label>
+                <Controller
+                  name="telefone"
+                  control={control}
+                  render={({ field }) => <input {...field} type="text" className="input input-bordered h-3/4 pt-2 pb-2 text-lg" placeholder='(00) 0 0000-0000' />}
                 />
-                {errors.tutorTelephone && (
-                  <span className="text-red-500">Campo obrigatório</span>
-                )}
+                {errors.telefone && <span className='text-red-500'>{errors.telefone.message}</span>}
               </div>
-              <div className="flex flex-col">
-                <label htmlFor="tutorAddress" className="text-lg font-semibold">
-                  Endereço do tutor:
-                </label>
-                <input
-                  type="text"
-                  name="tutorAddress"
-                  className="input input-bordered h-3/4 pt-2 pb-2 text-lg"
-                  placeholder="Rua, avenida, etc."
-                  value={tutorAddress}
-                  onChange={(e) => setTutorAddress(e.target.value)}
+              <div className='flex flex-col'>
+                <label htmlFor="endereco" className='text-lg font-semibold'>Endereço do tutor:</label>
+                <Controller
+                  name="endereco"
+                  control={control}
+                  render={({ field }) => <input {...field} type="text" className="input input-bordered h-3/4 pt-2 pb-2 text-lg" placeholder='Rua, avenida, etc.' />}
                 />
-                {errors.tutorAddress && (
-                  <span className="text-red-500">Campo obrigatório</span>
-                )}
+                {errors.endereco && <span className='text-red-500'>{errors.endereco.message}</span>}
               </div>
             </div>
 
-            <div className="flex gap-4">
-              <div className="flex flex-col">
-                <label htmlFor="tutorEmail" className="text-lg font-semibold">
-                  E-mail do tutor:
-                </label>
-                <input
-                  type="email"
-                  name="tutorEmail"
-                  className="input input-bordered h-3/4 pt-2 pb-2 text-lg"
-                  placeholder="exemplo@gmail.com"
-                  value={tutorEmail}
-                  onChange={(e) => setTutorEmail(e.target.value)}
+            <div className='flex gap-4'>
+              <div className='flex flex-col'>
+                <label htmlFor="email" className='text-lg font-semibold'>E-mail do tutor:</label>
+                <Controller
+                  name="email"
+                  control={control}
+                  render={({ field }) => <input {...field} type="email" className="input input-bordered h-3/4 pt-2 pb-2 text-lg" placeholder='exemplo@gmail.com' />}
                 />
-                {errors.tutorEmail && (
-                  <span className="text-red-500">Campo obrigatório</span>
-                )}
+                {errors.email && <span className='text-red-500'>{errors.email.message}</span>}
               </div>
             </div>
           </div>
 
-          <button
-            className="btn hover:bg-myrtleGreen-light hover:scale-105 w-40 bg-myrtleGreen text-white text-base"
-            type="submit"
-          >
+          <button className="btn hover:bg-myrtleGreen-light hover:scale-105 w-40 bg-myrtleGreen text-white text-base" type="submit">
             Salvar
           </button>
         </form>
