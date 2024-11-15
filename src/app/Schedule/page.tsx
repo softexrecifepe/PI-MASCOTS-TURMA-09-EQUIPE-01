@@ -1,9 +1,11 @@
-"use client";
+"use client"
 import { useState } from "react";
 import Link from "next/link";
 import { FaArrowLeft, FaArrowRight, FaCalendar } from "react-icons/fa";
 import { Header } from "../components/navigationScreen/header/header";
 import { SideBar } from "../components/navigationScreen/sidebar/sidebar";
+import DaySchedule from "../components/ui/tablesSchedule/daySchedule";
+import MonthlySchedule from "../components/ui/tablesSchedule/monthlySchedule";
 
 const Schedule = () => {
   const [view, setView] = useState("day");
@@ -97,10 +99,12 @@ const Schedule = () => {
               <FaArrowLeft className="mr-2 text-gray-900" />
               <span className="text-green-600 ">Voltar para a dashboard</span>
             </Link>
-            <div className="flex items-center mb-6">
-              <FaCalendar className="text-3xl text-blue-600 mr-2" />
+
+            <div className="flex items-center mb-6 ">
+              <FaCalendar className="text-3xl text-blue-600 mr-4" />
               <h1 className="roboto-light text-2xl">Agenda Diária</h1>
             </div>
+
             <div className="flex items-center justify-between mb-6 w-[450px]">
               <div className="flex space-x-2">
                 <button
@@ -127,6 +131,7 @@ const Schedule = () => {
                   Ano
                 </button>
               </div>
+
               <div className="flex items-center space-x-4">
                 <button>
                   <FaArrowLeft />
@@ -137,60 +142,11 @@ const Schedule = () => {
                 </button>
               </div>
             </div>
+
             {view === "day" ? (
-              <div className="bg-white border rounded-lg overflow-hidden shadow-lg w-[400px]">
-                <table className="w-full table-fixed">
-                  <thead>
-                    <tr className="bg-gray-50">
-                      <th className="border-b p-2 text-left w-24">Usuário 1</th>
-                      <th className="border-b p-2 text-left text-sm text-green-600 roboto-light tracking-wider">
-                        Veterinário
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {daySchedule.map((item, index) => (
-                      <tr key={index}>
-                        <td className="border-b p-2 text-left roboto-light bg-gray-100">
-                          {item.time}
-                        </td>
-                        <td className="border-b p-2">
-                          {item.commitment ? (
-                            <div
-                              className={`${item.color} roboto-medium text-white rounded-lg px-2 py-1`}
-                            >
-                              {item.commitment}
-                            </div>
-                          ) : (
-                            <div> </div>
-                          )}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+              <DaySchedule schedule={daySchedule} />
             ) : (
-              <div className="bg-white border rounded-lg overflow-hidden shadow-lg w-full">
-                <div className="grid grid-cols-7 gap-0">
-                  {monthlySchedule.map((item, index) => (
-                    <div key={index} className="border p-2 h-40">
-                      <div className="text-sm font-bold">{item.day}</div>
-                      <div className="mt-2">
-                        {item.commitments &&
-                          item.commitments.map((commitment, i) => (
-                            <div
-                              key={i}
-                              className={`rounded-lg px-2 py-1 mb-1 ${commitment.color} text-white`}
-                            >
-                              {commitment.name}
-                            </div>
-                          ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              <MonthlySchedule schedule={monthlySchedule} />
             )}
           </div>
         </main>

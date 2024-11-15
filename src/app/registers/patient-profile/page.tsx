@@ -21,8 +21,24 @@ export default function PatientProfile() {
             ></BreadCrumb>
             <div className="flex flex-col gap-10">
               <div className="flex flex-row gap-10">
-                <TutorInformation></TutorInformation>
-                <PetInformation></PetInformation>
+                <TutorInformation
+                  userType="Tutor"
+                  tutor_name="Camilla Barros"
+                  owners_cpf="000.000.000.00"
+                  foneNumber="(81) 90000-0000"
+                  email="exemple@gmail.com"
+                ></TutorInformation>
+                <PetInformation
+                  hospitalStatus="Em atendimento"
+                  userType="Paciente"
+                  usageType="Profile"
+                  pet_name="Bellinha"
+                  species="Cachorro"
+                  gender="fêmea"
+                  fisicalDescription="Branca com manchas pretas"
+                  weight="10kg"
+                  link_profilePic=""
+                ></PetInformation>
               </div>
               <div className="">
                 <ProfileTab></ProfileTab>
