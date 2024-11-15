@@ -1,21 +1,22 @@
 import { Avatar } from "@mui/material";
 
 type PetInfoProp = {
-  usageType: string;
-  categoryTag?: string;
-  categoryColor?: string;
-  pet_name: string;
-  userType?: string;
-  species: string;
-  gender: string;
-  age: string;
-  fisicalDescription: string;
-  weight: string;
-  hospitalStatus?: string;
-  link_profilePic?: string;
-  alergies: string;
-  owners_name?: string;
-  owners_fone?: string;
+  usageType: string | undefined;
+  categoryTag?: string | undefined;
+  categoryColor?: string | undefined;
+  pet_name: string | undefined;
+  userType?: string | undefined;
+  species: string | undefined;
+  breed: string | undefined;
+  gender: string | undefined;
+  age: string | undefined;
+  fisicalDescription: string | undefined;
+  weight: string | undefined;
+  hospitalStatus?: string | undefined;
+  link_profilePic?: string | undefined;
+  alergies: string | undefined;
+  owners_name?: string | undefined;
+  owners_fone?: string | undefined;
 };
 
 export function PetInformation({
@@ -26,6 +27,7 @@ export function PetInformation({
   age,
   userType,
   species,
+  breed,
   gender,
   fisicalDescription,
   weight,
@@ -48,7 +50,7 @@ export function PetInformation({
           </div>
           <div>
             <span className="text-sm text-gray-500">
-              {species}, {gender}, {fisicalDescription}, {age}, {weight}
+              {breed}, {gender}, {fisicalDescription}, {age}, {weight}
             </span>
           </div>
           <div>
