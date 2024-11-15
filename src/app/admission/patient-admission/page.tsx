@@ -5,10 +5,33 @@ import { SideBar } from "@/app/components/navigationScreen/sidebar/sidebar";
 import { BreadCrumb } from "@/app/components/ui/breadcrumbs/breadcrumb";
 import GeneralBtn from "@/app/components/ui/btn/generalBtn";
 import CardTypeAdmission from "@/app/components/ui/card/cardTypeAdmission";
+import Tab from "@/app/components/ui/tabs/tab";
 import { PetInformation } from "@/app/components/ui/titles/petInformation";
 import { SectionTitle } from "@/app/components/ui/titles/sectionTitle";
+import TimeLine from "@/app/components/ui/tl/timeLine";
 
 export default function PatientAdmission() {
+  const events = [
+    {
+      date: "2024-01-01",
+      timeStamp: "14:10",
+      title: "Evento 1",
+      description: "Descrição do evento 1.",
+    },
+    {
+      date: "2024-02-15",
+      timeStamp: "15:11",
+      title: "Evento 2",
+      description: "Descrição do evento 2.",
+    },
+    {
+      date: "2024-05-10",
+      timeStamp: "22:17",
+      title: "Evento 3",
+      description: "Descrição do evento 3.",
+    },
+  ];
+
   return (
     <>
       <div className="flex h-screen">
@@ -39,6 +62,7 @@ export default function PatientAdmission() {
                       userType="Paciente"
                       pet_name="Garibaldo"
                       species="Cachorro"
+                      breed="shi tzu"
                       gender="Macho"
                       age="5 anos"
                       fisicalDescription="branco"
@@ -100,7 +124,24 @@ export default function PatientAdmission() {
               </div>
               <div>
                 <div className="py-5 px-5">
-                  <span>Terá uma tab aqui!</span>
+                  <Tab labels={["Histórico", "Prescrição Médica"]}>
+                    {/* first tab */}
+                    <div>
+                      {/* first tab options */}
+                      <div className="py-5 flex flex-row gap-2">
+                        <GeneralBtn iconClass="" content="Ocorrências" />
+                        <GeneralBtn iconClass="" content="Peso" />
+                        <GeneralBtn iconClass="" content="Relatório Médico" />
+                      </div>
+                      {/* first tab information */}
+                      <div>
+                        <TimeLine events={events} />
+                      </div>
+                    </div>
+                    <div>
+                      <h2>Informações da tab 2</h2>
+                    </div>
+                  </Tab>
                 </div>
               </div>
             </div>
