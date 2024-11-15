@@ -1,21 +1,22 @@
 import { Avatar } from "@mui/material";
 
 type PetInfoProp = {
-  usageType: string;
-  categoryTag?: string;
-  categoryColor?: string;
-  pet_name: string;
-  userType?: string;
-  species: string;
-  gender: string;
-  age: string;
-  fisicalDescription: string;
-  weight: string;
-  hospitalStatus?: string;
-  link_profilePic?: string;
-  alergies: string;
-  owners_name?: string;
-  owners_fone?: string;
+  usageType: string | undefined;
+  categoryTag?: string | undefined;
+  categoryColor?: string | undefined;
+  pet_name: string | undefined;
+  userType?: string | undefined;
+  species: string | undefined;
+  breed: string | undefined;
+  gender: string | undefined;
+  age: string | undefined;
+  fisicalDescription: string | undefined;
+  weight: string | undefined;
+  hospitalStatus?: string | undefined;
+  link_profilePic?: string | undefined;
+  alergies: string | undefined;
+  owners_name?: string | undefined;
+  owners_fone?: string | undefined;
 };
 
 export function PetInformation({
@@ -26,6 +27,7 @@ export function PetInformation({
   age,
   userType,
   species,
+  breed,
   gender,
   fisicalDescription,
   weight,
@@ -37,19 +39,33 @@ export function PetInformation({
 }: PetInfoProp) {
   if (usageType !== "internamento") {
     return (
-      <section className="flex flex-row justify-between w-full">
-        <div className="flex flex-col gap-4">
+      <section className="flex flex-row justify-between content-center items-center w-full">
+        <div className="flex flex-col gap-1">
           <div className="text-2xl roboto-medium">
             {pet_name}{" "}
             <span className="text-xs text-gray-400">({userType})</span>
           </div>
-          <div>
-            <span className="text-sm text-gray-500">{alergies}</span>
-          </div>
-          <div>
-            <span className="text-sm text-gray-500">
-              {species}, {gender}, {fisicalDescription}, {age}, {weight}
-            </span>
+          <div></div>
+          <div className="flex flex-col">
+            <p className="text-sm text-gray-500">
+              Raça: <span className="text-black">{breed}</span>
+            </p>
+            <p className="text-sm text-gray-500">
+              Gênero: <span className="text-black">{gender}</span>
+            </p>
+            <p className="text-sm text-gray-500">
+              Descrição física:{" "}
+              <span className="text-black">{fisicalDescription}</span>
+            </p>
+            <p className="text-sm text-gray-500">
+              Idade: <span className="text-black">{age}</span>
+            </p>
+            <p className="text-sm text-gray-500">
+              Peso: <span className="text-black">{weight}</span>
+            </p>
+            <p className="text-sm text-gray-500">
+              Alergias: <span className="text-black">{alergies}</span>
+            </p>
           </div>
           <div>
             <span
@@ -79,12 +95,12 @@ export function PetInformation({
         <div className="flex flex-col gap-2 py-5 px-5">
           <div className="text-2xl roboto-medium">
             {pet_name}{" "}
-            <span className="text-xs text-gray-400">({userType})</span>
+            <span className="text-xs text-gray-400">&#40;{species}&#41;</span>
           </div>
           <div className="flex flex-col gap-3">
             <div>
               <span className="text-sm text-gray-500">
-                {species}, {gender}, {fisicalDescription}, {age}, {weight}
+                {breed}, {gender}, {fisicalDescription}, {age}, {weight}
               </span>
             </div>
             <div className="flex flex-row items-center gap-3">
