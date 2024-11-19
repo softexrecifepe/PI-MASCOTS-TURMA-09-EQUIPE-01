@@ -75,7 +75,7 @@ export default function SearchTutor() {
               <input
                 type="text"
                 name="searchName"
-                className="input input-bordered h-12 py-2 text-lg w-full" // Ajustei aqui para h-12 e py-2
+                className="input input-bordered h-12 py-2 text-lg w-full"
                 placeholder="Digite nome ou CPF"
                 value={searchName}
                 onChange={(e) => {
