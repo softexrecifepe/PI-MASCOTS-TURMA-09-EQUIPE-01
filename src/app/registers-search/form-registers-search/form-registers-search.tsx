@@ -55,7 +55,7 @@ export default function SearchTutor() {
   }, [searchName, tutors]);
 
   const goToTutorProfile = (tutorId: string) => {
-    router.push(`../../registers/patient-profile/${tutorId}`);
+    router.push(`../../registers/tutor-profile/${tutorId}`);
   };
 
   return (
