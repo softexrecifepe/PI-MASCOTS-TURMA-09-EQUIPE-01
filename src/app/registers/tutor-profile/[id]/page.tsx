@@ -10,6 +10,7 @@ import { TutorInformation } from "@/app/components/ui/titles/tutorInformation";
 import CircularProgress from "@mui/material/CircularProgress";
 import Tab from "@/app/components/ui/tabs/tab";
 import GeneralBtn from "@/app/components/ui/btn/generalBtn";
+import GeneralModal from "@/app/components/ui/modal/generalModal";
 
 // type Tutor = {
 //   id: string;
@@ -50,11 +51,14 @@ type Tutor = {
 };
 
 export default function TutorProfile() {
+  // para a pegar o id na rota
   const params = useParams();
   const id = params["id"];
 
+  // estados
   const [tutor, setTutor] = useState<Tutor | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     if (id) {
@@ -78,6 +82,26 @@ export default function TutorProfile() {
       fetchTutorData();
     }
   }, [id]);
+
+  // para abrir modal
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
+
+  // para fechar modal
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
+
+  // para salvar dados editados no modal
+  const handleSave = (updatedData: Record<string, string>) => {
+    setTutor((prev) => {
+      if (prev) {
+        return { ...prev, ...updatedData }; // Atualiza o tutor com os novos dados
+      }
+      return prev;
+    });
+  };
 
   // condição de carregamento
   if (isLoading) {
@@ -105,6 +129,26 @@ export default function TutorProfile() {
   if (!tutor) {
     return <div>Paciente não encontrado.</div>;
   }
+
+  // const fields = tutor
+  //   ? [
+  //       { name: "nome", label: "Nome", type: "text", value: tutor.nome },
+  //       { name: "cpf", label: "CPF", type: "text", value: tutor.cpf },
+  //       {
+  //         name: "telefone",
+  //         label: "Telefone",
+  //         type: "text",
+  //         value: tutor.telefone,
+  //       },
+  //       { name: "email", label: "Email", type: "email", value: tutor.email },
+  //       {
+  //         name: "endereco",
+  //         label: "Endereço",
+  //         type: "text",
+  //         value: tutor.endereco,
+  //       },
+  //     ]
+  //   : [];
 
   return (
     <>
@@ -153,17 +197,18 @@ export default function TutorProfile() {
                       <GeneralBtn
                         iconClass="fa-solid fa-pencil"
                         content="Editar"
+                        onClick={handleOpenModal}
                       ></GeneralBtn>
                     </div>
                     <div className="">
                       <GeneralBtn
-                        iconClass="fa-solid fa-right-from-bracket"
-                        content="Mensagem"
+                        iconClass="fa-solid fa-comment-sms"
+                        content="SMS"
                       ></GeneralBtn>
                     </div>
                     <div className="">
                       <GeneralBtn
-                        iconClass="fa-regular fa-heart"
+                        iconClass="fa-solid fa-envelope"
                         content="Email"
                       ></GeneralBtn>
                     </div>
@@ -186,6 +231,35 @@ export default function TutorProfile() {
           </main>
         </div>
       </div>
+
+      {/* modal */}
+
+      <GeneralModal
+        isOpen={openModal}
+        onClose={handleCloseModal}
+        onSave={handleSave}
+        fields={[
+          { name: "nome", label: "Nome", type: "text", value: tutor.nome },
+          { name: "cpf", label: "CPF", type: "text", value: tutor.cpf },
+          {
+            name: "telefone",
+            label: "Telefone",
+            type: "text",
+            value: tutor.telefone,
+          },
+          { name: "email", label: "Email", type: "email", value: tutor.email },
+          {
+            name: "endereco",
+            label: "Endereço",
+            type: "text",
+            value: tutor.endereco,
+          },
+        ]}
+        title="Editar Tutor"
+        id={tutor.id}
+        url="http://localhost:4000/tutores" // Passando o endpoint como prop
+        method="PATCH" // Passando o método HTTP como prop
+      />
     </>
   );
 }
