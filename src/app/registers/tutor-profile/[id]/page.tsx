@@ -1,45 +1,23 @@
 "use client";
 import { useParams } from "next/navigation";
 import { useState, useEffect } from "react";
-// import data from "../../../../../public/components/data.json";
 import { SideBar } from "@/app/components/navigationScreen/sidebar/sidebar";
 import { Header } from "@/app/components/navigationScreen/header/header";
 import { BreadCrumb } from "@/app/components/ui/breadcrumbs/breadcrumb";
 import { TutorInformation } from "@/app/components/ui/titles/tutorInformation";
-// import { PetInformation } from "@/app/components/ui/titles/petInformation";
 import CircularProgress from "@mui/material/CircularProgress";
 import Tab from "@/app/components/ui/tabs/tab";
 import GeneralBtn from "@/app/components/ui/btn/generalBtn";
 import GeneralModal from "@/app/components/ui/modal/generalModal";
+import { jsPDF } from "jspdf";
 
-// type Tutor = {
-//   id: string;
-//   icon: string;
-//   name: string;
-//   owners_cpf: string;
-//   owners_name: string;
-//   owners_fone: string;
-//   owners_email: string;
-//   schedule: string;
-//   description: string;
-//   recordNumber: string;
-//   admissionDate: string;
-//   exitDate: string;
-//   weight: string;
-//   breed: string;
-//   gender: string;
-//   fisicalDescription: string;
-//   specie: string;
-//   alergies: string;
-//   vet: string;
-//   vetSpeciality: string;
-//   appointmentStatus: string;
-//   age: string;
-//   boxLocation: string;
-//   category: string;
-//   color_classification: string;
-//   link_profilePic: string;
-// };
+interface Pet {
+  id: string;
+  name: string;
+  specie: string;
+  breed: string;
+  // Adicionar outros campos relevantes aqui
+}
 
 type Tutor = {
   id: string;
@@ -82,6 +60,49 @@ export default function TutorProfile() {
       fetchTutorData();
     }
   }, [id]);
+
+  // para gerar o relatório baixado em pdf
+  const handleGeneratePDF = async () => {
+    if (!tutor) return;
+
+    const doc = new jsPDF();
+    doc.setFontSize(18);
+    doc.text(`Relatório do Tutor - ${tutor.nome}`, 10, 10);
+
+    doc.setFontSize(12);
+    doc.text(`Nome: ${tutor.nome}`, 10, 20);
+    doc.text(`CPF: ${tutor.cpf}`, 10, 30);
+    doc.text(`Telefone: ${tutor.telefone}`, 10, 40);
+    doc.text(`Email: ${tutor.email}`, 10, 50);
+    doc.text(`Endereço: ${tutor.endereco}`, 10, 60);
+
+    // Verifica os dados dos pets antes de tentar gerar o PDF
+    const petsData = await fetchPetsData(tutor.id);
+    if (!Array.isArray(petsData)) {
+      console.error("Erro ao carregar dados dos pets.");
+      return;
+    }
+
+    doc.text("Pets Vinculados:", 10, 70);
+    petsData.forEach((pet: Pet, index: number) => {
+      doc.text(`Pet ${index + 1}: ${pet.name}`, 10, 80 + index * 10);
+      doc.text(`Espécie: ${pet.specie}`, 10, 90 + index * 10);
+      doc.text(`Raça: ${pet.breed}`, 10, 100 + index * 10);
+    });
+
+    doc.save("relatorio_tutor.pdf");
+  };
+
+  const fetchPetsData = async (tutorId: string) => {
+    const response = await fetch(
+      `http://localhost:4000/pets?tutorId=${tutorId}`
+    );
+    if (!response.ok) {
+      console.error("Erro ao buscar dados dos pets");
+      return [];
+    }
+    return response.json();
+  };
 
   // para abrir modal
   const handleOpenModal = () => {
@@ -130,26 +151,6 @@ export default function TutorProfile() {
     return <div>Paciente não encontrado.</div>;
   }
 
-  // const fields = tutor
-  //   ? [
-  //       { name: "nome", label: "Nome", type: "text", value: tutor.nome },
-  //       { name: "cpf", label: "CPF", type: "text", value: tutor.cpf },
-  //       {
-  //         name: "telefone",
-  //         label: "Telefone",
-  //         type: "text",
-  //         value: tutor.telefone,
-  //       },
-  //       { name: "email", label: "Email", type: "email", value: tutor.email },
-  //       {
-  //         name: "endereco",
-  //         label: "Endereço",
-  //         type: "text",
-  //         value: tutor.endereco,
-  //       },
-  //     ]
-  //   : [];
-
   return (
     <>
       <div className="flex h-screen">
@@ -177,20 +178,6 @@ export default function TutorProfile() {
                       foneNumber={tutor?.telefone}
                       email={tutor?.email}
                     ></TutorInformation>
-                    {/* <PetInformation
-                    hospitalStatus=""
-                    userType="Paciente"
-                    usageType="Profile"
-                    pet_name={patient?.name}
-                    species={patient?.specie}
-                    breed={patient?.breed}
-                    gender={patient?.gender}
-                    fisicalDescription={patient?.fisicalDescription}
-                    weight={patient?.weight}
-                    link_profilePic={patient?.link_profilePic}
-                    alergies={patient?.alergies}
-                    age={patient?.age}
-                  ></PetInformation> */}
                   </div>
                   <div className="grid grid-cols-2 gap-2 p-4">
                     <div className="">
@@ -216,6 +203,7 @@ export default function TutorProfile() {
                       <GeneralBtn
                         iconClass="fa-solid fa-print"
                         content="imprimir"
+                        onClick={handleGeneratePDF}
                       ></GeneralBtn>
                     </div>
                   </div>
