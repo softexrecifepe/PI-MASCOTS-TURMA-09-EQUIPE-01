@@ -2,9 +2,10 @@
 import Link from "next/link";
 import { Header } from "../components/navigationScreen/header/header";
 import { SideBar } from "../components/navigationScreen/sidebar/sidebar";
-import { BtnColorBg } from "../components/ui/btn/btnColorBg";
 import { BreadCrumb } from "../components/ui/breadcrumbs/breadcrumb";
+import { BtnColorBg } from "../components/ui/btn/btnColorBg";
 import { SectionTitle } from "../components/ui/titles/sectionTitle";
+import SearchRegisteredTutor from "../registers-search/page";
 
 export default function Registration() {
   return (
@@ -24,10 +25,13 @@ export default function Registration() {
               color="text-gamboge"
             ></SectionTitle>
 
-            <div className="mt-8">
+            <div className="mt-3">
               <Link href={"/registers/register"}>
                 <BtnColorBg content="Novo cadastro" />
               </Link>
+            </div>
+            <div className="mt-6">
+              <SearchRegisteredTutor />
             </div>
           </main>
         </div>

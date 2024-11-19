@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
 import { useAppointmentQueue } from "@/app/contexts/appointmentQueueContext";
+import { useEffect, useState } from "react";
 
 type PatientInfo = {
   owners_cpf: string;
