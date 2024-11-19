@@ -180,32 +180,28 @@ export default function TutorProfile() {
                     ></TutorInformation>
                   </div>
                   <div className="grid grid-cols-2 gap-2 p-4">
-                    <div className="">
-                      <GeneralBtn
-                        iconClass="fa-solid fa-pencil"
-                        content="Editar"
-                        onClick={handleOpenModal}
-                      ></GeneralBtn>
-                    </div>
-                    <div className="">
-                      <GeneralBtn
-                        iconClass="fa-solid fa-comment-sms"
-                        content="SMS"
-                      ></GeneralBtn>
-                    </div>
-                    <div className="">
-                      <GeneralBtn
-                        iconClass="fa-solid fa-envelope"
-                        content="Email"
-                      ></GeneralBtn>
-                    </div>
-                    <div className="">
-                      <GeneralBtn
-                        iconClass="fa-solid fa-print"
-                        content="imprimir"
-                        onClick={handleGeneratePDF}
-                      ></GeneralBtn>
-                    </div>
+                    <GeneralBtn
+                      iconClass="fa-solid fa-pencil"
+                      content="Editar"
+                      onClick={handleOpenModal}
+                    ></GeneralBtn>
+                    <GeneralBtn
+                      iconClass="fa-solid fa-comment-sms"
+                      content="SMS"
+                    ></GeneralBtn>
+                    <GeneralBtn
+                      iconClass="fa-solid fa-envelope"
+                      content="Email"
+                    ></GeneralBtn>
+                    <GeneralBtn
+                      iconClass="fa-solid fa-print"
+                      content="imprimir"
+                      onClick={handleGeneratePDF}
+                    ></GeneralBtn>
+                    {/* <div className=""></div>
+                    <div className=""></div>
+                    <div className=""></div>
+                    <div className=""></div> */}
                   </div>
                 </div>
               </div>
