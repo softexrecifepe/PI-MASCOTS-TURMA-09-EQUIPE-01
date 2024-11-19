@@ -1,7 +1,7 @@
 "use client";
 import { useParams } from "next/navigation";
 import { useState, useEffect } from "react";
-import data from "../../../../../public/components/data.json";
+// import data from "../../../../../public/components/data.json";
 import { SideBar } from "@/app/components/navigationScreen/sidebar/sidebar";
 import { Header } from "@/app/components/navigationScreen/header/header";
 import { BreadCrumb } from "@/app/components/ui/breadcrumbs/breadcrumb";
@@ -11,33 +11,42 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Tab from "@/app/components/ui/tabs/tab";
 import GeneralBtn from "@/app/components/ui/btn/generalBtn";
 
+// type Tutor = {
+//   id: string;
+//   icon: string;
+//   name: string;
+//   owners_cpf: string;
+//   owners_name: string;
+//   owners_fone: string;
+//   owners_email: string;
+//   schedule: string;
+//   description: string;
+//   recordNumber: string;
+//   admissionDate: string;
+//   exitDate: string;
+//   weight: string;
+//   breed: string;
+//   gender: string;
+//   fisicalDescription: string;
+//   specie: string;
+//   alergies: string;
+//   vet: string;
+//   vetSpeciality: string;
+//   appointmentStatus: string;
+//   age: string;
+//   boxLocation: string;
+//   category: string;
+//   color_classification: string;
+//   link_profilePic: string;
+// };
+
 type Tutor = {
   id: string;
-  icon: string;
-  name: string;
-  owners_cpf: string;
-  owners_name: string;
-  owners_fone: string;
-  owners_email: string;
-  schedule: string;
-  description: string;
-  recordNumber: string;
-  admissionDate: string;
-  exitDate: string;
-  weight: string;
-  breed: string;
-  gender: string;
-  fisicalDescription: string;
-  specie: string;
-  alergies: string;
-  vet: string;
-  vetSpeciality: string;
-  appointmentStatus: string;
-  age: string;
-  boxLocation: string;
-  category: string;
-  color_classification: string;
-  link_profilePic: string;
+  nome: string;
+  cpf: string;
+  telefone: string;
+  email: string;
+  endereco: string;
 };
 
 export default function TutorProfile() {
@@ -49,16 +58,24 @@ export default function TutorProfile() {
 
   useEffect(() => {
     if (id) {
-      // Simula o carregamento de dados
-      setTimeout(() => {
-        const foundTutor = data.find((p) => p.id === id);
-        if (foundTutor) {
-          setTutor(foundTutor);
-        } else {
-          setTutor(null);
+      // Função para buscar os dados do tutor do JSON Server
+      const fetchTutorData = async () => {
+        try {
+          const response = await fetch(`http://localhost:4000/tutores/${id}`);
+          if (!response.ok) {
+            throw new Error("Erro ao buscar dados do tutor.");
+          }
+          const data = await response.json();
+          setTutor(data); // Define o estado com os dados recebidos
+        } catch (error) {
+          console.error(error);
+          setTutor(null); // Se ocorrer um erro, define tutor como null
+        } finally {
+          setIsLoading(false); // Dados carregados, desativa o estado de carregamento
         }
-        setIsLoading(false); // Dados carregados, desativa o estado de carregamento
-      }, 300); // Simula um atraso de 1 segundo (pode remover se quiser carregar instantaneamente)
+      };
+
+      fetchTutorData();
     }
   }, [id]);
 
@@ -111,10 +128,10 @@ export default function TutorProfile() {
                   <div className="flex flex-row gap-20">
                     <TutorInformation
                       userType="Tutor"
-                      tutor_name={tutor?.owners_name}
-                      owners_cpf={tutor?.owners_cpf}
-                      foneNumber={tutor?.owners_fone}
-                      email={tutor?.owners_email}
+                      tutor_name={tutor?.nome}
+                      owners_cpf={tutor?.cpf}
+                      foneNumber={tutor?.telefone}
+                      email={tutor?.email}
                     ></TutorInformation>
                     {/* <PetInformation
                     hospitalStatus=""
