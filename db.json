@@ -15,6 +15,72 @@
       "telefone": "85988655522",
       "email": "johny@hotmail.com",
       "endereco": "Rua quimera 12"
+    },
+    {
+      "id": "4828",
+      "nome": "maxwell",
+      "cpf": "900.987.857-30",
+      "telefone": "81999949435",
+      "email": "gestorx@gmail.com",
+      "endereco": "Rua quimera 12",
+      "pets": [
+        {
+          "nome": "Tobias",
+          "raca": "Pitbull"
+        },
+        {
+          "nome": "",
+          "raca": ""
+        }
+      ]
+    },
+    {
+      "id": "1a85",
+      "nome": "Baki",
+      "cpf": "900.280.564-12",
+      "telefone": "85988655526",
+      "email": "tutory@gmail.com",
+      "endereco": "Rua 1",
+      "pets": [
+        {
+          "nome": "Robin",
+          "raca": "SRD"
+        },
+        {
+          "nome": "Juninho",
+          "raca": "SRD"
+        }
+      ]
+    },
+    {
+      "id": "97cc",
+      "nome": "lucas",
+      "cpf": "900.987.857-30",
+      "telefone": "81984050546",
+      "email": "gestorx@gmail.com",
+      "endereco": "Rua quimera 12",
+      "pets": [
+        {
+          "nome": "Tobias",
+          "raca": "SRD",
+          "especie": "cao"
+        },
+        {
+          "nome": "Juninho",
+          "raca": "SRD",
+          "especie": "gato"
+        },
+        {
+          "nome": "",
+          "raca": "",
+          "especie": ""
+        },
+        {
+          "nome": "",
+          "raca": "",
+          "especie": ""
+        }
+      ]
     }
   ]
 }

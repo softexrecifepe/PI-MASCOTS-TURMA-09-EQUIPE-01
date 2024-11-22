@@ -13,7 +13,7 @@ const page = () => {
         <SectionTitle
           iconClass="fa-regular fa-folder-open"
           sectionTitle="Cadastro de Tutor"
-          color="text-gamboge"
+          color=""
         ></SectionTitle>
         <RegisterForm />
       </div>
