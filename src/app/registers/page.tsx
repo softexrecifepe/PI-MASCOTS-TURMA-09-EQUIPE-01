@@ -27,7 +27,7 @@ export default function Registration() {
 
             <div className="mt-3">
               <Link href={"/registers/register"}>
-                <BtnColorBg content="Novo cadastro" />
+                <BtnColorBg content="Novo tutor" />
               </Link>
             </div>
             <div className="mt-6">
