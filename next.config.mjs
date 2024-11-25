@@ -26,6 +26,12 @@ const nextConfig = {
         port: "", // Deixe em branco se não houver porta específica
         pathname: "/**", // Isso permite todos os avatares dos usuários (pode ajustar conforme necessário)
       },
+      {
+        protocol: "https",
+        hostname: "firebasestorage.googleapis.com",
+        port: "",
+        pathname: "/**", // Isso permite o acesso a todas as imagens dentro do Firebase Storage
+      },
     ],
   },
 };
