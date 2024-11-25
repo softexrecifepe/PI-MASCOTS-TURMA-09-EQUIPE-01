@@ -14,6 +14,7 @@ import { FaUser } from "react-icons/fa";
 import { PiLineVerticalLight } from "react-icons/pi";
 import { LiaGripLinesVerticalSolid } from "react-icons/lia";
 import { v4 as uuidv4 } from "uuid";
+import ImageUpload from "./imageUpload";
 
 interface Pet {
   id: string;
@@ -24,6 +25,7 @@ interface Pet {
   idade: string;
   peso: string;
   alergias: string;
+  imagem?: string;
 }
 
 const RegisterForm = () => {
@@ -33,6 +35,8 @@ const RegisterForm = () => {
     reset,
     formState: { errors },
   } = useForm<TutorData>({ resolver: zodResolver(tutorSchema) });
+
+  const [tutorId, setTutorId] = useState<string>(uuidv4()); // Gera um tutorId único
 
   const [pets, setPets] = useState<Pet[]>([
     {
@@ -44,11 +48,19 @@ const RegisterForm = () => {
       idade: "",
       peso: "",
       alergias: "",
+      imagem: "",
     },
   ]);
 
+  // Função para lidar com o upload da imagem e salvar a URL no estado do pet
+  const handleImageUpload = (index: number, url: string) => {
+    const updatedPets = [...pets];
+    updatedPets[index] = { ...updatedPets[index], imagem: url }; // Atualiza a propriedade "imagem"
+    setPets(updatedPets); // Define o novo estado
+  };
+
   const onSubmit = async (data: TutorData) => {
-    const tutorId = uuidv4(); // Gera um ID único para o tutor
+    // const tutorId = uuidv4(); // Gera um ID único para o tutor
     const tutorData = { ...data, pets };
 
     try {
@@ -377,6 +389,15 @@ const RegisterForm = () => {
                   onChange={(e) =>
                     handlePetChange(index, "alergias", e.target.value)
                   }
+                />
+              </div>
+              {/* Componente de upload de imagem */}
+              <div className="flex flex-col">
+                <label className="text-lg font-semibold">Foto do pet:</label>
+                <ImageUpload
+                  petId={pet.id}
+                  tutorId={tutorId} // Defina tutorId antes de criar os pets
+                  onUpload={(url) => handleImageUpload(index, url)}
                 />
               </div>
               {pets.length > 1 && (
