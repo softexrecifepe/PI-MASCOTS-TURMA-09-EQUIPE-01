@@ -1436,16 +1436,33 @@
             "name": "Internamento",
             "color": "bg-red-500",
             "hour": "12:00"
+          },
+          {
+            "name": "Exame",
+            "color": "bg-green-500",
+            "hour": "09:00"
           }
         ]
       },
       {
         "day": "26",
-        "marking": null
+        "marking": [
+          {
+            "name": "Atendimento",
+            "color": "bg-blue-500",
+            "hour": "12:00"
+          }
+        ]
       },
       {
         "day": "27",
-        "marking": null
+        "marking": [
+          {
+            "name": "Exame",
+            "color": "bg-green-500",
+            "hour": "11:00"
+          }
+        ]
       },
       {
         "day": "28",

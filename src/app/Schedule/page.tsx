@@ -23,6 +23,23 @@ const Schedule = () => {
   const [month, setMonth] = useState<string>("");
   const [hour, setHour] = useState<string>("");
 
+	const [currentDay, setCurrentDay] = useState(new Date());
+	const formattedDay = currentDay.toLocaleDateString("pt-BR", {
+		day: "numeric",
+		month: "long",
+		year: "numeric",
+	});
+	// Atualiza o dia exibido
+	const handleDayChange = (direction: "prev" | "next") => {
+		const newDay = new Date(currentDay);
+		if (direction === "prev") {
+			newDay.setDate(newDay.getDate() - 1);
+		} else if (direction === "next") {
+			newDay.setDate(newDay.getDate() + 1);
+		}
+		setCurrentDay(newDay);
+	};
+
 	// data atual formatada
   const currentDate = new Date().toLocaleDateString("pt-BR", {
     day: "numeric",
@@ -41,39 +58,36 @@ const Schedule = () => {
 			if (!response.ok) throw new Error("Erro ao buscar o schedule.");
 			const data = await response.json();
 	
-			// Busca os dados do mês atual
+			const currentMonth = currentDay.toLocaleDateString("pt-BR", { month: "long" }).toLowerCase();
+			const currentDayNumber = currentDay.getDate().toString();
+	
 			const monthData = data[currentMonth];
 			if (monthData) {
 				setMonthlySchedule(monthData);
-				console.log("Dados do mês atual retornados pela API:", monthData);
 	
-				// Busca os dados do dia atual
-				const today = new Date().getDate().toString();
-				const dayData = monthData.find((d) => d.day === today);
-	
+				const dayData = monthData.find((d) => d.day === currentDayNumber);
 				if (dayData && dayData.marking) {
-					// Transformar os dados do dia atual para o formato esperado pelo componente DaySchedule
 					const transformedSchedule = dayData.marking.map((item) => ({
-						time: item.hour, // Transforma `hour` em `time`
-						marking: item.name, // Transforma `name` em `marking`
-						color: item.color, // Mantém `color` como está
+						time: item.hour,
+						marking: item.name,
+						color: item.color,
 					}));
-					setDaySchedule(transformedSchedule); // Atualiza o estado com os dados transformados
-					console.log("Marcações do dia atual transformadas:", transformedSchedule);
+					setDaySchedule(transformedSchedule);
 				} else {
-					setDaySchedule([]); 
-					console.warn(`Nenhuma marcação encontrada para o dia ${today}.`);
+					setDaySchedule([]);
 				}
 			} else {
-				console.error(`Mês "${currentMonth}" não encontrado no schedule.`);
+				setMonthlySchedule([]);
+				setDaySchedule([]);
 			}
 		} catch (error) {
 			console.error("Erro ao buscar a agenda:", error);
-			alert("Erro ao buscar a agenda. Tente novamente.");
 		}
-		
-		
 	};
+	
+	useEffect(() => {
+		fetchSchedule();
+	}, [currentDay]);
 
   // useEffect para carregar os dados da agenda
   useEffect(() => {
@@ -241,7 +255,27 @@ const Schedule = () => {
                   </button>
                 </div>
               )}
-            </div>
+
+{view === "day" && (
+							<div className="flex items-center mb-6">
+								<button
+									onClick={() => handleDayChange("prev")}
+									className="px-3 py-1 bg-blue-400 text-white rounded-l quicksand-semibold"
+								>
+									-
+								</button>
+								<div className="px-4 py-1 bg-blue-600 text-white quicksand-semibold text-center">
+									{formattedDay}
+								</div>
+								<button
+									onClick={() => handleDayChange("next")}
+									className="px-3 py-1 bg-blue-400 text-white rounded-r quicksand-semibold"
+								>
+									+
+								</button>
+							</div>
+						)}
+            </div>						
           </div>
 
           {view === "day" ? (
