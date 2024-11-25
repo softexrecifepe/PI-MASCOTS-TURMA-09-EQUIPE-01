@@ -35,27 +35,45 @@ const Schedule = () => {
   const [currentMonth, setCurrentMonth] = useState(parts[1].toLowerCase());
 
   // Função para buscar na agenda 
-  const fetchSchedule = async () => {
-    try {
-      console.log("Buscando dados do mês atual...");
-      const response = await fetch("http://localhost:4000/schedule");
-      if (!response.ok) {
-        throw new Error("Erro ao buscar o schedule.");
-      }
-      const data = await response.json();
-
-      const monthData = data[currentMonth];
-      if (monthData) {
-        setMonthlySchedule(monthData);
-        console.log("Dados do mês atual retornados pela API:", monthData);
-      } else {
-        console.error(`Mês "${currentMonth}" não encontrado no schedule.`);
-      }
-    } catch (error) {
-      console.error("Erro ao buscar a agenda:", error);
-      alert("Erro ao buscar a agenda. Tente novamente.");
-    }
-  };
+	const fetchSchedule = async () => {
+		try {
+			const response = await fetch("http://localhost:4000/schedule");
+			if (!response.ok) throw new Error("Erro ao buscar o schedule.");
+			const data = await response.json();
+	
+			// Busca os dados do mês atual
+			const monthData = data[currentMonth];
+			if (monthData) {
+				setMonthlySchedule(monthData);
+				console.log("Dados do mês atual retornados pela API:", monthData);
+	
+				// Busca os dados do dia atual
+				const today = new Date().getDate().toString();
+				const dayData = monthData.find((d) => d.day === today);
+	
+				if (dayData && dayData.marking) {
+					// Transformar os dados do dia atual para o formato esperado pelo componente DaySchedule
+					const transformedSchedule = dayData.marking.map((item) => ({
+						time: item.hour, // Transforma `hour` em `time`
+						marking: item.name, // Transforma `name` em `marking`
+						color: item.color, // Mantém `color` como está
+					}));
+					setDaySchedule(transformedSchedule); // Atualiza o estado com os dados transformados
+					console.log("Marcações do dia atual transformadas:", transformedSchedule);
+				} else {
+					setDaySchedule([]); 
+					console.warn(`Nenhuma marcação encontrada para o dia ${today}.`);
+				}
+			} else {
+				console.error(`Mês "${currentMonth}" não encontrado no schedule.`);
+			}
+		} catch (error) {
+			console.error("Erro ao buscar a agenda:", error);
+			alert("Erro ao buscar a agenda. Tente novamente.");
+		}
+		
+		
+	};
 
   // useEffect para carregar os dados da agenda
   useEffect(() => {
@@ -114,7 +132,6 @@ const Schedule = () => {
 			// busca a agenda no JSON
       const response = await fetch("http://localhost:4000/schedule");
       if (!response.ok) throw new Error("Erro ao buscar a agenda.");
-
       const data = await response.json();
 
 			// valida o mês e o dia
@@ -123,11 +140,12 @@ const Schedule = () => {
       const dayData = monthData.find((d: { day: string }) => d.day === day);
       if (!dayData) return alert(`Dia "${day}" não encontrado.`);
 
+			// insere os compromissos 
       if (!dayData.marking) dayData.marking = [newMarking];
       else dayData.marking.push(newMarking);
-
       console.log("Estrutura atualizada para o mês:", monthData);
 
+			// envia os dados para o JSON
       const putResponse = await fetch(`http://localhost:4000/schedule`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },

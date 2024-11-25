@@ -1322,6 +1322,11 @@
             "name": "Internamento",
             "color": "bg-red-500",
             "hour": "15:00"
+          },
+          {
+            "name": "Atendimento",
+            "color": "bg-blue-500",
+            "hour": "15:00"
           }
         ]
       },
@@ -1342,7 +1347,18 @@
       },
       {
         "day": "11",
-        "marking": null
+        "marking": [
+          {
+            "name": "Internamento",
+            "color": "bg-red-500",
+            "hour": "10:00"
+          },
+          {
+            "name": "Exame",
+            "color": "bg-green-500",
+            "hour": "18:00"
+          }
+        ]
       },
       {
         "day": "12",
@@ -1415,6 +1431,11 @@
             "name": "Atendimento",
             "color": "bg-blue-500",
             "hour": "11:00"
+          },
+          {
+            "name": "Internamento",
+            "color": "bg-red-500",
+            "hour": "12:00"
           }
         ]
       },
