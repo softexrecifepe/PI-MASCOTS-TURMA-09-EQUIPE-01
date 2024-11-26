@@ -12,6 +12,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { doc, getDoc } from "firebase/firestore";
 import { db, storage } from "@/lib/firebase/firebase.config";
 import { ref, getDownloadURL } from "firebase/storage";
+// import EditPetModal from "@/app/components/ui/modal/editPetModal";
 
 // type Patient = {
 //   userType: string;
@@ -427,6 +428,11 @@ export default function PatientProfileId() {
 
   //   fetchPatientData();
   // }, [tutorId, petId]);
+
+  // const [modalOpen, setModalOpen] = useState(false);
+
+  // const handleOpenModal = () => setModalOpen(true);
+  // const handleCloseModal = () => setModalOpen(false);
 
   useEffect(() => {
     console.log("Tutor ID:", tutorId);
