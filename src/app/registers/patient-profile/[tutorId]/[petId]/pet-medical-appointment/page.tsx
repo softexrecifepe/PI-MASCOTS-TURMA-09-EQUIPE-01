@@ -422,7 +422,7 @@ export default function PatientMedicalAppointment() {
           <Header />
           <main className="flex-1 overflow-x-hidden overflow-y-auto ml-20 mt-[72px] px-10 py-8">
             <BreadCrumb
-              link={`/registers/patient-profile/${patient?.id}`}
+              link={`/registers/patient-profile/${tutorId}/${petId}`}
               description="Voltar para o perfil do pet"
             />
             <div className="flex flex-row gap-5 justify-center items-center h-screen">
@@ -448,7 +448,7 @@ export default function PatientMedicalAppointment() {
           <Header />
           <main className="flex-1 overflow-x-hidden overflow-y-auto ml-20 mt-[72px] px-10 py-8">
             <BreadCrumb
-              link={`/registers/patient-profile/${patient.id}`}
+              link={`/registers/patient-profile/${tutorId}/${petId}`}
               description="Voltar para o perfil do pet"
             />
             <SectionTitle

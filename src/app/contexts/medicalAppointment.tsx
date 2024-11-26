@@ -721,6 +721,558 @@
 //   }
 // };
 
+// "use client";
+
+// import {
+//   useContext,
+//   useState,
+//   ReactNode,
+//   createContext,
+//   useEffect,
+//   useCallback,
+// } from "react";
+// import { db } from "@/lib/firebase/firebase.config";
+// import { collection, getDocs, addDoc } from "firebase/firestore"; //doc, getDoc,
+// import { useRouter } from "next/router";
+
+// // Tipos e interfaces
+// interface AppointmentData {
+//   appointmentType: string;
+//   title: string;
+//   vet: string;
+//   notes: string;
+//   send_to_admission: boolean;
+//   timeStamp: string;
+//   isLast?: boolean;
+// }
+
+// type MedicalAppointmentContextType = {
+//   appointmentHistory: AppointmentData[];
+//   addMedicalAppointment: (
+//     tutorId: string,
+//     petId: string,
+//     appointmentData: AppointmentData
+//   ) => Promise<void>; // Tipando addMedicalAppointment
+//   loadPatientAppointments: (tutorId: string, petId: string) => void;
+//   currentPatientId: string | null;
+//   currentTutorId: string | null;
+//   setCurrentPatientId: React.Dispatch<React.SetStateAction<string | null>>; // Adicionando setCurrentPatientId
+//   setCurrentTutorId: React.Dispatch<React.SetStateAction<string | null>>; // Adicionando setCurrentTutorId
+// };
+
+// const MedicalAppointmentContext = createContext<
+//   MedicalAppointmentContextType | undefined
+// >(undefined);
+
+// // cria o provider
+// export function MedicalAppointmentProvider({
+//   children,
+// }: {
+//   children: ReactNode;
+// }) {
+//   const [appointmentHistory, setAppointmentHistory] = useState<
+//     AppointmentData[]
+//   >([]);
+//   const [currentPatientId, setCurrentPatientId] = useState<string | null>(null);
+//   const [currentTutorId, setCurrentTutorId] = useState<string | null>(null);
+
+//   const router = useRouter();
+//   const { tutorId, petId } = router.query; // pega os parâmetros tutorId e petId da URL
+
+//   // // Função para carregar as consultas de um paciente específico do Firestore
+//   // const loadPatientAppointments = async (tutorId: string, petId: string) => {
+//   //   if (petId === currentPatientId) return; // Evita carregar se o ID do paciente já estiver correto
+
+//   //   console.log("Atualizando o currentPatientId para:", petId);
+//   //   setCurrentPatientId(petId);
+
+//   //   try {
+//   //     const appointmentsCollection = collection(
+//   //       db,
+//   //       `tutores/${tutorId}/petsVinculados/${petId}/pet-medical-appointment`
+//   //     );
+//   //     const querySnapshot = await getDocs(appointmentsCollection);
+
+//   //     const appointments: AppointmentData[] = querySnapshot.docs.map((doc) => {
+//   //       const data = doc.data();
+//   //       return {
+//   //         appointmentType: data.appointmentType || "",
+//   //         title: data.title || "",
+//   //         vet: data.vet || "",
+//   //         notes: data.notes || "",
+//   //         send_to_admission: data.send_to_admission || false,
+//   //         timeStamp: data.timeStamp || "",
+//   //         isLast: data.isLast || false,
+//   //         id: doc.id,
+//   //       };
+//   //     });
+
+//   //     setAppointmentHistory(appointments);
+//   //   } catch (error) {
+//   //     console.error("Erro ao carregar consultas do paciente:", error);
+//   //     setAppointmentHistory([]);
+//   //   }
+//   // };
+
+//   // Função para carregar as consultas de um paciente específico do Firestore
+//   const loadPatientAppointments = useCallback(
+//     async (tutorId: string, petId: string) => {
+//       if (petId === currentPatientId) return; // Evita carregar se o ID do paciente já estiver correto
+
+//       console.log("Atualizando o currentPatientId para:", petId);
+//       setCurrentPatientId(petId);
+
+//       try {
+//         // Acessa a subcoleção de consultas do pet no Firestore
+//         const appointmentsCollection = collection(
+//           db,
+//           `tutores/${tutorId}/petsVinculados/${petId}/pet-medical-appointment`
+//         );
+//         const querySnapshot = await getDocs(appointmentsCollection);
+
+//         const appointments: AppointmentData[] = querySnapshot.docs.map(
+//           (doc) => {
+//             const data = doc.data();
+//             return {
+//               appointmentType: data.appointmentType || "",
+//               title: data.title || "",
+//               vet: data.vet || "",
+//               notes: data.notes || "",
+//               send_to_admission: data.send_to_admission || false,
+//               timeStamp: data.timeStamp || "",
+//               isLast: data.isLast || false,
+//               id: doc.id,
+//             };
+//           }
+//         );
+
+//         setAppointmentHistory(appointments);
+//       } catch (error) {
+//         console.error("Erro ao carregar consultas do paciente:", error);
+//         setAppointmentHistory([]);
+//       }
+//     },
+//     [currentPatientId] // Passando dependência para currentPatientId
+//   );
+
+//   // / Aqui é onde você adiciona o useEffect para monitorar as mudanças de currentTutorId e currentPatientId
+//   // useEffect(() => {
+//   //   if (currentTutorId && currentPatientId) {
+//   //     loadPatientAppointments(currentTutorId, currentPatientId);
+//   //   }
+//   // }, [currentTutorId, currentPatientId, loadPatientAppointments]);
+
+//   // useEffect(() => {
+//   //   const fetchTutorAndPetId = async () => {
+//   //     try {
+//   //       const tutorId = currentTutorId; // Obtenha o tutorId dinamicamente
+
+//   //       if (!tutorId) {
+//   //         console.error("Tutor ID não encontrado.");
+//   //         return; // Retorna se não houver tutorId disponível
+//   //       }
+
+//   //       // Buscar pets do tutor
+//   //       const petSnapshot = await getDocs(
+//   //         collection(db, `tutores/${tutorId}/petsVinculados`)
+//   //       );
+
+//   //       if (petSnapshot.empty) {
+//   //         console.error("Nenhum pet encontrado para este tutor.");
+//   //         return;
+//   //       }
+
+//   //       // Pegando o primeiro pet encontrado para exemplo
+//   //       const petDoc = petSnapshot.docs[0]; // Pegando o primeiro pet
+//   //       const petId = petDoc.id;
+//   //       console.log("Pet ID:", petId);
+
+//   //       // Buscar as consultas para esse pet
+//   //       const appointmentSnapshot = await getDocs(
+//   //         collection(
+//   //           db,
+//   //           `tutores/${tutorId}/petsVinculados/${petId}/pet-medical-appointment`
+//   //         )
+//   //       );
+
+//   //       if (appointmentSnapshot.empty) {
+//   //         console.error("Nenhuma consulta encontrada para este pet.");
+//   //         return;
+//   //       }
+
+//   //       // Mapeando as consultas e ajustando a estrutura de dados para o tipo AppointmentData
+//   //       const appointments: AppointmentData[] = appointmentSnapshot.docs.map(
+//   //         (doc) => {
+//   //           const data = doc.data();
+
+//   //           // Garantindo que o objeto tem todos os campos necessários para ser do tipo AppointmentData
+//   //           return {
+//   //             appointmentType: data.appointmentType || "", // Garantindo que todos os campos existam
+//   //             title: data.title || "",
+//   //             vet: data.vet || "",
+//   //             notes: data.notes || "",
+//   //             send_to_admission: data.send_to_admission || false,
+//   //             timeStamp: data.timeStamp || "",
+//   //             isLast: data.isLast || false,
+//   //             id: doc.id, // Incluindo o ID da consulta
+//   //           };
+//   //         }
+//   //       );
+
+//   //       // Atualizando o estado com as consultas
+//   //       setAppointmentHistory(appointments);
+//   //     } catch (error) {
+//   //       console.error("Erro ao buscar tutorId, petId e consultas:", error);
+//   //     }
+//   //   };
+
+//   //   fetchTutorAndPetId();
+//   // }, [currentTutorId]); // Aqui a dependência de currentTutorId vai garantir que a busca ocorra quando o tutorId mudar
+
+//   useEffect(() => {
+//     const fetchTutorAndPetId = async () => {
+//       try {
+//         const tutorId = currentTutorId || router.query.tutorId;  // Pega o tutorId da rota ou do contexto
+//         const petId = currentPatientId || router.query.petId;  // Pega o petId da rota ou do contexto
+
+//         if (!tutorId || !petId) {
+//           console.error("Tutor ID ou Pet ID não fornecido.");
+//           return;
+//         }
+
+//         // Buscar as consultas para esse pet e tutor específicos
+//         const appointmentSnapshot = await getDocs(
+//           collection(db, `tutores/${tutorId}/petsVinculados/${petId}/pet-medical-appointment`)
+//         );
+
+//         if (appointmentSnapshot.empty) {
+//           console.error("Nenhuma consulta encontrada para este pet.");
+//           return;
+//         }
+
+//         // Mapeando as consultas e ajustando a estrutura de dados para o tipo AppointmentData
+//         const appointments: AppointmentData[] = appointmentSnapshot.docs.map((doc) => {
+//           const data = doc.data();
+//           return {
+//             appointmentType: data.appointmentType || "",
+//             title: data.title || "",
+//             vet: data.vet || "",
+//             notes: data.notes || "",
+//             send_to_admission: data.send_to_admission || false,
+//             timeStamp: data.timeStamp || "",
+//             isLast: data.isLast || false,
+//             id: doc.id,
+//           };
+//         });
+
+//         setAppointmentHistory(appointments);
+//       } catch (error) {
+//         console.error("Erro ao buscar tutorId, petId e consultas:", error);
+//       }
+//     };
+
+//     if (router.query.tutorId && router.query.petId) {
+//       fetchTutorAndPetId();
+//     }
+//   }, [router.query.tutorId, router.query.petId, currentPatientId]);
+
+//   // const addMedicalAppointment = async (
+//   //   tutorId: string,
+//   //   petId: string,
+//   //   appointmentData: AppointmentData
+//   // ) => {
+//   //   try {
+//   //     console.log("Adicionando consulta com os dados:", {
+//   //       tutorId,
+//   //       petId,
+//   //       appointmentData,
+//   //     });
+
+//   //     // Verifica se tutorId e petId são válidos
+//   //     if (!tutorId || !petId) {
+//   //       console.error("Tutor ID ou Pet ID não fornecido");
+//   //       return;
+//   //     }
+
+//   //     const appointmentsCollection = collection(
+//   //       db,
+//   //       `tutores/${tutorId}/petsVinculados/${petId}/pet-medical-appointment`
+//   //     );
+
+//   //     // Adiciona a consulta
+//   //     const docRef = await addDoc(appointmentsCollection, appointmentData);
+
+//   //     // Verifica se a adição foi bem-sucedida
+//   //     alert("Consulta adicionada com sucesso!");
+//   //     console.log("Consulta adicionada com sucesso! ID:", docRef.id);
+
+//   //     // Se for o paciente atual, atualize o histórico de consultas
+//   //     if (petId === currentPatientId) {
+//   //       setAppointmentHistory((prev) => [
+//   //         ...prev,
+//   //         { ...appointmentData, id: docRef.id },
+//   //       ]);
+//   //     }
+//   //   } catch (error) {
+//   //     console.error("Erro ao adicionar consulta:", error);
+//   //   }
+//   // };
+
+//   const addMedicalAppointment = async (
+//     tutorId: string,
+//     petId: string,
+//     appointmentData: AppointmentData
+//   ) => {
+//     try {
+//       if (!tutorId || !petId) {
+//         console.error("Tutor ID ou Pet ID não fornecido");
+//         return;
+//       }
+
+//       const appointmentsCollection = collection(
+//         db,
+//         `tutores/${tutorId}/petsVinculados/${petId}/pet-medical-appointment`
+//       );
+
+//       // Adiciona a consulta
+//       const docRef = await addDoc(appointmentsCollection, appointmentData);
+
+//       // Verifica se a adição foi bem-sucedida
+//       alert("Consulta adicionada com sucesso!");
+//       console.log("Consulta adicionada com sucesso! ID:", docRef.id);
+
+//       // Se for o paciente atual, atualize o histórico de consultas
+//       if (petId === currentPatientId) {
+//         setAppointmentHistory((prev) => [
+//           ...prev,
+//           { ...appointmentData, id: docRef.id },
+//         ]);
+//       }
+//     } catch (error) {
+//       console.error("Erro ao adicionar consulta:", error);
+//     }
+//   };
+
+//   const value = {
+//     appointmentHistory,
+//     addMedicalAppointment,
+//     loadPatientAppointments,
+//     currentPatientId,
+//     currentTutorId,
+//     setCurrentPatientId,
+//     setCurrentTutorId,
+//   };
+
+//   return (
+//     <MedicalAppointmentContext.Provider value={value}>
+//       {children}
+//     </MedicalAppointmentContext.Provider>
+//   );
+// }
+
+// // chama o contexto
+// export function useMedicalAppointmentContext() {
+//   const context = useContext(MedicalAppointmentContext);
+//   if (context === undefined) {
+//     throw new Error(
+//       "useMedicalAppointmentContext must be used within a MedicalAppointmentProvider"
+//     );
+//   }
+//   return context;
+// }
+
+// "use client";
+
+// import {
+//   useContext,
+//   useState,
+//   ReactNode,
+//   createContext,
+//   useEffect,
+//   useCallback,
+// } from "react";
+// import { db } from "@/lib/firebase/firebase.config";
+// import { collection, getDocs, addDoc } from "firebase/firestore";
+// import { useRouter } from "next/router";
+
+// // Tipos e interfaces
+// interface AppointmentData {
+//   appointmentType: string;
+//   title: string;
+//   vet: string;
+//   notes: string;
+//   send_to_admission: boolean;
+//   timeStamp: string;
+//   isLast?: boolean;
+// }
+
+// type MedicalAppointmentContextType = {
+//   appointmentHistory: AppointmentData[];
+//   addMedicalAppointment: (
+//     tutorId: string,
+//     petId: string,
+//     appointmentData: AppointmentData
+//   ) => Promise<void>;
+//   loadPatientAppointments: (tutorId: string, petId: string) => void;
+//   currentPatientId: string | null;
+//   currentTutorId: string | null;
+//   setCurrentPatientId: React.Dispatch<React.SetStateAction<string | null>>;
+//   setCurrentTutorId: React.Dispatch<React.SetStateAction<string | null>>;
+// };
+
+// const MedicalAppointmentContext = createContext<
+//   MedicalAppointmentContextType | undefined
+// >(undefined);
+
+// // cria o provider
+// export function MedicalAppointmentProvider({
+//   children,
+// }: {
+//   children: ReactNode;
+// }) {
+//   const [appointmentHistory, setAppointmentHistory] = useState<
+//     AppointmentData[]
+//   >([]);
+//   const [currentPatientId, setCurrentPatientId] = useState<string | null>(null);
+//   const [currentTutorId, setCurrentTutorId] = useState<string | null>(null);
+//   const [isClient, setIsClient] = useState(false);
+
+//   const router = useRouter();
+//   const { tutorId, petId } = router.query; // Pega os parâmetros tutorId e petId da URL
+
+//   // Função para carregar as consultas de um paciente específico do Firestore
+//   const loadPatientAppointments = useCallback(
+//     async (tutorId: string, petId: string) => {
+//       if (petId === currentPatientId) return; // Evita carregar se o ID do paciente já estiver correto
+
+//       console.log("Atualizando o currentPatientId para:", petId);
+//       setCurrentPatientId(petId);
+
+//       try {
+//         const appointmentsCollection = collection(
+//           db,
+//           `tutores/${tutorId}/petsVinculados/${petId}/pet-medical-appointment`
+//         );
+//         const querySnapshot = await getDocs(appointmentsCollection);
+
+//         const appointments: AppointmentData[] = querySnapshot.docs.map(
+//           (doc) => {
+//             const data = doc.data();
+//             return {
+//               appointmentType: data.appointmentType || "",
+//               title: data.title || "",
+//               vet: data.vet || "",
+//               notes: data.notes || "",
+//               send_to_admission: data.send_to_admission || false,
+//               timeStamp: data.timeStamp || "",
+//               isLast: data.isLast || false,
+//               id: doc.id,
+//             };
+//           }
+//         );
+
+//         setAppointmentHistory(appointments);
+//       } catch (error) {
+//         console.error("Erro ao carregar consultas do paciente:", error);
+//         setAppointmentHistory([]);
+//       }
+//     },
+//     [currentPatientId] // Passando dependência para currentPatientId
+//   );
+
+//   // useEffect para verificar se o código está sendo executado no lado do cliente
+//   useEffect(() => {
+//     setIsClient(true); // Definimos que estamos no lado do cliente
+//   }, []);
+
+//   // useEffect para garantir que a consulta seja carregada assim que os IDs forem definidos
+//   useEffect(() => {
+//     if (!isClient) return; // Não faz nada se não estamos no lado do cliente
+//     const tutorIdFromUrl = tutorId || currentTutorId; // Prioriza o tutorId da URL, mas usa o do contexto se disponível
+//     const petIdFromUrl = petId || currentPatientId; // Prioriza o petId da URL, mas usa o do contexto se disponível
+
+//     if (tutorIdFromUrl && petIdFromUrl) {
+//       if (!currentTutorId || !currentPatientId) {
+//         // Caso os IDs ainda não estejam configurados, define-os
+//         setCurrentTutorId(tutorIdFromUrl as string);
+//         setCurrentPatientId(petIdFromUrl as string);
+//       }
+//       // Carrega as consultas médicas assim que os IDs forem configurados
+//       loadPatientAppointments(tutorIdFromUrl as string, petIdFromUrl as string);
+//     }
+//   }, [
+//     tutorId,
+//     petId,
+//     currentTutorId,
+//     currentPatientId,
+//     loadPatientAppointments,
+//     isClient,
+//   ]);
+
+//   // Função para adicionar uma consulta médica
+//   const addMedicalAppointment = async (
+//     tutorId: string,
+//     petId: string,
+//     appointmentData: AppointmentData
+//   ) => {
+//     try {
+//       if (!tutorId || !petId) {
+//         console.error("Tutor ID ou Pet ID não fornecido");
+//         return;
+//       }
+
+//       const appointmentsCollection = collection(
+//         db,
+//         `tutores/${tutorId}/petsVinculados/${petId}/pet-medical-appointment`
+//       );
+
+//       // Adiciona a consulta
+//       const docRef = await addDoc(appointmentsCollection, appointmentData);
+
+//       // Verifica se a adição foi bem-sucedida
+//       alert("Consulta adicionada com sucesso!");
+//       console.log("Consulta adicionada com sucesso! ID:", docRef.id);
+
+//       // Se for o paciente atual, atualize o histórico de consultas
+//       if (petId === currentPatientId) {
+//         setAppointmentHistory((prev) => [
+//           ...prev,
+//           { ...appointmentData, id: docRef.id },
+//         ]);
+//       }
+//     } catch (error) {
+//       console.error("Erro ao adicionar consulta:", error);
+//     }
+//   };
+
+//   const value = {
+//     appointmentHistory,
+//     addMedicalAppointment,
+//     loadPatientAppointments,
+//     currentPatientId,
+//     currentTutorId,
+//     setCurrentPatientId,
+//     setCurrentTutorId,
+//   };
+
+//   return (
+//     <MedicalAppointmentContext.Provider value={value}>
+//       {children}
+//     </MedicalAppointmentContext.Provider>
+//   );
+// }
+
+// // chama o contexto
+// export function useMedicalAppointmentContext() {
+//   const context = useContext(MedicalAppointmentContext);
+//   if (context === undefined) {
+//     throw new Error(
+//       "useMedicalAppointmentContext must be used within a MedicalAppointmentProvider"
+//     );
+//   }
+//   return context;
+// }
+
 "use client";
 
 import {
@@ -732,7 +1284,8 @@ import {
   useCallback,
 } from "react";
 import { db } from "@/lib/firebase/firebase.config";
-import { collection, getDocs, addDoc } from "firebase/firestore"; //doc, getDoc,
+import { collection, getDocs, addDoc } from "firebase/firestore";
+import { useSearchParams } from "next/navigation"; // Alteração para usar useSearchParams
 
 // Tipos e interfaces
 interface AppointmentData {
@@ -751,12 +1304,14 @@ type MedicalAppointmentContextType = {
     tutorId: string,
     petId: string,
     appointmentData: AppointmentData
-  ) => Promise<void>; // Tipando addMedicalAppointment
+  ) => Promise<void>;
   loadPatientAppointments: (tutorId: string, petId: string) => void;
   currentPatientId: string | null;
   currentTutorId: string | null;
-  setCurrentPatientId: React.Dispatch<React.SetStateAction<string | null>>; // Adicionando setCurrentPatientId
-  setCurrentTutorId: React.Dispatch<React.SetStateAction<string | null>>; // Adicionando setCurrentTutorId
+  setCurrentPatientId: React.Dispatch<React.SetStateAction<string | null>>;
+  setCurrentTutorId: React.Dispatch<React.SetStateAction<string | null>>;
+  tutorId: string | null; // Tutor ID (se necessário em outro ponto do contexto)
+  petId: string | null;
 };
 
 const MedicalAppointmentContext = createContext<
@@ -774,41 +1329,12 @@ export function MedicalAppointmentProvider({
   >([]);
   const [currentPatientId, setCurrentPatientId] = useState<string | null>(null);
   const [currentTutorId, setCurrentTutorId] = useState<string | null>(null);
+  const [isClient, setIsClient] = useState(false);
 
-  // // Função para carregar as consultas de um paciente específico do Firestore
-  // const loadPatientAppointments = async (tutorId: string, petId: string) => {
-  //   if (petId === currentPatientId) return; // Evita carregar se o ID do paciente já estiver correto
-
-  //   console.log("Atualizando o currentPatientId para:", petId);
-  //   setCurrentPatientId(petId);
-
-  //   try {
-  //     const appointmentsCollection = collection(
-  //       db,
-  //       `tutores/${tutorId}/petsVinculados/${petId}/pet-medical-appointment`
-  //     );
-  //     const querySnapshot = await getDocs(appointmentsCollection);
-
-  //     const appointments: AppointmentData[] = querySnapshot.docs.map((doc) => {
-  //       const data = doc.data();
-  //       return {
-  //         appointmentType: data.appointmentType || "",
-  //         title: data.title || "",
-  //         vet: data.vet || "",
-  //         notes: data.notes || "",
-  //         send_to_admission: data.send_to_admission || false,
-  //         timeStamp: data.timeStamp || "",
-  //         isLast: data.isLast || false,
-  //         id: doc.id,
-  //       };
-  //     });
-
-  //     setAppointmentHistory(appointments);
-  //   } catch (error) {
-  //     console.error("Erro ao carregar consultas do paciente:", error);
-  //     setAppointmentHistory([]);
-  //   }
-  // };
+  // Usando useSearchParams para pegar os parâmetros de consulta na URL
+  const searchParams = useSearchParams();
+  const tutorId = searchParams.get("tutorId");
+  const petId = searchParams.get("petId");
 
   // Função para carregar as consultas de um paciente específico do Firestore
   const loadPatientAppointments = useCallback(
@@ -819,7 +1345,6 @@ export function MedicalAppointmentProvider({
       setCurrentPatientId(petId);
 
       try {
-        // Acessa a subcoleção de consultas do pet no Firestore
         const appointmentsCollection = collection(
           db,
           `tutores/${tutorId}/petsVinculados/${petId}/pet-medical-appointment`
@@ -851,93 +1376,42 @@ export function MedicalAppointmentProvider({
     [currentPatientId] // Passando dependência para currentPatientId
   );
 
-  // / Aqui é onde você adiciona o useEffect para monitorar as mudanças de currentTutorId e currentPatientId
+  // useEffect para verificar se o código está sendo executado no lado do cliente
   useEffect(() => {
-    if (currentTutorId && currentPatientId) {
-      loadPatientAppointments(currentTutorId, currentPatientId);
-    }
-  }, [currentTutorId, currentPatientId, loadPatientAppointments]);
+    setIsClient(true); // Definimos que estamos no lado do cliente
+  }, []);
 
+  // useEffect para garantir que a consulta seja carregada assim que os IDs forem definidos
   useEffect(() => {
-    const fetchTutorAndPetId = async () => {
-      try {
-        const tutorId = currentTutorId; // Obtenha o tutorId dinamicamente
+    if (!isClient) return; // Não faz nada se não estamos no lado do cliente
+    const tutorIdFromUrl = tutorId || currentTutorId; // Prioriza o tutorId da URL, mas usa o do contexto se disponível
+    const petIdFromUrl = petId || currentPatientId; // Prioriza o petId da URL, mas usa o do contexto se disponível
 
-        if (!tutorId) {
-          console.error("Tutor ID não encontrado.");
-          return; // Retorna se não houver tutorId disponível
-        }
-
-        // Buscar pets do tutor
-        const petSnapshot = await getDocs(
-          collection(db, `tutores/${tutorId}/petsVinculados`)
-        );
-
-        if (petSnapshot.empty) {
-          console.error("Nenhum pet encontrado para este tutor.");
-          return;
-        }
-
-        // Pegando o primeiro pet encontrado para exemplo
-        const petDoc = petSnapshot.docs[0]; // Pegando o primeiro pet
-        const petId = petDoc.id;
-        console.log("Pet ID:", petId);
-
-        // Buscar as consultas para esse pet
-        const appointmentSnapshot = await getDocs(
-          collection(
-            db,
-            `tutores/${tutorId}/petsVinculados/${petId}/pet-medical-appointment`
-          )
-        );
-
-        if (appointmentSnapshot.empty) {
-          console.error("Nenhuma consulta encontrada para este pet.");
-          return;
-        }
-
-        // Mapeando as consultas e ajustando a estrutura de dados para o tipo AppointmentData
-        const appointments: AppointmentData[] = appointmentSnapshot.docs.map(
-          (doc) => {
-            const data = doc.data();
-
-            // Garantindo que o objeto tem todos os campos necessários para ser do tipo AppointmentData
-            return {
-              appointmentType: data.appointmentType || "", // Garantindo que todos os campos existam
-              title: data.title || "",
-              vet: data.vet || "",
-              notes: data.notes || "",
-              send_to_admission: data.send_to_admission || false,
-              timeStamp: data.timeStamp || "",
-              isLast: data.isLast || false,
-              id: doc.id, // Incluindo o ID da consulta
-            };
-          }
-        );
-
-        // Atualizando o estado com as consultas
-        setAppointmentHistory(appointments);
-      } catch (error) {
-        console.error("Erro ao buscar tutorId, petId e consultas:", error);
+    if (tutorIdFromUrl && petIdFromUrl) {
+      if (!currentTutorId || !currentPatientId) {
+        // Caso os IDs ainda não estejam configurados, define-os
+        setCurrentTutorId(tutorIdFromUrl as string);
+        setCurrentPatientId(petIdFromUrl as string);
       }
-    };
+      // Carrega as consultas médicas assim que os IDs forem configurados
+      loadPatientAppointments(tutorIdFromUrl as string, petIdFromUrl as string);
+    }
+  }, [
+    tutorId,
+    petId,
+    currentTutorId,
+    currentPatientId,
+    loadPatientAppointments,
+    isClient,
+  ]);
 
-    fetchTutorAndPetId();
-  }, [currentTutorId]); // Aqui a dependência de currentTutorId vai garantir que a busca ocorra quando o tutorId mudar
-
+  // Função para adicionar uma consulta médica
   const addMedicalAppointment = async (
     tutorId: string,
     petId: string,
     appointmentData: AppointmentData
   ) => {
     try {
-      console.log("Adicionando consulta com os dados:", {
-        tutorId,
-        petId,
-        appointmentData,
-      });
-
-      // Verifica se tutorId e petId são válidos
       if (!tutorId || !petId) {
         console.error("Tutor ID ou Pet ID não fornecido");
         return;
@@ -975,6 +1449,8 @@ export function MedicalAppointmentProvider({
     currentTutorId,
     setCurrentPatientId,
     setCurrentTutorId,
+    tutorId,
+    petId,
   };
 
   return (
