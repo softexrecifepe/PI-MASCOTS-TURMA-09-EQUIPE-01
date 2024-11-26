@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Script from "next/script";
 import { AppointmentQueueProvider } from "./contexts/appointmentQueueContext";
+import { MedicalAppointmentProvider } from "./contexts/medicalAppointment";
 
 const robotoThin = localFont({
   src: "./assets/fonts/Roboto-Thin.ttf",
@@ -72,7 +73,9 @@ export default function RootLayout({
         ${robotoMedium.variable} ${robotoBold.variable} ${quickSandLight.variable}
         ${quickSandRegular.variable} ${quickSandMedium.variable} ${quickSandSemiBold.variable} ${quickSandBold.variable} antialiased`}
       >
-        <AppointmentQueueProvider>{children}</AppointmentQueueProvider>
+        <MedicalAppointmentProvider>
+          <AppointmentQueueProvider>{children}</AppointmentQueueProvider>
+        </MedicalAppointmentProvider>
         <Script
           src="https://kit.fontawesome.com/94c1cd0640.js"
           crossOrigin="anonymous"

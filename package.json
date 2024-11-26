@@ -13,7 +13,9 @@
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "@mui/material": "^6.1.6",
+    "date-fns": "^4.1.0",
     "firebase": "^11.0.2",
+    "js-cookie": "^3.0.5",
     "next": "14.2.14",
     "next-auth": "^4.24.8",
     "react": "^18",
@@ -22,6 +24,7 @@
   },
   "devDependencies": {
     "@hookform/resolvers": "^3.9.1",
+    "@types/js-cookie": "^3.0.6",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
