@@ -10,12 +10,25 @@ import Tab from "@/app/components/ui/tabs/tab";
 import GeneralBtn from "@/app/components/ui/btn/generalBtn";
 import GeneralModal from "@/app/components/ui/modal/generalModal";
 import { jsPDF } from "jspdf";
+import { db } from "@/lib/firebase/firebase.config"; // Importe a configuração do Firebase
+import {
+  doc,
+  getDoc,
+  collection,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
+// import { useRouter } from 'next/router';
+import usePets from "@/app/hooks/usePets";
+import { Avatar } from "@mui/material";
 
 interface Pet {
   id: string;
-  name: string;
-  specie: string;
-  breed: string;
+  nome: string;
+  raca: string;
+  idade: string;
+  genero: string;
   // Adicionar outros campos relevantes aqui
 }
 
@@ -29,35 +42,158 @@ type Tutor = {
 };
 
 export default function TutorProfile() {
+  // const router = useRouter();
+  // const { id } = router.query; // Captura o ID da URL
+
   // para a pegar o id na rota
   const params = useParams();
-  const id = params["id"];
+  // const id = params["id"];
+  const id = Array.isArray(params["id"]) ? params["id"][0] : params["id"];
+
+  const { pets } = usePets(id);
 
   // estados
   const [tutor, setTutor] = useState<Tutor | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [openModal, setOpenModal] = useState(false);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   useEffect(() => {
+    const fetchPetImage = async () => {
+      if (!pets || pets.length === 0) return;
+
+      try {
+        // Suponha que você quer pegar o primeiro pet ou fazer uma busca condicional
+        const petId = pets[0].id; // Aqui você pode definir qual pet vai ser considerado para pegar a imagem
+        const petDocRef = doc(db, `tutores/${id}/petsVinculados/${petId}`);
+        const petDoc = await getDoc(petDocRef);
+
+        if (petDoc.exists()) {
+          const url = petDoc.data()?.imagem;
+          setImageUrl(url || null);
+        } else {
+          console.log("Pet não encontrado");
+        }
+      } catch (error) {
+        console.error("Erro ao recuperar a imagem do pet:", error);
+      }
+    };
+
+    fetchPetImage();
+  }, [id, pets]); // Agora, o efeito será disparado sempre que o id ou os pets mudarem
+
+  // useEffect(() => {
+  //   if (id) {
+  //     // Função para buscar os dados do tutor do JSON Server
+  //     const fetchTutorData = async () => {
+  //       try {
+  //         const response = await fetch(`http://localhost:4000/tutores/${id}`);
+  //         if (!response.ok) {
+  //           throw new Error("Erro ao buscar dados do tutor.");
+  //         }
+  //         const data = await response.json();
+  //         setTutor(data); // Define o estado com os dados recebidos
+  //       } catch (error) {
+  //         console.error(error);
+  //         setTutor(null); // Se ocorrer um erro, define tutor como null
+  //       } finally {
+  //         setIsLoading(false); // Dados carregados, desativa o estado de carregamento
+  //       }
+  //     };
+
+  //     fetchTutorData();
+  //   }
+  // }, [id]);
+
+  // useEffect(() => {
+  //   if (id) {
+  //     // Função para buscar os dados do tutor do Firestore
+  //     const fetchTutorData = async () => {
+  //       try {
+  //         const docRef = doc(db, "tutores", id); // Busca o documento pelo ID
+  //         const docSnap = await getDoc(docRef);
+
+  //         if (docSnap.exists()) {
+  //           setTutor({ id: docSnap.id, ...docSnap.data() } as Tutor); // Define o estado com os dados recebidos
+  //         } else {
+  //           console.error("Tutor não encontrado.");
+  //           setTutor(null);
+  //         }
+  //       } catch (error) {
+  //         console.error("Erro ao buscar dados do tutor:", error);
+  //         setTutor(null); // Se ocorrer um erro, define tutor como null
+  //       } finally {
+  //         setIsLoading(false); // Dados carregados, desativa o estado de carregamento
+  //       }
+  //     };
+
+  //     fetchTutorData();
+  //   }
+  // }, [id]);
+
+  //   // Função para buscar dados do tutor no Firestore
+  // const fetchTutorData = async (id: string) => {
+  //   try {
+  //     // Use o `doc` passando `db`, o nome da coleção e o ID do documento
+  //     const docRef = doc(db, "tutores", id);
+  //     const docSnap = await getDoc(docRef);
+
+  //     if (docSnap.exists()) {
+  //       const data = docSnap.data();
+  //       return {
+  //         id: docSnap.id,
+  //         ...data,
+  //       };
+  //     } else {
+  //       console.error("Documento não encontrado!");
+  //       return null;
+  //     }
+  //   } catch (error) {
+  //     console.error("Erro ao buscar dados do Firestore:", error);
+  //     return null;
+  //   }
+  // };
+
+  // Função para buscar dados do tutor no Firestore
+  const fetchTutorData = async (id: string) => {
+    try {
+      // Acessa o Firestore e pega o documento pelo ID
+      const docRef = doc(db, "tutores", id);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        return {
+          id: docSnap.id,
+          ...data,
+        } as Tutor;
+      } else {
+        console.error("Documento não encontrado!");
+        return null;
+      }
+    } catch (error) {
+      console.error("Erro ao buscar dados do Firestore:", error);
+      return null;
+    }
+  };
+
+  // useEffect para buscar os dados ao carregar a página
+  useEffect(() => {
     if (id) {
-      // Função para buscar os dados do tutor do JSON Server
-      const fetchTutorData = async () => {
+      // Busca os dados do Firestore ao montar o componente
+      const fetchData = async () => {
         try {
-          const response = await fetch(`http://localhost:4000/tutores/${id}`);
-          if (!response.ok) {
-            throw new Error("Erro ao buscar dados do tutor.");
-          }
-          const data = await response.json();
-          setTutor(data); // Define o estado com os dados recebidos
+          const tutorData = await fetchTutorData(id);
+          setTutor(tutorData);
         } catch (error) {
-          console.error(error);
-          setTutor(null); // Se ocorrer um erro, define tutor como null
+          console.error("Erro ao buscar dados do tutor:", error);
+          setTutor(null);
         } finally {
           setIsLoading(false); // Dados carregados, desativa o estado de carregamento
         }
       };
 
-      fetchTutorData();
+      fetchData();
     }
   }, [id]);
 
@@ -85,23 +221,41 @@ export default function TutorProfile() {
 
     doc.text("Pets Vinculados:", 10, 70);
     petsData.forEach((pet: Pet, index: number) => {
-      doc.text(`Pet ${index + 1}: ${pet.name}`, 10, 80 + index * 10);
-      doc.text(`Espécie: ${pet.specie}`, 10, 90 + index * 10);
-      doc.text(`Raça: ${pet.breed}`, 10, 100 + index * 10);
+      doc.text(`Pet ${index + 1}: ${pet.nome}`, 10, 80 + index * 10);
+      doc.text(`Ra: ${pet.raca}`, 10, 90 + index * 10);
+      doc.text(`Idade: ${pet.idade}`, 10, 100 + index * 10);
     });
 
     doc.save("relatorio_tutor.pdf");
   };
 
+  // const fetchPetsData = async (tutorId: string) => {
+  //   const response = await fetch(
+  //     `http://localhost:4000/pets?tutorId=${tutorId}`
+  //   );
+  //   if (!response.ok) {
+  //     console.error("Erro ao buscar dados dos pets");
+  //     return [];
+  //   }
+  //   return response.json();
+  // };
+
   const fetchPetsData = async (tutorId: string) => {
-    const response = await fetch(
-      `http://localhost:4000/pets?tutorId=${tutorId}`
-    );
-    if (!response.ok) {
-      console.error("Erro ao buscar dados dos pets");
+    try {
+      const petsRef = collection(db, "pets");
+      const q = query(petsRef, where("tutorId", "==", tutorId)); // Filtra os pets pelo ID do tutor
+      const querySnapshot = await getDocs(q);
+
+      const pets = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      })) as Pet[];
+
+      return pets;
+    } catch (error) {
+      console.error("Erro ao buscar dados dos pets:", error);
       return [];
     }
-    return response.json();
   };
 
   // para abrir modal
@@ -207,7 +361,46 @@ export default function TutorProfile() {
               </div>
               <div className="">
                 <Tab labels={["Pets Cadastrados", "Pagamentos"]}>
-                  <div>Informações sobre pets cadastrados</div>
+                  <div className="py-5 px-5">
+                    <div>
+                      {pets.length > 0 ? (
+                        <ul className="flex flex-col gap-5">
+                          {pets.map((pet) => (
+                            <li
+                              key={pet.id}
+                              className="flex flex-row gap-5 items-center"
+                            >
+                              <div>
+                                <Avatar
+                                  alt="imagem do usuário"
+                                  src={imageUrl ? imageUrl : undefined}
+                                  sx={{ width: 50, height: 50 }}
+                                ></Avatar>
+                              </div>
+                              <div>
+                                <div className="flex flex-col gap-1 ">
+                                  <span className="text-l roboto-medium w-40 text-blue-500">
+                                    {pet.nome}
+                                  </span>
+                                  <span className="text-sm text-gray-500">
+                                    {pet.raca}, {pet.idade} anos, {pet.genero}
+                                  </span>
+                                </div>
+                              </div>
+                              <div>
+                                <GeneralBtn
+                                  iconClass=""
+                                  content="Ver perfil"
+                                ></GeneralBtn>
+                              </div>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <p>Nenhum pet encontrado.</p>
+                      )}
+                    </div>
+                  </div>
                   <div>Informações sobre pagamentos</div>
                 </Tab>
               </div>
@@ -218,7 +411,7 @@ export default function TutorProfile() {
 
       {/* modal */}
 
-      <GeneralModal
+      {/* <GeneralModal
         isOpen={openModal}
         onClose={handleCloseModal}
         onSave={handleSave}
@@ -243,6 +436,31 @@ export default function TutorProfile() {
         id={tutor.id}
         url="http://localhost:4000/tutores" // Passando o endpoint como prop
         method="PATCH" // Passando o método HTTP como prop
+      /> */}
+      <GeneralModal
+        isOpen={openModal}
+        onClose={handleCloseModal}
+        onSave={handleSave}
+        fields={[
+          { name: "nome", label: "Nome", type: "text", value: tutor.nome },
+          { name: "cpf", label: "CPF", type: "text", value: tutor.cpf },
+          {
+            name: "telefone",
+            label: "Telefone",
+            type: "text",
+            value: tutor.telefone,
+          },
+          { name: "email", label: "Email", type: "email", value: tutor.email },
+          {
+            name: "endereco",
+            label: "Endereço",
+            type: "text",
+            value: tutor.endereco,
+          },
+        ]}
+        title="Editar Tutor"
+        id={tutor.id}
+        collectionName="tutores" // Nome da coleção no Firestore
       />
     </>
   );
