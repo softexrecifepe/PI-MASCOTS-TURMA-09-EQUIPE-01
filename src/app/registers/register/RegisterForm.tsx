@@ -36,7 +36,7 @@ const RegisterForm = () => {
     formState: { errors },
   } = useForm<TutorData>({ resolver: zodResolver(tutorSchema) });
 
-  const [tutorId, setTutorId] = useState<string>(uuidv4()); // Gera um tutorId único
+  const [tutorId, setTutorId] = useState<string>(uuidv4()); 
 
   const [pets, setPets] = useState<Pet[]>([
     {
@@ -56,11 +56,11 @@ const RegisterForm = () => {
   const handleImageUpload = (index: number, url: string) => {
     const updatedPets = [...pets];
     updatedPets[index] = { ...updatedPets[index], imagem: url }; // Atualiza a propriedade "imagem"
-    setPets(updatedPets); // Define o novo estado
+    setPets(updatedPets); 
   };
 
   const onSubmit = async (data: TutorData) => {
-    // const tutorId = uuidv4(); // Gera um ID único para o tutor
+  
     const tutorData = { ...data, pets };
 
     try {
@@ -81,13 +81,7 @@ const RegisterForm = () => {
         email: tutorData.email,
       });
 
-      // if (!response.ok) {
-      //   throw new Error("Erro ao salvar os dados. Verifique o servidor.");
-      // }else{alert('Tutor cadastrado com sucesso!')}
-      // reset({ nome: '', cpf: '', telefone: '', endereco: '', email: '' });
-      // setPets([{ id: uuidv4(), nome: '', raca: '', especie: '', genero: '', idade: '', peso: '', alergias: '' }]);
-
-      // Salva cada pet como subcoleção do tutor
+  
       const petsCollectionRef = collection(tutorRef, "petsVinculados");
       for (const pet of pets) {
         await addDoc(petsCollectionRef, pet);
@@ -138,11 +132,7 @@ const RegisterForm = () => {
     setPets(updatedPets);
   };
 
-  // const handlePetChange = (index: number, key: string, value: string) => {
-  //   const updatedPets = [...pets];
-  //   updatedPets[index][key] = value;
-  //   setPets(updatedPets);
-  // };
+
 
   const handlePetChange = (index: number, key: keyof Pet, value: string) => {
     const updatedPets = [...pets];
@@ -156,19 +146,20 @@ const RegisterForm = () => {
       <SideBar />
 
       <form
-        className="flex-1 overflow-x-hidden overflow-y-auto ml-20 mt-[30px] px-10 py-8"
+        className="flex-1 overflow-x-hidden overflow-y-auto ml-20 mt-[30px] px-10 py-8 bg-gray-100 rounded-md"
         onSubmit={handleSubmit(onSubmit)}
       >
+        <div><hr /></div>
         <div className="mb-10">
           <div className="mb-10">
             <h1 className="flex justify-center font-bold text-2xl items-center">
-              Tutor <FaUser className="ml-5" />
+              Novo Tutor <FaUser className="ml-5" />
             </h1>
           </div>
           <div className="flex gap-10">
             <div>
               {" "}
-              <LiaGripLinesVerticalSolid className="size-28" />{" "}
+              <LiaGripLinesVerticalSolid className="size-20 text-myrtleGreen-light" />{" "}
             </div>
             <div>
               {/* Campos do Tutor */}
@@ -184,7 +175,7 @@ const RegisterForm = () => {
                       <input
                         {...field}
                         type="text"
-                        className="input input-bordered h-3/4 pt-2 pb-2 text-lg"
+                        className="input input-bordered h-3/4 pt-2 pb-2 text-lg size-80"
                         placeholder="Digite o nome completo"
                       />
                     )}
@@ -204,7 +195,7 @@ const RegisterForm = () => {
                       <input
                         {...field}
                         type="text"
-                        className="input input-bordered h-3/4 pt-2 pb-2 text-lg"
+                        className="input input-bordered h-3/4 pt-2 pb-2 text-lg size-64"
                         placeholder="000.000.000-00"
                       />
                     )}
@@ -294,18 +285,18 @@ const RegisterForm = () => {
           </h1>
         </div>
 
-        <div className="flex gap-10 items-center">
+        <div className="flex gap-10 items-center m-0 w-2">
           <div>
             {" "}
-            <PiLineVerticalLight className="size-20 ml-7" />{" "}
+            <PiLineVerticalLight className="size-16 ml-7 text-gray-100 " />{" "}
           </div>
           {pets.map((pet, index) => (
-            <div key={pet.id} className="flex-col gap-4 ">
-              <div className="flex flex-col">
-                <label className="text-lg font-semibold">Nome do pet:</label>
+            <div key={pet.id} className="flex-col gap-1 ">
+              <div className="flex flex-col m-0">
+                <label className="text-base font-semibold">Nome do pet:</label>
                 <input
                   type="text"
-                  className="input input-bordered h-3/4 pt-2 pb-2 text-lg"
+                  className="input input-bordered h-3/4 pt-2 pb-2 text-lg size-56"
                   placeholder="Digite o nome do pet"
                   value={pet.nome}
                   onChange={(e) =>
@@ -313,11 +304,11 @@ const RegisterForm = () => {
                   }
                 />
               </div>
-              <div className="flex flex-col">
-                <label className="text-lg font-semibold">Raça do pet:</label>
+              <div className="flex flex-col  m-0">
+                <label className="text-base font-semibold">Raça do pet:</label>
                 <input
                   type="text"
-                  className="input input-bordered h-3/4 pt-2 pb-2 text-lg"
+                  className="input input-bordered h-3/4 pt-2 pb-2 text-lg size-52"
                   placeholder="Digite a raça do pet"
                   value={pet.raca}
                   onChange={(e) =>
@@ -325,10 +316,10 @@ const RegisterForm = () => {
                   }
                 />
               </div>
-              <div className="flex flex-col">
-                <label className="text-lg font-semibold">Espécie do pet:</label>
+              <div className="flex flex-col  m-0">
+                <label className="text-base font-semibold">Espécie do pet:</label>
                 <select
-                  className="input input-bordered h-3/4 pt-2 pb-2 text-lg"
+                  className="input input-bordered h-3/4 pt-2 pb-2 text-lg size-48"
                   value={pet.especie}
                   onChange={(e) =>
                     handlePetChange(index, "especie", e.target.value)
@@ -342,10 +333,10 @@ const RegisterForm = () => {
                   <option value="outro">Outro</option>
                 </select>
               </div>
-              <div className="flex flex-col">
-                <label className="text-lg font-semibold">Gênero/Sexo:</label>
+              <div className="flex flex-col  m-0">
+                <label className="text-base font-semibold">Gênero/Sexo:</label>
                 <select
-                  className="input input-bordered h-3/4 pt-2 pb-2 text-lg"
+                  className="input input-bordered h-3/4 pt-2 pb-2 text-lg size-44"
                   value={pet.genero}
                   onChange={(e) =>
                     handlePetChange(index, "genero", e.target.value)
@@ -356,11 +347,11 @@ const RegisterForm = () => {
                   <option value="femea">Fêmea</option>
                 </select>
               </div>
-              <div className="flex flex-col">
-                <label className="text-lg font-semibold">Idade:</label>
+              <div className="flex flex-col  m-0">
+                <label className="text-base font-semibold">Idade:</label>
                 <input
                   type="number"
-                  className="input input-bordered h-3/4 pt-2 pb-2 text-lg"
+                  className="input input-bordered h-3/4 pt-2 pb-2 text-lg size-40"
                   placeholder="Digite a idade em anos"
                   value={pet.idade}
                   onChange={(e) =>
@@ -368,11 +359,11 @@ const RegisterForm = () => {
                   }
                 />
               </div>
-              <div className="flex flex-col">
-                <label className="text-lg font-semibold">Peso (kg):</label>
+              <div className="flex flex-col  m-0">
+                <label className="text-base font-semibold">Peso (kg):</label>
                 <input
                   type="number"
-                  className="input input-bordered h-3/4 pt-2 pb-2 text-lg"
+                  className="input input-bordered h-3/4 pt-2 pb-2 text-lg size-36"
                   placeholder="Digite o peso"
                   value={pet.peso}
                   onChange={(e) =>
@@ -380,10 +371,10 @@ const RegisterForm = () => {
                   }
                 />
               </div>
-              <div className="flex flex-col">
-                <label className="text-lg font-semibold">Alergias:</label>
+              <div className="flex flex-col  m-0">
+                <label className="text-base font-semibold">Alergias:</label>
                 <textarea
-                  className="input input-bordered h-3/4 pt-2 pb-2 text-lg"
+                  className="input input-bordered h-3/4 pt-2 pb-2 text-sm size-64"
                   placeholder="Digite as alergias, se houver"
                   value={pet.alergias}
                   onChange={(e) =>
@@ -392,18 +383,18 @@ const RegisterForm = () => {
                 />
               </div>
               {/* Componente de upload de imagem */}
-              <div className="flex flex-col">
-                <label className="text-lg font-semibold">Foto do pet:</label>
+              <div className="flex flex-col  m-0">
+                <label className="text-base font-semibold">Foto do pet:</label>
                 <ImageUpload
                   petId={pet.id}
-                  tutorId={tutorId} // Defina tutorId antes de criar os pets
+                  tutorId={tutorId} 
                   onUpload={(url) => handleImageUpload(index, url)}
                 />
               </div>
               {pets.length > 1 && (
                 <button
                   type="button"
-                  className="btn bg-red-500 rounded-full px-1 text-white ml-6 mt-2"
+                  className="btn bg-red-500 rounded-full px-1 text-white  mt-2"
                   onClick={() => handleRemovePet(index)}
                 >
                   <AiFillMinusCircle className="size-10" />
@@ -415,7 +406,7 @@ const RegisterForm = () => {
             <div className="flex justify-end mt-4">
               <button
                 type="button"
-                className="btn bg-myrtleGreen rounded-full px-1 text-white ml-6"
+                className="btn bg-myrtleGreen rounded-full px-1 text-white "
                 onClick={handleAddPet}
               >
                 <AiFillPlusCircle className="size-10 " />
