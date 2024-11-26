@@ -1,36 +1,117 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Mascots - Clínica Veterinária 🐾
 
-## Getting Started
+O **Projeto Mascots** foi desenvolvido como projeto final do curso de Front-End da Formação Acelerada em Programação, da Softex Pernambuco com o intuíto de facilitar a gestão da clínica veterinária, centralizando diversas funcionalidades importantes em um único sistema, de forma prática e eficiente. A aplicação foi projetada para atender as necessidades dos funcionários da clínica, como veterinários, auxiliares e administradores.
 
-First, run the development server:
+![](/images/ladingpage.gif)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📋 Problema que o Projeto Resolve
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Monta um sistema para uma melhor organização de informações sobre consultas, prescrições, internamentos, estoques e solicitações de exames, e algumas outras funcionalidades do dia a dia de uma clínica veterinária. O projeto busca resolver esses problemas ao oferecer um sistema integrado para gerenciar todas essas informações, otimizando a dinâmica de trabalho e armazenamento de dados.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Telas
 
-To learn more about Next.js, take a look at the following resources:
+1. Login
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+![](./images/login.png)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2. Dashboard
 
-## Deploy on Vercel
+![](./images/dashboard.gif)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3. Agenda
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+![](./images/schedule.gif)
+
+4. Tutor e Pet
+
+![](./images/tutor-e-pet.gif)
+
+5. Atendimento
+
+[](./images/atendimento.gif)
+
+6. Internamento
+
+[](./images/internamento.gif)
+
+---
+
+## 🛠️ Funcionalidades Principais
+
+1. **Dashboard com as prinicpais informações do sistema resumidas em uma só tela**
+2. **Criação de Consulta**
+3. **🏥 Internamento de Animais**
+4. **📦 Gerenciamento de Estoque**
+5. **📁 Gerenciamento de Arquivos**
+6. **Cadastro de tutores e de pets**
+7. **Landing Page**
+
+## 👥 Público-Alvo
+
+- **Funcionários da Clínica Veterinária**:  
+  Veterinários, auxiliares veterinários e administradores.
+
+---
+
+## 🎯 Benefícios da Solução
+
+- **Centralização de Serviços**: Todos os serviços essenciais ficam disponíveis em um único lugar.
+- **Armazenamento Seguro**: Arquivos importantes, como exames e prescrições, ficam salvos de forma organizada e acessível.
+- **Otimização do Fluxo de Trabalho**: Facilita o gerenciamento de consultas, internamentos e estoque, reduzindo erros e aumentando a eficiência.
+
+---
+
+## 💻 Tecnologias Utilizadas
+
+### **Frontend**
+
+- **React** e **Next.js**: Para desenvolvimento de interfaces dinâmicas e renderização no lado do servidor (SSR).
+- **Tailwind CSS** e **DaisyUI**: Para estilização rápida e criação de componentes de interface.
+- **@mui/material** e **@emotion/react**: Para design e tema estilizado.
+
+### **Formulários e Validações**
+
+- **React Hook Form** e **Zod**: Para manipulação de formulários e validação de dados.
+
+### **Autenticação**
+
+- **NextAuth.js**: Para login seguro e integração com provedores de autenticação.
+
+### **Funcionalidades Extras**
+
+- **React Icons**: Para adição de ícones visuais.
+- **jspdf**: Para geração de arquivos PDF.
+- **UUID**: Para identificação única de registros.
+
+### **Backend e Banco de Dados**
+
+- **Firebase**: Para autenticação e armazenamento em tempo real.
+
+### **Linguagem**
+
+- **TypeScript**: Para maior segurança no desenvolvimento, com tipagem estática.
+
+---
+
+## 🚀 Como Instalar e Executar o Projeto
+
+1. Clone o repositório:
+
+   ```bash
+   git clone https://github.com/softexrecifepe/PI-MASCOTS-TURMA-09-EQUIPE-01
+   ```
+
+2. Instale as dependências:
+
+   ```bash
+   npm i
+   ```
+
+3. Inicie o servidor de desenvolvimento:
+   ```bash
+   npm run dev
+   ```
