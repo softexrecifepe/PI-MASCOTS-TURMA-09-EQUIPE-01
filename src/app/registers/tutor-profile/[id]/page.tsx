@@ -21,6 +21,7 @@ import {
 } from "firebase/firestore";
 // import { useRouter } from 'next/router';
 import usePets from "@/app/hooks/usePets";
+import { Avatar } from "@mui/material";
 
 interface Pet {
   id: string;
@@ -55,6 +56,31 @@ export default function TutorProfile() {
   const [tutor, setTutor] = useState<Tutor | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [openModal, setOpenModal] = useState(false);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchPetImage = async () => {
+      if (!pets || pets.length === 0) return;
+
+      try {
+        // Suponha que você quer pegar o primeiro pet ou fazer uma busca condicional
+        const petId = pets[0].id; // Aqui você pode definir qual pet vai ser considerado para pegar a imagem
+        const petDocRef = doc(db, `tutores/${id}/petsVinculados/${petId}`);
+        const petDoc = await getDoc(petDocRef);
+
+        if (petDoc.exists()) {
+          const url = petDoc.data()?.imagem;
+          setImageUrl(url || null);
+        } else {
+          console.log("Pet não encontrado");
+        }
+      } catch (error) {
+        console.error("Erro ao recuperar a imagem do pet:", error);
+      }
+    };
+
+    fetchPetImage();
+  }, [id, pets]); // Agora, o efeito será disparado sempre que o id ou os pets mudarem
 
   // useEffect(() => {
   //   if (id) {
@@ -340,13 +366,33 @@ export default function TutorProfile() {
                       {pets.length > 0 ? (
                         <ul className="flex flex-col gap-5">
                           {pets.map((pet) => (
-                            <li key={pet.id} className="flex flex-col gap-2">
-                              <span className="text-l roboto-medium text-blue-500">
-                                {pet.nome}
-                              </span>
-                              <span className="text-sm text-gray-500">
-                                {pet.raca}, {pet.idade} anos, {pet.genero}
-                              </span>
+                            <li
+                              key={pet.id}
+                              className="flex flex-row gap-5 items-center"
+                            >
+                              <div>
+                                <Avatar
+                                  alt="imagem do usuário"
+                                  src={imageUrl ? imageUrl : undefined}
+                                  sx={{ width: 50, height: 50 }}
+                                ></Avatar>
+                              </div>
+                              <div>
+                                <div className="flex flex-col gap-1 ">
+                                  <span className="text-l roboto-medium w-40 text-blue-500">
+                                    {pet.nome}
+                                  </span>
+                                  <span className="text-sm text-gray-500">
+                                    {pet.raca}, {pet.idade} anos, {pet.genero}
+                                  </span>
+                                </div>
+                              </div>
+                              <div>
+                                <GeneralBtn
+                                  iconClass=""
+                                  content="Ver perfil"
+                                ></GeneralBtn>
+                              </div>
                             </li>
                           ))}
                         </ul>
