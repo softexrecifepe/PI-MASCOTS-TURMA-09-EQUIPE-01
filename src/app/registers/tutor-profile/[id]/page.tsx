@@ -10,6 +10,16 @@ import Tab from "@/app/components/ui/tabs/tab";
 import GeneralBtn from "@/app/components/ui/btn/generalBtn";
 import GeneralModal from "@/app/components/ui/modal/generalModal";
 import { jsPDF } from "jspdf";
+import { db } from "@/lib/firebase/firebase.config"; // Importe a configuração do Firebase
+import {
+  doc,
+  getDoc,
+  collection,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
+// import { useRouter } from 'next/router';
 
 interface Pet {
   id: string;
@@ -29,35 +39,131 @@ type Tutor = {
 };
 
 export default function TutorProfile() {
+  // const router = useRouter();
+  // const { id } = router.query; // Captura o ID da URL
+
   // para a pegar o id na rota
   const params = useParams();
-  const id = params["id"];
+  // const id = params["id"];
+  const id = Array.isArray(params["id"]) ? params["id"][0] : params["id"];
 
   // estados
   const [tutor, setTutor] = useState<Tutor | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [openModal, setOpenModal] = useState(false);
 
+  // useEffect(() => {
+  //   if (id) {
+  //     // Função para buscar os dados do tutor do JSON Server
+  //     const fetchTutorData = async () => {
+  //       try {
+  //         const response = await fetch(`http://localhost:4000/tutores/${id}`);
+  //         if (!response.ok) {
+  //           throw new Error("Erro ao buscar dados do tutor.");
+  //         }
+  //         const data = await response.json();
+  //         setTutor(data); // Define o estado com os dados recebidos
+  //       } catch (error) {
+  //         console.error(error);
+  //         setTutor(null); // Se ocorrer um erro, define tutor como null
+  //       } finally {
+  //         setIsLoading(false); // Dados carregados, desativa o estado de carregamento
+  //       }
+  //     };
+
+  //     fetchTutorData();
+  //   }
+  // }, [id]);
+
+  // useEffect(() => {
+  //   if (id) {
+  //     // Função para buscar os dados do tutor do Firestore
+  //     const fetchTutorData = async () => {
+  //       try {
+  //         const docRef = doc(db, "tutores", id); // Busca o documento pelo ID
+  //         const docSnap = await getDoc(docRef);
+
+  //         if (docSnap.exists()) {
+  //           setTutor({ id: docSnap.id, ...docSnap.data() } as Tutor); // Define o estado com os dados recebidos
+  //         } else {
+  //           console.error("Tutor não encontrado.");
+  //           setTutor(null);
+  //         }
+  //       } catch (error) {
+  //         console.error("Erro ao buscar dados do tutor:", error);
+  //         setTutor(null); // Se ocorrer um erro, define tutor como null
+  //       } finally {
+  //         setIsLoading(false); // Dados carregados, desativa o estado de carregamento
+  //       }
+  //     };
+
+  //     fetchTutorData();
+  //   }
+  // }, [id]);
+
+  //   // Função para buscar dados do tutor no Firestore
+  // const fetchTutorData = async (id: string) => {
+  //   try {
+  //     // Use o `doc` passando `db`, o nome da coleção e o ID do documento
+  //     const docRef = doc(db, "tutores", id);
+  //     const docSnap = await getDoc(docRef);
+
+  //     if (docSnap.exists()) {
+  //       const data = docSnap.data();
+  //       return {
+  //         id: docSnap.id,
+  //         ...data,
+  //       };
+  //     } else {
+  //       console.error("Documento não encontrado!");
+  //       return null;
+  //     }
+  //   } catch (error) {
+  //     console.error("Erro ao buscar dados do Firestore:", error);
+  //     return null;
+  //   }
+  // };
+
+  // Função para buscar dados do tutor no Firestore
+  const fetchTutorData = async (id: string) => {
+    try {
+      // Acessa o Firestore e pega o documento pelo ID
+      const docRef = doc(db, "tutores", id);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        return {
+          id: docSnap.id,
+          ...data,
+        } as Tutor;
+      } else {
+        console.error("Documento não encontrado!");
+        return null;
+      }
+    } catch (error) {
+      console.error("Erro ao buscar dados do Firestore:", error);
+      return null;
+    }
+  };
+
+  // useEffect para buscar os dados ao carregar a página
   useEffect(() => {
     if (id) {
-      // Função para buscar os dados do tutor do JSON Server
-      const fetchTutorData = async () => {
+      // Busca os dados do Firestore ao montar o componente
+      const fetchData = async () => {
         try {
-          const response = await fetch(`http://localhost:4000/tutores/${id}`);
-          if (!response.ok) {
-            throw new Error("Erro ao buscar dados do tutor.");
-          }
-          const data = await response.json();
-          setTutor(data); // Define o estado com os dados recebidos
+          const tutorData = await fetchTutorData(id);
+          setTutor(tutorData);
         } catch (error) {
-          console.error(error);
-          setTutor(null); // Se ocorrer um erro, define tutor como null
+          console.error("Erro ao buscar dados do tutor:", error);
+          setTutor(null);
         } finally {
           setIsLoading(false); // Dados carregados, desativa o estado de carregamento
         }
       };
 
-      fetchTutorData();
+      fetchData();
     }
   }, [id]);
 
@@ -93,15 +199,33 @@ export default function TutorProfile() {
     doc.save("relatorio_tutor.pdf");
   };
 
+  // const fetchPetsData = async (tutorId: string) => {
+  //   const response = await fetch(
+  //     `http://localhost:4000/pets?tutorId=${tutorId}`
+  //   );
+  //   if (!response.ok) {
+  //     console.error("Erro ao buscar dados dos pets");
+  //     return [];
+  //   }
+  //   return response.json();
+  // };
+
   const fetchPetsData = async (tutorId: string) => {
-    const response = await fetch(
-      `http://localhost:4000/pets?tutorId=${tutorId}`
-    );
-    if (!response.ok) {
-      console.error("Erro ao buscar dados dos pets");
+    try {
+      const petsRef = collection(db, "pets");
+      const q = query(petsRef, where("tutorId", "==", tutorId)); // Filtra os pets pelo ID do tutor
+      const querySnapshot = await getDocs(q);
+
+      const pets = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      })) as Pet[];
+
+      return pets;
+    } catch (error) {
+      console.error("Erro ao buscar dados dos pets:", error);
       return [];
     }
-    return response.json();
   };
 
   // para abrir modal
@@ -218,7 +342,7 @@ export default function TutorProfile() {
 
       {/* modal */}
 
-      <GeneralModal
+      {/* <GeneralModal
         isOpen={openModal}
         onClose={handleCloseModal}
         onSave={handleSave}
@@ -243,6 +367,31 @@ export default function TutorProfile() {
         id={tutor.id}
         url="http://localhost:4000/tutores" // Passando o endpoint como prop
         method="PATCH" // Passando o método HTTP como prop
+      /> */}
+      <GeneralModal
+        isOpen={openModal}
+        onClose={handleCloseModal}
+        onSave={handleSave}
+        fields={[
+          { name: "nome", label: "Nome", type: "text", value: tutor.nome },
+          { name: "cpf", label: "CPF", type: "text", value: tutor.cpf },
+          {
+            name: "telefone",
+            label: "Telefone",
+            type: "text",
+            value: tutor.telefone,
+          },
+          { name: "email", label: "Email", type: "email", value: tutor.email },
+          {
+            name: "endereco",
+            label: "Endereço",
+            type: "text",
+            value: tutor.endereco,
+          },
+        ]}
+        title="Editar Tutor"
+        id={tutor.id}
+        collectionName="tutores" // Nome da coleção no Firestore
       />
     </>
   );
