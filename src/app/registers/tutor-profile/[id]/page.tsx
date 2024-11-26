@@ -20,12 +20,14 @@ import {
   getDocs,
 } from "firebase/firestore";
 // import { useRouter } from 'next/router';
+import usePets from "@/app/hooks/usePets";
 
 interface Pet {
   id: string;
-  name: string;
-  specie: string;
-  breed: string;
+  nome: string;
+  raca: string;
+  idade: string;
+  genero: string;
   // Adicionar outros campos relevantes aqui
 }
 
@@ -46,6 +48,8 @@ export default function TutorProfile() {
   const params = useParams();
   // const id = params["id"];
   const id = Array.isArray(params["id"]) ? params["id"][0] : params["id"];
+
+  const { pets } = usePets(id);
 
   // estados
   const [tutor, setTutor] = useState<Tutor | null>(null);
@@ -191,9 +195,9 @@ export default function TutorProfile() {
 
     doc.text("Pets Vinculados:", 10, 70);
     petsData.forEach((pet: Pet, index: number) => {
-      doc.text(`Pet ${index + 1}: ${pet.name}`, 10, 80 + index * 10);
-      doc.text(`Espécie: ${pet.specie}`, 10, 90 + index * 10);
-      doc.text(`Raça: ${pet.breed}`, 10, 100 + index * 10);
+      doc.text(`Pet ${index + 1}: ${pet.nome}`, 10, 80 + index * 10);
+      doc.text(`Ra: ${pet.raca}`, 10, 90 + index * 10);
+      doc.text(`Idade: ${pet.idade}`, 10, 100 + index * 10);
     });
 
     doc.save("relatorio_tutor.pdf");
@@ -331,7 +335,26 @@ export default function TutorProfile() {
               </div>
               <div className="">
                 <Tab labels={["Pets Cadastrados", "Pagamentos"]}>
-                  <div>Informações sobre pets cadastrados</div>
+                  <div className="py-5 px-5">
+                    <div>
+                      {pets.length > 0 ? (
+                        <ul className="flex flex-col gap-5">
+                          {pets.map((pet) => (
+                            <li key={pet.id} className="flex flex-col gap-2">
+                              <span className="text-l roboto-medium text-blue-500">
+                                {pet.nome}
+                              </span>
+                              <span className="text-sm text-gray-500">
+                                {pet.raca}, {pet.idade} anos, {pet.genero}
+                              </span>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <p>Nenhum pet encontrado.</p>
+                      )}
+                    </div>
+                  </div>
                   <div>Informações sobre pagamentos</div>
                 </Tab>
               </div>
