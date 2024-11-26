@@ -14,9 +14,29 @@ Monta um sistema para uma melhor organização de informações sobre consultas,
 
 ## Telas
 
-1. Dashboard
+1. Login
+
+![](./images/login.png)
+
+2. Dashboard
 
 ![](./images/dashboard.gif)
+
+3. Agenda
+
+![](./images/schedule.gif)
+
+4. Tutor e Pet
+
+![](./images/tutor-e-pet.gif)
+
+5. Atendimento
+
+[](./images/atendimento.gif)
+
+6. Internamento
+
+[](./images/internamento.gif)
 
 ---
 
