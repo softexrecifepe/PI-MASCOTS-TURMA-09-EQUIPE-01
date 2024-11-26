@@ -58,9 +58,9 @@ export default function ImageUpload({ petId, tutorId }: ImageUploadProps) {
   };
 
   return (
-    <div>
+    <div >
       <input type="file" accept="image/*" onChange={handleImageChange} />
-      <button onClick={uploadImage} disabled={isUploading}>
+      <button onClick={uploadImage} disabled={isUploading} className="text-white cursor-default" > 
         {isUploading ? "Carregando..." : "Carregar Imagem"}
       </button>
 
