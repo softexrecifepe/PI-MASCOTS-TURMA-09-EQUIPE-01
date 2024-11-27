@@ -1,0 +1,70 @@
+{
+  "tutores": [
+    {
+      "id": "0017",
+      "nome": "Max100%",
+      "cpf": "77777789730",
+      "telefone": "81000000000",
+      "email": "max100%@gmail.com",
+      "endereco": "Rua da Guia,12"
+    },
+    {
+      "id": "8def",
+      "nome": "johny",
+      "cpf": "900.987.857-30",
+      "telefone": "85988655522",
+      "email": "johny@hotmail.com",
+      "endereco": "Rua quimera 12"
+    },
+    {
+      "id": "8a7d",
+      "nome": "lucas",
+      "cpf": "900.280.564-12",
+      "telefone": "85998675544",
+      "email": "gestorz@gmail.com",
+      "endereco": "Rua golfinho",
+      "pets": [
+        {
+          "id": "db7525d4-2093-485f-b5b4-b8dd3d08418c",
+          "nome": "Maxwell",
+          "raca": "Canário",
+          "especie": "ave",
+          "genero": "macho",
+          "idade": "2",
+          "peso": "1",
+          "alergias": "Não possui"
+        },
+        {
+          "id": "e6e1587e-cf5c-41a8-a5c4-5eafa041e80d",
+          "nome": "MaryJaneWattson",
+          "raca": "Malinois",
+          "especie": "cao",
+          "genero": "femea",
+          "idade": "2",
+          "peso": "25",
+          "alergias": "Dipirona"
+        }
+      ]
+    },
+    {
+      "id": "7bdd",
+      "nome": "Paulinha",
+      "cpf": "506.052.671-10",
+      "telefone": "85988655526",
+      "email": "paulinhafofa@yahoo.com",
+      "endereco": "Rua 12",
+      "pets": [
+        {
+          "id": "9739a8f3-e8f0-44ac-80db-7582bec0ffc9",
+          "nome": "Maximus",
+          "raca": "Pitbull",
+          "especie": "cao",
+          "genero": "macho",
+          "idade": "1",
+          "peso": "10",
+          "alergias": "Nenhuma"
+        }
+      ]
+    }
+  ]
+}

@@ -2,26 +2,47 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+.roboto-thin {
+  font-family: var(--font-roboto-thin);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.roboto-light {
+  font-family: var(--font-roboto-light);
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+.roboto-regular {
+  font-family: var(--font-roboto-regular);
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+.roboto-medium {
+  font-family: var(--font-roboto-medium);
+}
+
+.roboto-bold {
+  font-family: var(--font-roboto-bold);
+}
+
+.quicksand-light {
+  font-family: var(--font-quicksand-light);
+}
+
+.quicksand-regular {
+  font-family: var(--font-quicksand-regular);
+}
+
+.quicksand-medium {
+  font-family: var(--font-quicksand-medium);
+}
+
+.quicksand-semibold {
+  font-family: var(--font-quicksand-semibold);
+}
+
+.quicksand-bold {
+  font-family: var(--font-quicksand-bold);
+}
+
+html {
+  scroll-behavior: smooth;
+  background: white;
 }
