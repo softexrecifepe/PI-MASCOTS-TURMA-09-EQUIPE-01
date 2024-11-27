@@ -32,11 +32,11 @@ Monta um sistema para uma melhor organização de informações sobre consultas,
 
 5. Atendimento
 
-[](./images/atendimento.gif)
+![](./images/atendimento.gif)
 
 6. Internamento
 
-[](./images/internamento.gif)
+![](./images/internamento.gif)
 
 ---
 
